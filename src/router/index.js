@@ -1,31 +1,44 @@
-import React from 'react'
-
-
+import React, { useState } from 'react'
 //router
-import { Switch,Route } from 'react-router'
+import { Switch, Route } from 'react-router'
 //layoutpages
-import Index from '../views/index'
+// import Index from '../views/index'
 import Default from '../layouts/dashboard/default'
-import Horizontal from '../layouts/dashboard/horizontal'
-import Boxed from '../layouts/dashboard/boxed'
-import DualHorizontal from '../layouts/dashboard/dual-horizontal'
-import DualCompact from '../layouts/dashboard/dual-compact'
-import BoxedFancy from "../layouts/dashboard/boxed-fancy"
 import Simple from '../layouts/dashboard/simple'
+import { getUserDetails } from '../utils/permissions.js'
+//import clientDefault from '../layouts/dashboard/student-default'
+import SignIn from '../components/auth/sign-in'
+import FirstTimeLoginPassswordChange from '../components/auth/change-password-on-login'
+import { authLocations } from './fws-path-locations'
 
 const IndexRouters = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userDetail, setUserDetail] = useState(null);
+
+    React.useEffect(() => {
+        setUserDetail(getUserDetails());
+        if (userDetail)
+            setIsLoggedIn(true)
+    }, [isLoggedIn]);
+
+
     return (
         <>
             <Switch>
-                <Route exact path="/" component={Index}></Route>
-                <Route  path="/dashboard" component={Default}></Route>
-                <Route  path="/boxed" component={Boxed}></Route>
-                <Route  path="/horizontal" component={Horizontal}></Route>
-                <Route  path="/dual-horizontal" component={DualHorizontal}></Route>
-                <Route  path="/dual-compact" component={DualCompact} ></Route>
-                <Route  path="/boxedFancy" component={BoxedFancy} ></Route>
-                <Route  path="/auth" component={Simple}></Route>
-                <Route  path="/errors" component={Simple}></Route>
+                {
+                    <>
+                        <Route exact path="/"
+                            component={SignIn}></Route>
+
+                        <Route path={"/dashboard"}
+                            component={Default}></Route>
+
+                        <Route path={authLocations.login} component={SignIn}></Route>
+                        
+                     <Route path={authLocations.firstTimeLogin} component={FirstTimeLoginPassswordChange}></Route> 
+                        <Route path="/errors" component={Simple}></Route>
+                    </>
+                }
             </Switch>
         </>
     )

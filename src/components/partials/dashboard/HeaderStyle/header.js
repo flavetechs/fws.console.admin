@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { Navbar,Container,Nav,Dropdown} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link,useHistory } from 'react-router-dom'
 import CustomToggle from '../../../dropdowns'
 import {bindActionCreators} from "redux"
 
@@ -27,7 +27,10 @@ import Logo from '../../components/logo'
 
 // store
 import {NavbarstyleAction, getDirMode, SchemeDirAction,  getNavbarStyleMode, getSidebarActiveMode, SidebarActiveStyleAction, getDarkMode, ModeAction,  SidebarColorAction, getSidebarColorMode, getSidebarTypeMode} from '../../../../store/setting/setting'
-import {connect} from "react-redux"
+import {connect, useDispatch} from "react-redux"
+import { loginOutUser } from '../../../../store/actions/auth-actions'
+import { authLocations } from '../../../../router/fws-path-locations'
+import { getUserDetails } from '../../../../utils/permissions'
 
 const mapStateToProps = (state) => {
     return {
@@ -54,7 +57,8 @@ const mapDispatchToProps = dispatch => ({
 
 
 const Header = (props) => {
-
+    const dispatch = useDispatch();
+    const history = useHistory();
     useEffect(() => {
          // navbarstylemode
          const navbarstyleMode1 = sessionStorage.getItem('Navbarstyle-mode');
@@ -68,7 +72,7 @@ const Header = (props) => {
     const minisidebar =() =>{
         document.getElementsByTagName('ASIDE')[0].classList.toggle('sidebar-mini')
     }
-    
+    var userDetail = getUserDetails();
     return (
         <>
             <Navbar expand="lg" variant="light" className="nav iq-navbar">
@@ -275,15 +279,18 @@ const Header = (props) => {
                                     <img src={avatars6}alt="User-Profile" className="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded"/>
                                     <img src={avatars4} alt="User-Profile" className="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded"/>
                                     <div className="caption ms-3 d-none d-md-block ">
-                                        <h6 className="mb-0 caption-title">Austin Robertson</h6>
-                                        <p className="mb-0 caption-sub-title">Marketing Administrator</p>
+                                    <h6 className="mb-0 caption-title">{userDetail?.userName}</h6>
+                                        <p className="mb-0 caption-sub-title">{userDetail?.userType}</p>
                                     </div>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu  className="dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <Dropdown.Item href="https://templates.iqonic.design/hope-ui/react/build/dashboard/app/user-profile">Profile</Dropdown.Item>
-                                    <Dropdown.Item href="https://templates.iqonic.design/hope-ui/react/build/dashboard/app/user-privacy-setting">Privacy Setting</Dropdown.Item>
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item href="https://templates.iqonic.design/hope-ui/react/build/auth/sign-in">Logout</Dropdown.Item>
+                                    {/* <Dropdown.Item href="https://templates.iqonic.design/hope-ui/react/build/dashboard/app/user-profile">Profile</Dropdown.Item>
+                                    <Dropdown.Item href="https://templates.iqonic.design/hope-ui/react/build/dashboard/app/user-privacy-setting">Privacy Setting</Dropdown.Item> */}
+                                    {/* <Dropdown.Divider /> */}
+                                    <Dropdown.Item  onClick={() => {
+                                        dispatch(loginOutUser());
+                                        history.push(authLocations.login)
+                                    }}>Logout</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav>
