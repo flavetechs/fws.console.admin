@@ -15,21 +15,16 @@ export const authReducer = (state = _state, { type, payload }: any) => {
             }
 
         case actions.LOGIN_USER_SUCCESS: {
-            localStorage.removeItem('token');
-            localStorage.removeItem('permissions');
-            localStorage.removeItem('userDetail');
-            const decodedToken = jwt<any>(payload.authResult.token);
-            localStorage.setItem('token', payload.authResult.token);
-            localStorage.setItem('permissions', decodedToken.permissions);
-            localStorage.setItem('userDetail', JSON.stringify(payload.userDetail));
-            
-       
+            sessionStorage.removeItem('token');
+            const decodedToken = jwt<any>(payload.token);
+            sessionStorage.setItem('token', payload.token);
+            sessionStorage.setItem('user', JSON.stringify(decodedToken));
             
             return {
                 ...state,
                 loading: false,
-                token: payload.authResult.token,
-                refreshToken: payload.authResult.refreshToken,
+                token: payload.token,
+                refreshToken: payload.refreshToken,
                 message: '',
                 isSuccessful: true,
             }
@@ -46,9 +41,9 @@ export const authReducer = (state = _state, { type, payload }: any) => {
             }
 
         case actions.LOG_OUT_USER: {
-            localStorage.removeItem('token');
-            localStorage.removeItem('permissions');
-            localStorage.removeItem('userDetail');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('permissions');
+            sessionStorage.removeItem('userDetail');
             return {
                 message: '',
                 token: '',
@@ -85,8 +80,8 @@ export const authReducer = (state = _state, { type, payload }: any) => {
                 isSuccessful: false,
             }
         case actions.RESET_PASSWORD_SUCCESS:
-            localStorage.removeItem('token');
-            localStorage.setItem('token', payload.token);
+            sessionStorage.removeItem('token');
+            sessionStorage.setItem('token', payload.token);
             return {
                 ...state,
                 loading: false,
