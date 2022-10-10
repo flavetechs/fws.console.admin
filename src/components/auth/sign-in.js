@@ -22,23 +22,23 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
     const { message } = state.auth;
-    var token = localStorage.getItem('token');
-    var userDetail = localStorage.getItem('userDetail')
-
+    var token = sessionStorage.getItem('token');
+    var userDetail = sessionStorage.getItem('userDetail')
+console.log("token",token);
     useEffect(() => {
-        if (userDetail) {
-            if(JSON.parse(userDetail).isFirstTimeLogin === false){
+        if (token) {
+            // if(JSON.parse(userDetail).isFirstTimeLogin === false){
                 if (JSON.parse(userDetail).userType === 'Client') {
                     window.location.href = '/client-dashboard';
                 } else {
                     window.location.href = '/dashboard';
                 }
-            }else{
-                localStorage.removeItem('token');
-                localStorage.removeItem('userDetail')
-                localStorage.removeItem('permissions')
-                history.push(authLocations.firstTimeLogin+'?id='+ JSON.parse(userDetail).userAccountId)
-            }
+            // }else{
+            //     sessionStorage.removeItem('token');
+            //     sessionStorage.removeItem('userDetail')
+            //     sessionStorage.removeItem('permissions')
+            //     history.push(authLocations.firstTimeLogin+'?id='+ JSON.parse(userDetail).userAccountId)
+            // }
            
         }
     }, [token, history, userDetail])
