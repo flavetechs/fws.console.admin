@@ -23,25 +23,20 @@ const SignIn = () => {
     const state = useSelector((state) => state);
     const { message } = state.auth;
     var token = sessionStorage.getItem('token');
-    var userDetail = sessionStorage.getItem('userDetail')
-console.log("token",token);
+    var user = sessionStorage.getItem('user')
+    console.log("token", token);
     useEffect(() => {
+        
+        debugger
         if (token) {
-            // if(JSON.parse(userDetail).isFirstTimeLogin === false){
-                if (JSON.parse(userDetail).userType === 'Client') {
-                    window.location.href = '/client-dashboard';
-                } else {
-                    window.location.href = '/dashboard';
-                }
-            // }else{
-            //     sessionStorage.removeItem('token');
-            //     sessionStorage.removeItem('userDetail')
-            //     sessionStorage.removeItem('permissions')
-            //     history.push(authLocations.firstTimeLogin+'?id='+ JSON.parse(userDetail).userAccountId)
-            // }
-           
+            if (JSON.parse(user).userType === '0') {
+                window.location.href = '/dashboard';
+            } else {
+                window.location.href = '/client-dashboard';
+            }
+
         }
-    }, [token, history, userDetail])
+    }, [token, history, user])
 
     const validation = Yup.object().shape({
         userName: Yup.string()

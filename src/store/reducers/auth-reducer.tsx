@@ -16,14 +16,9 @@ export const authReducer = (state = _state, { type, payload }: any) => {
 
         case actions.LOGIN_USER_SUCCESS: {
             sessionStorage.removeItem('token');
-            sessionStorage.removeItem('permissions');
-            sessionStorage.removeItem('userDetail');
             const decodedToken = jwt<any>(payload.token);
             sessionStorage.setItem('token', payload.token);
-            sessionStorage.setItem('permissions', decodedToken.permissions);
-            sessionStorage.setItem('userDetail', JSON.stringify(payload.userDetail));
-            
-       
+            sessionStorage.setItem('user', JSON.stringify(decodedToken));
             
             return {
                 ...state,
