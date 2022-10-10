@@ -14,9 +14,9 @@ const DefaultRouter = () => {
                 {/* dashboard */}
                 <Route exact path="/" component={Index}></Route>
                         <Route path={dashboardLocations.dashboard} exact component={Index} />
-                    {/* user */}
-                    {/* <Route path="/dashboard/app/user-profile"     exact component={UserProfile} />
-                    <Route path="/dashboard/app/user-add"         exact component={UserAdd}/>
+                  {/* location */}
+                     {/* <Route path="/dashboard/app/user-profile"     exact component={UserProfile} /> */}
+                    {/* <Route path="/dashboard/app/user-add"         exact component={UserAdd}/>
                     <Route path="/dashboard/app/user-list"        exact component={UserList}/>
                     <Route path="/dashboard/app/user-privacy-setting" exact component={userProfileEdit}/> */}
                      {/* widget */}

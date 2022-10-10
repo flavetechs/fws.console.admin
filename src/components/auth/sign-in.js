@@ -27,7 +27,7 @@ const SignIn = () => {
     console.log("token", token);
     useEffect(() => {
         
-        debugger
+       
         if (token) {
             if (JSON.parse(user).userType === '0') {
                 window.location.href = '/dashboard';
