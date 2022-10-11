@@ -1,8 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { Link, useLocation} from 'react-router-dom'
 import {Accordion, useAccordionButton, AccordionContext} from 'react-bootstrap'
-import { dashboardLocations, locationLocations } from '../../../../router/fws-path-locations';
-import dashboard from '../../../../views/dashboard';
+import { clientDashboardLocations, productsLocations } from '../../../../router/fws-client-path-locations';
 
 
 function CustomToggle({ children, eventKey, onClick }) {
@@ -22,7 +21,7 @@ function CustomToggle({ children, eventKey, onClick }) {
     );
   }
 
-const VerticalNav = () => {
+const ClientVerticalNav = () => {
     const [activeMenu, setActiveMenu] = useState(false)
     //location
     let location = useLocation();
@@ -36,7 +35,7 @@ const VerticalNav = () => {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link className={`${location.pathname === dashboardLocations.dashboard ? 'active' : ''} nav-link `} aria-current="page" to={dashboardLocations.dashboard } onClick={() => {}}>
+                    <Link className={`${location.pathname === clientDashboardLocations.dashboard ? 'active' : ''} nav-link `} aria-current="page" to={clientDashboardLocations.dashboard} onClick={() => {}}>
                         <i className="icon">
                             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
@@ -46,86 +45,28 @@ const VerticalNav = () => {
                         <span className="item-name">Dashboard</span>
                     </Link>
                 </li>
-                <li className="nav-item static-item">
-                                <Link
-                                    className="nav-link static-item disabled"
-                                    to="#"
-                                    tabIndex="-1"
-                                >
-                                    <span className="default-icon">settings</span>
-                                    <span className="mini-icon">-</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <hr className="hr-horizontal" />
-                            </li>
+               
                             <Accordion.Item as="li" eventKey="horizontal-menu" bsPrefix="nav-item" >
                             <CustomToggle eventKey="sidebar-user" onClick={(activeKey) => {
                 }}>
+                    <Link className={`${location.pathname === productsLocations.products ? 'active' : ''} nav-link `} aria-current="page" to={productsLocations.products} >
                         <i className="icon">
-                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M8.53162 2.93677C10.7165 1.66727 13.402 1.68946 15.5664 2.99489C17.7095 4.32691 19.012 6.70418 18.9998 9.26144C18.95 11.8019 17.5533 14.19 15.8075 16.0361C14.7998 17.1064 13.6726 18.0528 12.4488 18.856C12.3228 18.9289 12.1848 18.9777 12.0415 19C11.9036 18.9941 11.7693 18.9534 11.6508 18.8814C9.78243 17.6746 8.14334 16.134 6.81233 14.334C5.69859 12.8314 5.06584 11.016 5 9.13442C4.99856 6.57225 6.34677 4.20627 8.53162 2.93677ZM9.79416 10.1948C10.1617 11.1008 11.0292 11.6918 11.9916 11.6918C12.6221 11.6964 13.2282 11.4438 13.6748 10.9905C14.1214 10.5371 14.3715 9.92064 14.3692 9.27838C14.3726 8.29804 13.7955 7.41231 12.9073 7.03477C12.0191 6.65723 10.995 6.86235 10.3133 7.55435C9.63159 8.24635 9.42664 9.28872 9.79416 10.1948Z" fill="currentColor"></path><ellipse opacity="0.4" cx="12" cy="21" rx="5" ry="1" fill="currentColor"></ellipse></svg>
+                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.4" d="M10.0833 15.958H3.50777C2.67555 15.958 2 16.6217 2 17.4393C2 18.2559 2.67555 18.9207 3.50777 18.9207H10.0833C10.9155 18.9207 11.5911 18.2559 11.5911 17.4393C11.5911 16.6217 10.9155 15.958 10.0833 15.958Z" fill="currentColor"></path>
+                                <path opacity="0.4" d="M22.0001 6.37867C22.0001 5.56214 21.3246 4.89844 20.4934 4.89844H13.9179C13.0857 4.89844 12.4102 5.56214 12.4102 6.37867C12.4102 7.1963 13.0857 7.86 13.9179 7.86H20.4934C21.3246 7.86 22.0001 7.1963 22.0001 6.37867Z" fill="currentColor"></path>
+                                <path d="M8.87774 6.37856C8.87774 8.24523 7.33886 9.75821 5.43887 9.75821C3.53999 9.75821 2 8.24523 2 6.37856C2 4.51298 3.53999 3 5.43887 3C7.33886 3 8.87774 4.51298 8.87774 6.37856Z" fill="currentColor"></path>
+                                <path d="M21.9998 17.3992C21.9998 19.2648 20.4609 20.7777 18.5609 20.7777C16.6621 20.7777 15.1221 19.2648 15.1221 17.3992C15.1221 15.5325 16.6621 14.0195 18.5609 14.0195C20.4609 14.0195 21.9998 15.5325 21.9998 17.3992Z" fill="currentColor"></path>
+                            </svg>
                         </i>
-                        <span className="item-name">Locations</span>
-                        <i className="right-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <span className="item-name">Products</span>
+                        </Link>
+                        {/* <i className="right-icon"> */}
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </i>
+                        </svg> */}
+                    {/* </i> */}
                     </CustomToggle>
-                    <Accordion.Collapse eventKey="sidebar-user">
-                        <ul className="sub-nav">
-                            <li className="nav-item">
-                            <Link className={`${location.pathname === locationLocations.country ? 'active' : ''} nav-link `} aria-current="page" to={locationLocations.country} onClick={() => {}}>
-                                    <i className="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i className="sidenav-mini-icon"> C </i>
-                                    <span className="item-name">Country</span>
-                                </Link>
-                            </li>
-
-                        </ul>
-                    </Accordion.Collapse>
-                    <Accordion.Collapse eventKey="sidebar-user">
-                        <ul className="sub-nav">
-                            <li className="nav-item">
-                            <Link className={`${location.pathname === locationLocations.state ? 'active' : ''} nav-link `} aria-current="page" to={locationLocations.state} onClick={() => {}}>
-                                    <i className="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i className="sidenav-mini-icon"> S </i>
-                                    <span className="item-name">State</span>
-                                </Link>
-                            </li>
-
-                        </ul>
-                    </Accordion.Collapse>
-                    <Accordion.Collapse eventKey="sidebar-user">
-                        <ul className="sub-nav">
-                            <li className="nav-item">
-                            <Link className={`${location.pathname === locationLocations.city ? 'active' : ''} nav-link `} aria-current="page" to={locationLocations.city} onClick={() => {}}>
-                                    <i className="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                                <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i className="sidenav-mini-icon"> C </i>
-                                    <span className="item-name">City</span>
-                                </Link>
-                            </li>
-
-                        </ul>
-                    </Accordion.Collapse>
+                   
                 </Accordion.Item>
                 {/* <Accordion.Item as="li" eventKey="horizontal-menu" bsPrefix="nav-item" >
                     <CustomToggle eventKey="horizontal-menu" onClick={(activeKey) => setActiveMenu(activeKey)}>
@@ -826,4 +767,4 @@ const VerticalNav = () => {
     )
 }
 
-export default VerticalNav
+export default ClientVerticalNav

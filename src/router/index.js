@@ -10,6 +10,7 @@ import { getUserDetails } from '../utils/permissions.js'
 import SignIn from '../components/auth/sign-in'
 import FirstTimeLoginPassswordChange from '../components/auth/change-password-on-login'
 import { authLocations } from './fws-path-locations'
+import clientDefault from '../layouts/dashboard/client-default'
 
 const IndexRouters = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,11 +28,11 @@ const IndexRouters = () => {
             <Switch>
                 {
                     <>
-                        <Route exact path="/"
-                            component={SignIn}></Route>
+                         <Route exact path="/"
+                            component={userDetail?.userType == '0' ?  Default : clientDefault}></Route>
 
-                        <Route path={"/dashboard"}
-                            component={Default}></Route>
+                        <Route path={userDetail?.userType == '0' ? "/dashboard" : '/client-dashboard'}
+                            component={userDetail?.userType == '0' ?  Default : clientDefault}></Route>
 
                         <Route path={authLocations.login} component={SignIn}></Route>
                         
