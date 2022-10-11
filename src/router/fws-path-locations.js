@@ -8,7 +8,13 @@ export const dashboardLocations = {
   };
 
   export const locationLocations = {
-    country: "/fws/country",
-    state:"/fws/state",
-    city:"/fws/city",
+    country: "/fws/list-country",
+    state:"/fws/list-state",
+    city:"/fws/list-city",
+    addCountry: "/fws/add-country",
+    addState: "/fws/add-state",
+    addCity: "/fws/add-city",
+    editCountry: "/fws/edit-country",
+    editState: "/fws/edit-state",
+    editCity: "/fws/edit-city",
   };
