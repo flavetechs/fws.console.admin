@@ -10,12 +10,15 @@ import { getUserDetails } from '../utils/permissions.js'
 import SignIn from '../components/auth/sign-in'
 import FirstTimeLoginPassswordChange from '../components/auth/change-password-on-login'
 import { authLocations, locationLocations } from './fws-path-locations'
-import CountryList from '../components/location-lookup/list-country'
-import StateList from '../components/location-lookup/list-state'
-import CityList from '../components/location-lookup/list-city'
-import AddCountry from '../components/location-lookup/add-country'
-import AddState from '../components/location-lookup/add-state'
-import AddCity from '../components/location-lookup/add-city'
+import ListCountry from '../components/fws-admin/location-lookup/list-country'
+import ListState from '../components/fws-admin/location-lookup/list-state'
+import ListCity from '../components/fws-admin/location-lookup/list-city'
+import AddCountry from '../components/fws-admin/location-lookup/add-country'
+import AddState from '../components/fws-admin/location-lookup/add-state'
+import AddCity from '../components/fws-admin/location-lookup/add-city'
+import EditCountry from '../components/fws-admin/location-lookup/edit-country'
+import EditState from '../components/fws-admin/location-lookup/edit-state'
+import EditCity from '../components/fws-admin/location-lookup/edit-city'
 
 const IndexRouters = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,13 +45,17 @@ const IndexRouters = () => {
                         <Route path={authLocations.login} component={SignIn}></Route>
                         
                      <Route path={authLocations.firstTimeLogin} component={FirstTimeLoginPassswordChange}></Route>
-
-                     <Route path={locationLocations.country} component={CountryList}></Route> 
-                     <Route path={locationLocations.state} component={StateList}></Route> 
-                     <Route path={locationLocations.city} component={CityList}></Route> 
-                     <Route path={locationLocations.addCountry} component={AddCountry}></Route> 
-                     <Route path={locationLocations.addState} component={AddState}></Route> 
-                     <Route path={locationLocations.addCity} component={AddCity}></Route> 
+ 
+                     <Route path={locationLocations.country} component={ListCountry}></Route>
+                     <Route path={locationLocations.state} component={ListState}></Route>
+                     <Route path={locationLocations.city} component={ListCity}></Route>
+                     <Route path={locationLocations.addCountry} component={AddCountry}></Route>
+                     <Route path={locationLocations.addState} component={AddState}></Route>
+                     <Route path={locationLocations.addCity} component={AddCity}></Route>
+                     <Route path={locationLocations.editCountry} component={EditCountry}></Route>
+                     <Route path={locationLocations.editState} component={EditState}></Route>
+                     <Route path={locationLocations.addCity} component={EditCity}></Route>
+                    
 
                         <Route path="/errors" component={Simple}></Route>
                     </>

@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory } from "react-router-dom";
-import { createCity, createState } from "../../store/actions/location-lookup-actions";
-import Card from "../Card";
+import { createCity, createState } from "../../../store/actions/location-lookup-actions";
+import Card from "../../Card";
 
-const EditCity = () => {
+const AddCity = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
   const history = useHistory();
@@ -24,12 +24,12 @@ const EditCity = () => {
 
   // ACCESSING STATE FROM REDUX STORE
   const state = useSelector((state) => state);
-  const { isSuccessful, message } = state.locationLookup;
+  const { isSuccessful, message, stateList } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
-//   if (isSuccessful) {
-//     history.push(sessionLocations.subjectSetupList);
-//   }
+  //   if (isSuccessful) {
+  //     history.push(sessionLocations.subjectSetupList);
+  //   }
 
   return (
     <>
@@ -63,6 +63,35 @@ const EditCity = () => {
                     <Form>
                       {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
+                        <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
+                          <label htmlFor="cityName" className="form-label">
+                            {" "}
+                            <b>State Name</b>
+                          </label>
+                          <Field
+                            as="select"
+                            name="stateId"
+                            className="form-select"
+                            id="stateId"
+                          // onChange={(e) => {
+                          //     setFieldValue("stateId", e.target.value);
+                          //     history.push(`${locationLocations.city}?stateId=${e.target.value}`
+                          //     );
+                          // }}
+                          >
+                            <option value="">Select State</option>
+                            {stateList?.map((item, idx) => (
+                              <option
+                                key={idx}
+                                value={item?.stateId}
+                              >
+                                {item.stateName}
+                              </option>
+                            ))}
+                          </Field>
+                        </div>
+                      </Col>
+                      <Col lg="12">
                         <div className="form-group">
                           {touched.cityName && errors.cityName && (
                             <div className="text-danger">{errors.cityName}</div>
@@ -79,7 +108,7 @@ const EditCity = () => {
                             aria-describedby="cityName"
                             required
                             placeholder="Enter City name"
-                            onChange={(e)=> setFieldValue("cityName",e.target.value)}
+                            onChange={(e) => setFieldValue("cityName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -91,10 +120,10 @@ const EditCity = () => {
                             id="customCheck1"
                             className="form-check-input"
                             name="isActive"
-                            // checked={isChecked}
-                            // onChange={(e) => {
-                            //   setIsChecked(!isChecked);
-                            // }}
+                          // checked={isChecked}
+                          // onChange={(e) => {
+                          //   setIsChecked(!isChecked);
+                          // }}
                           />
                           <label htmlFor="isActive" className="check-label">
                             isActive{" "}
@@ -131,4 +160,4 @@ const EditCity = () => {
   );
 };
 
-export default EditCity;
+export default AddCity;

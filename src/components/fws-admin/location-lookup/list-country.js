@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountryLookupList } from "../../store/actions/location-lookup-actions";
-import Card from "../Card";
-import { locationLocations } from "../../router/fws-path-locations";
+import { getCountryLookupList } from "../../../store/actions/location-lookup-actions";
+import Card from "../../Card";
+import { locationLocations } from "../../../router/fws-path-locations";
 
 
-const CountryList = () => {
+const ListCountry = () => {
     //VARIABLE DECLARATIONS
     const dispatch = useDispatch();
     const [showDeleteButton, setDeleteButton] = useState(true);
@@ -152,10 +152,10 @@ const CountryList = () => {
                                             <button
                                                 type="button"
                                                 className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
-                                            //   onClick={() => {
-                                            //     setDeleteButton(!showDeleteButton);
-                                            //     setShowCheckBoxes(!showCheckBoxes);
-                                            //   }}
+                                                onClick={() => {
+                                                    setDeleteButton(!showDeleteButton);
+                                                    setShowCheckBoxes(!showCheckBoxes);
+                                                }}
                                             >
                                                 <i className="btn-inner">
                                                     <svg
@@ -331,7 +331,7 @@ const CountryList = () => {
                                                                 placement="top"
                                                                 overlay={
                                                                     <Tooltip id="button-tooltip-2">
-                                                                        Country Details
+                                                                        Edit Country
                                                                     </Tooltip>
                                                                 }
                                                             >
@@ -341,8 +341,7 @@ const CountryList = () => {
                                                                     data-placement="top"
                                                                     title=""
                                                                     data-original-title="Details"
-                                                                    to="#"
-                                                                //   to={`${staffLocations.staffDetails}?teacherAccountId=${item.teacherAccountId}`}
+                                                                    to={`${locationLocations.editCountry}?countryId=${item.countryId}`}
                                                                 >
                                                                     <span className="btn-inner">
                                                                         <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -423,9 +422,6 @@ const CountryList = () => {
                                     </table>
                                 </div>
                             </Card.Body>
-                            {/* <Card.Footer>
-                <PaginationFilter filterProps={filterProps} action={ getAllStaffAccount} dispatch={dispatch}/>
-              </Card.Footer> */}
                         </Card>
                     </Col>
                 </Row>
@@ -434,4 +430,4 @@ const CountryList = () => {
     );
 };
 
-export default CountryList;
+export default ListCountry;

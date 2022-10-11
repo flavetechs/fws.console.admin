@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory } from "react-router-dom";
-import { createCity, createState } from "../../store/actions/location-lookup-actions";
-import Card from "../Card";
+import { createCountry, createState } from "../../../store/actions/location-lookup-actions";
+import Card from "../../Card";
 
-const AddCity = () => {
+const EditState = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
   const history = useHistory();
@@ -17,8 +17,8 @@ const AddCity = () => {
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
     countryName: Yup.string()
-      .min(2, "City Name Too Short!")
-      .required("City is required"),
+      .min(2, "State Name Too Short!")
+      .required("State is required"),
   });
   //VALIDATIONS SCHEMA
 
@@ -40,14 +40,14 @@ const AddCity = () => {
               <Card.Body>
                 <Formik
                   initialValues={{
-                    cityName: "",
+                    stateName: "",
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.cityName = values.cityName.toUpperCase();
+                    values.stateName = values.stateName.toUpperCase();
                     values.isActive = isChecked;
-                    createCity(values)(dispatch);
+                    createState(values)(dispatch);
                   }}
                 >
                   {({
@@ -64,22 +64,22 @@ const AddCity = () => {
                       {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
                         <div className="form-group">
-                          {touched.cityName && errors.cityName && (
-                            <div className="text-danger">{errors.cityName}</div>
+                          {touched.stateName && errors.stateName && (
+                            <div className="text-danger">{errors.stateName}</div>
                           )}
-                          <label htmlFor="cityName" className="form-label">
+                          <label htmlFor="stateName" className="form-label">
                             {" "}
-                            <b>City Name</b>
+                            <b>State Name</b>
                           </label>
                           <Field
                             type="text"
                             className="form-control"
-                            name="cityName"
-                            id="cityName"
-                            aria-describedby="cityName"
+                            name="stateName"
+                            id="stateName"
+                            aria-describedby="stateName"
                             required
-                            placeholder="Enter City name"
-                            onChange={(e)=> setFieldValue("cityName",e.target.value)}
+                            placeholder="Enter State name"
+                            onChange={(e)=> setFieldValue("stateName",e.target.value)}
                           />
                         </div>
                       </Col>
@@ -131,4 +131,4 @@ const AddCity = () => {
   );
 };
 
-export default AddCity;
+export default EditState;

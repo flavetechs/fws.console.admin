@@ -1,13 +1,15 @@
+import React from 'react';
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory } from "react-router-dom";
-import { createCountry, createState } from "../../store/actions/location-lookup-actions";
-import Card from "../Card";
+import { createCountry } from "../../../store/actions/location-lookup-actions";
+import Card from "../../Card";
+import { locationLocations } from "../../../router/fws-path-locations";
 
-const EditState = () => {
+const AddCountry = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
   const history = useHistory();
@@ -17,8 +19,8 @@ const EditState = () => {
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
     countryName: Yup.string()
-      .min(2, "State Name Too Short!")
-      .required("State is required"),
+      .min(2, "Country Name Too Short!")
+      .required("Country is required"),
   });
   //VALIDATIONS SCHEMA
 
@@ -27,9 +29,15 @@ const EditState = () => {
   const { isSuccessful, message } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
-//   if (isSuccessful) {
-//     history.push(sessionLocations.subjectSetupList);
-//   }
+
+  React.useEffect(() => {
+    if (!isSuccessful) {
+      history.push(locationLocations.country);
+    }
+  }, [!isSuccessful])
+  
+
+  console.log('isSuccessful', isSuccessful);
 
   return (
     <>
@@ -40,14 +48,14 @@ const EditState = () => {
               <Card.Body>
                 <Formik
                   initialValues={{
-                    stateName: "",
+                    countryName: "",
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.stateName = values.stateName.toUpperCase();
+                    values.countryName = values.countryName.toUpperCase();
                     values.isActive = isChecked;
-                    createState(values)(dispatch);
+                    createCountry(values)(dispatch);
                   }}
                 >
                   {({
@@ -64,26 +72,25 @@ const EditState = () => {
                       {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
                         <div className="form-group">
-                          {touched.stateName && errors.stateName && (
-                            <div className="text-danger">{errors.stateName}</div>
+                          {touched.countryName && errors.countryName && (
+                            <div className="text-danger">{errors.countryName}</div>
                           )}
-                          <label htmlFor="stateName" className="form-label">
+                          <label htmlFor="countryName" className="form-label">
                             {" "}
-                            <b>State Name</b>
+                            <b>Country Name</b>
                           </label>
                           <Field
                             type="text"
                             className="form-control"
-                            name="stateName"
-                            id="stateName"
-                            aria-describedby="stateName"
+                            name="countryName"
+                            id="countryName"
+                            aria-describedby="countryName"
                             required
-                            placeholder="Enter State name"
-                            onChange={(e)=> setFieldValue("stateName",e.target.value)}
+                            placeholder="Enter Country name e.g Ghana... etc"
+                            onChange={(e) => setFieldValue("countryName", e.target.value)}
                           />
                         </div>
                       </Col>
-
                       <Col lg="12" className="d-flex justify-content-between">
                         <div className="form-check mb-3 form-Check">
                           <input
@@ -91,10 +98,10 @@ const EditState = () => {
                             id="customCheck1"
                             className="form-check-input"
                             name="isActive"
-                            // checked={isChecked}
-                            // onChange={(e) => {
-                            //   setIsChecked(!isChecked);
-                            // }}
+                            checked={isChecked}
+                            onChange={(e) => {
+                              setIsChecked(!isChecked);
+                            }}
                           />
                           <label htmlFor="isActive" className="check-label">
                             isActive{" "}
@@ -109,7 +116,7 @@ const EditState = () => {
                             history.goBack();
                           }}
                         >
-                          Cancel
+                          Back
                         </Button>{" "}
                         <Button
                           type="button"
@@ -131,4 +138,4 @@ const EditState = () => {
   );
 };
 
-export default EditState;
+export default AddCountry;

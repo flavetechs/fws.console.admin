@@ -16,15 +16,15 @@ export const authReducer = (state = _state, { type, payload }: any) => {
 
         case actions.LOGIN_USER_SUCCESS: {
             sessionStorage.removeItem('token');
-            const decodedToken = jwt<any>(payload.token);
-            sessionStorage.setItem('token', payload.token);
+            const decodedToken = jwt<any>(payload.authResult.token);
+            sessionStorage.setItem('token', payload.authResult.token);
             sessionStorage.setItem('user', JSON.stringify(decodedToken));
             
             return {
                 ...state,
                 loading: false,
-                token: payload.token,
-                refreshToken: payload.refreshToken,
+                token: payload.authResult.token,
+                refreshToken: payload.authResult.refreshToken,
                 message: '',
                 isSuccessful: true,
             }
@@ -81,12 +81,12 @@ export const authReducer = (state = _state, { type, payload }: any) => {
             }
         case actions.RESET_PASSWORD_SUCCESS:
             sessionStorage.removeItem('token');
-            sessionStorage.setItem('token', payload.token);
+            sessionStorage.setItem('token', payload.authResult.token);
             return {
                 ...state,
                 loading: false,
-                token: payload.token,
-                refreshToken: payload.refreshToken,
+                token: payload.authResult.token,
+                refreshToken: payload.authResult.refreshToken,
                 message: 'Password change successful',
                 isSuccessful: true,
             }

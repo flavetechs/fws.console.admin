@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountryLookupList, getStateLookupList } from "../../store/actions/location-lookup-actions";
-import Card from "../Card";
-import { locationLocations } from "../../router/fws-path-locations";
+import { getCityLookupList, getCountryLookupList } from "../../../store/actions/location-lookup-actions";
+import Card from "../../Card";
+import { locationLocations } from "../../../router/fws-path-locations";
 import { Field, Formik } from "formik";
 
 
-const StateList = () => {
+const ListCity = () => {
     //VARIABLE DECLARATIONS
     const dispatch = useDispatch();
     let locations = useLocation();
@@ -20,12 +20,12 @@ const StateList = () => {
 
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state) => state);
-    const { stateList, countryList } = state.locationLookup;
+    const { cityList, stateList } = state.locationLookup;
     //   const { deleteDialogResponse } = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
     const queryParams = new URLSearchParams(locations.search);
-    const countryIdQueryParam = queryParams.get("countryId") || "";
+    const stateIdQueryParam = queryParams.get("countryId") || "";
 
     //   const filteredStaffList = countryList.filter((staffs) => {
     //     if (searchQuery === "") {
@@ -46,22 +46,14 @@ const StateList = () => {
 
     //   });
 
-    // React.useEffect(() => {
-    //     getStateLookupList("443be913-6a4c-4602-5981-08da9731379b")(dispatch)
-    // }, [dispatch]);
-
     React.useEffect(() => {
-        getCountryLookupList()(dispatch)
-    }, [dispatch]);
-
-    React.useEffect(() => {
-        const fetchStateLookupList = () => {
-            if (countryIdQueryParam) {
-                getStateLookupList(countryIdQueryParam)(dispatch)
+        const fetchCityLookupList = () => {
+            if (stateIdQueryParam) {
+                getCityLookupList(stateIdQueryParam)(dispatch)
             }
         };
-        fetchStateLookupList();
-    }, [countryIdQueryParam]);
+        fetchCityLookupList();
+    }, [stateIdQueryParam]);
 
     //DELETE HANDLER
     //   React.useEffect(() => {
@@ -111,6 +103,8 @@ const StateList = () => {
     //     returnList(stafflists)(dispatch);
     //   };
 
+    console.log('cityList', cityList);
+
     return (
         <>
             <div>
@@ -118,7 +112,7 @@ const StateList = () => {
                     <Col sm="12">
                         <Formik
                             initialValues={{
-                                countryId: countryIdQueryParam,
+                                stateId: stateIdQueryParam,
                             }}
                             enableReinitialize={true}
                             onSubmit={() => {
@@ -129,7 +123,7 @@ const StateList = () => {
                                     <Card.Header className="d-flex justify-content-between">
                                         <div className="header-title">
                                             <h4 className="card-title mb-3">
-                                                <b>State List</b>
+                                                <b>City List</b>
                                             </h4>
                                         </div>
                                     </Card.Header>
@@ -137,22 +131,22 @@ const StateList = () => {
                                         <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
                                             <Field
                                                 as="select"
-                                                name="countryId"
+                                                name="stateId"
                                                 className="form-select"
-                                                id="countryId"
-                                                onChange={(e) => {
-                                                    setFieldValue("countryId", e.target.value);
-                                                    history.push(`${locationLocations.state}?countryId=${e.target.value}`
-                                                    );
-                                                }}
+                                                id="stateId"
+                                            // onChange={(e) => {
+                                            //     setFieldValue("stateId", e.target.value);
+                                            //     history.push(`${locationLocations.city}?stateId=${e.target.value}`
+                                            //     );
+                                            // }}
                                             >
-                                                <option value="">Select Country</option>
-                                                {countryList?.map((country, idx) => (
+                                                <option value="">Select State</option>
+                                                {stateList?.map((item, idx) => (
                                                     <option
                                                         key={idx}
-                                                        value={country?.countryId}
+                                                        value={item?.stateId}
                                                     >
-                                                        {country.countryName}
+                                                        {item.stateName}
                                                     </option>
                                                 ))}
                                             </Field>
@@ -284,7 +278,7 @@ const StateList = () => {
                                                     </button>
                                                 )}
                                                 <Link
-                                                    to={locationLocations.addState}
+                                                    to={locationLocations.addCity}
                                                     className="d-flex justify-content-end"
                                                 >
                                                     <button
@@ -307,7 +301,7 @@ const StateList = () => {
                                                                 ></path>
                                                             </svg>
                                                         </i>
-                                                        <span>Add State</span>
+                                                        <span>Add City</span>
                                                     </button>
                                                 </Link>
                                             </div>
@@ -337,7 +331,7 @@ const StateList = () => {
                                                             )}
                                                         </th>
                                                         <th>
-                                                            <b>State</b>
+                                                            <b>City</b>
                                                         </th>
                                                         <th>
                                                             <b>Status</b>
@@ -348,7 +342,7 @@ const StateList = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {stateList.map((item, idx) => (
+                                                    {cityList.map((item, idx) => (
                                                         <tr key={idx}>
                                                             <td className="text-dark">
                                                                 {showCheckBoxes ? (
@@ -369,7 +363,7 @@ const StateList = () => {
                                                                 )}
                                                             </td>
                                                             <td className="text-uppercase">
-                                                                <b>{item.stateName}</b>
+                                                                <b>{item.cityName}</b>
                                                             </td>
                                                             <td className="text-uppercase">
                                                                 {item.isActive ? <Badge bg="success">Active</Badge>
@@ -382,7 +376,7 @@ const StateList = () => {
                                                                         placement="top"
                                                                         overlay={
                                                                             <Tooltip id="button-tooltip-2">
-                                                                                State Details
+                                                                                City Details
                                                                             </Tooltip>
                                                                         }
                                                                     >
@@ -414,7 +408,7 @@ const StateList = () => {
                                                                         placement="top"
                                                                         overlay={
                                                                             <Tooltip id="button-tooltip-2">
-                                                                                Delete State
+                                                                                Delete City
                                                                             </Tooltip>
                                                                         }
                                                                     >
@@ -474,9 +468,6 @@ const StateList = () => {
                                             </table>
                                         </div>
                                     </Card.Body>
-                                    {/* <Card.Footer>
-                <PaginationFilter filterProps={filterProps} action={ getAllStaffAccount} dispatch={dispatch}/>
-              </Card.Footer> */}
                                 </Card>
                             )}
                         </Formik>
@@ -487,4 +478,4 @@ const StateList = () => {
     );
 };
 
-export default StateList;
+export default ListCity;

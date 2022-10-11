@@ -51,8 +51,8 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
       return {
         ...state,
         loading: false,
+        message: payload,
         isSuccessful: false,
-        message: payload
       };
 
     case actions.FETCH_STATE_LOOKUP_LOADING:
@@ -109,16 +109,16 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
     case actions.CREATE_COUNTRY_LOOKUP_SUCCESS:
       return {
         ...state,
-        isSuccessful: true,
         loading: false,
-        message: payload
+        message: payload,
+        isSuccessful: true,
       };
     case actions.CREATE_COUNTRY_LOOKUP_FAILED:
       return {
         ...state,
-        isSuccessful: false,
         loading: false,
-        message: ''
+        message: '',
+        isSuccessful: false,
       };
 
 

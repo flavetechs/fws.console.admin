@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory } from "react-router-dom";
-import { createCountry } from "../../store/actions/location-lookup-actions";
-import Card from "../Card";
+import { createCity, createState } from "../../../store/actions/location-lookup-actions";
+import Card from "../../Card";
 
-const AddCountry = () => {
+const EditCity = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
   const history = useHistory();
@@ -17,8 +17,8 @@ const AddCountry = () => {
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
     countryName: Yup.string()
-      .min(2, "Country Name Too Short!")
-      .required("Country is required"),
+      .min(2, "City Name Too Short!")
+      .required("City is required"),
   });
   //VALIDATIONS SCHEMA
 
@@ -40,14 +40,14 @@ const AddCountry = () => {
               <Card.Body>
                 <Formik
                   initialValues={{
-                    countryName: "",
+                    cityName: "",
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.countryName = values.countryName.toUpperCase();
+                    values.cityName = values.cityName.toUpperCase();
                     values.isActive = isChecked;
-                    createCountry(values)(dispatch);
+                    createCity(values)(dispatch);
                   }}
                 >
                   {({
@@ -64,22 +64,22 @@ const AddCountry = () => {
                       {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
                         <div className="form-group">
-                          {touched.countryName && errors.countryName && (
-                            <div className="text-danger">{errors.countryName}</div>
+                          {touched.cityName && errors.cityName && (
+                            <div className="text-danger">{errors.cityName}</div>
                           )}
-                          <label htmlFor="countryName" className="form-label">
+                          <label htmlFor="cityName" className="form-label">
                             {" "}
-                            <b>Country Name</b>
+                            <b>City Name</b>
                           </label>
                           <Field
                             type="text"
                             className="form-control"
-                            name="countryName"
-                            id="countryName"
-                            aria-describedby="countryName"
+                            name="cityName"
+                            id="cityName"
+                            aria-describedby="cityName"
                             required
-                            placeholder="Enter Country name e.g Ghana, Mozambique... etc"
-                            onChange={(e)=> setFieldValue("countryName",e.target.value)}
+                            placeholder="Enter City name"
+                            onChange={(e)=> setFieldValue("cityName",e.target.value)}
                           />
                         </div>
                       </Col>
@@ -131,4 +131,4 @@ const AddCountry = () => {
   );
 };
 
-export default AddCountry;
+export default EditCity;
