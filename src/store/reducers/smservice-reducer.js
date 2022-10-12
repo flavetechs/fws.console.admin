@@ -66,6 +66,53 @@ export const smserviceReducer = (state = _state, { type, payload }) => {
                       message: payload,
                       isSuccessful: false,
                     };
+
+                    case actions.VALIDATE_BASE_URL_SUFFIX:
+                      return {
+                        ...state,
+                        loading: false,
+                        baseUrlSuffixValidation: payload,
+                        isSuccessful: true,
+                      };
+
+                      case actions.FETCH_COUNTRY_LOADING:
+                        return {
+                          ...state,
+                          loading: true,
+                        };
+                  
+                      case actions.FETCH_COUNTRY_SUCCESS:
+                        return {
+                          ...state,
+                          loading: false,
+                          countries: payload,
+                        };
+                      case actions.FETCH_COUNTRY_FAILED:
+                        return {
+                          ...state,
+                          loading: false,
+                          countries: [],
+                        };
+                  
+                      case actions.FETCH_STATE_LOADING:
+                        return {
+                          ...state,
+                          loading: true,
+                        };
+                      case actions.FETCH_STATE_SUCCESS:
+                        return {
+                          ...state,
+                          loading: false,
+                          states: payload,
+                        };
+                  
+                      case actions.FETCH_STATE_FAILED:
+                        return {
+                          ...state,
+                          loading: false,
+                          states: [],
+                        };
+                  
               
                 default:
                     return state

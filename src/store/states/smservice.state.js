@@ -3,4 +3,7 @@ export const _state = {
     smservice:[],
     message: "",
     isSuccessful: false,
+    countries:[],
+    states:[],
+    baseUrlSuffixValidation:"",
 }

@@ -51,6 +51,43 @@ export const authReducer = (state = _state, { type, payload }: any) => {
             }
         }
 
+        case actions.REGISTER_USER_LOADING:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                token: '',
+                refreshToken: '',
+                isSuccessful: false,
+            }
+
+        case actions.REGISTER_USER_SUCCESS: {
+            sessionStorage.removeItem('token');
+            const decodedToken = jwt<any>(payload.authResult.token);
+            sessionStorage.setItem('token', payload.authResult.token);
+            sessionStorage.setItem('user', JSON.stringify(decodedToken));
+            
+            return {
+                ...state,
+                loading: false,
+                token: payload.authResult.token,
+                refreshToken: payload.authResult.refreshToken,
+                message: '',
+                isSuccessful: true,
+            }
+        }
+
+        case actions.REGISTER_USER_FAILED:
+            return {
+                ...state,
+                loading: false,
+                token: null,
+                refreshToken: null,
+                message: payload,
+                isSuccessful: false,
+            }
+
+
         case actions.GENERATE_PASSWORD_RESET_LINK_LOADING:
             return {
                 ...state,

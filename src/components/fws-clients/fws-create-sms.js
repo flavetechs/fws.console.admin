@@ -2,21 +2,22 @@ import { Field, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory,useLocation } from "react-router-dom";
-import { createSms } from "../../store/actions/smservice-actions";
+import { useHistory, useLocation } from "react-router-dom";
+import { createSms, getCountries, getStates } from "../../store/actions/smservice-actions";
 import avatars1 from "../../assets/images/avatars/01.png";
 import avatars2 from "../../assets/images/avatars/avtar_2.png";
 import avatars3 from "../../assets/images/avatars/avtar_2.png";
 import avatars4 from "../../assets/images/avatars/avtar_3.png";
 import avatars5 from "../../assets/images/avatars/avtar_4.png";
 import avatars6 from "../../assets/images/avatars/avtar_5.png";
+import * as Yup from "yup";
 
 const CreateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
   const state = useSelector((state) => state);
-  const { products } = state.product;
+  const { countries, states } = state.smservice;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
   const [images, setImages] = useState(null);
@@ -25,6 +26,24 @@ const CreateSms = () => {
       setImages(URL.createObjectURL(event.target.files[0]));
     }
   };
+  //VALIDATIONS SCHEMA
+  const validation = Yup.object().shape({
+    schoolName: Yup.string().required("School Name is required"),
+    address: Yup.string().required("Address is required"),
+    country: Yup.string().required("Country is required"),
+    state: Yup.string().required("State is required"),
+    baseUrl: Yup.string()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      )
+      .required("Base Url is required"),
+    baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
+  });
+  //VALIDATIONS SCHEMA
+  useEffect(() => {
+    getCountries()(dispatch);
+  }, [dispatch]);
   return (
     <>
       <div>
@@ -35,15 +54,15 @@ const CreateSms = () => {
             ipAddress: "",
             country: "",
             state: "",
-            city: "",
+            // city: "",
             baseUrl: "",
             baseUrlAppendix: "",
             schoolLogo: "",
             productId: productId,
           }}
-          //validationSchema={validation}
+          validationSchema={validation}
           onSubmit={(values) => {
-            createSms(values)(dispatch);
+           // createSms(values)(dispatch);
           }}
         >
           {({
@@ -69,6 +88,18 @@ const CreateSms = () => {
                   <Card.Body>
                     <div className="new-user-info">
                       <div>
+                      <Row>
+                          <div className="col-md-6">
+                            {touched.schoolName && errors.schoolName && (
+                              <div className="text-danger">{errors.schoolName}</div>
+                            )}
+                          </div>
+                          <div className="col-md-6">
+                            {touched.address && errors.address && (
+                              <div className="text-danger">{errors.address}</div>
+                            )}
+                          </div>
+                        </Row>
                         <div className="row">
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="schoolName" className="form-label">
@@ -98,6 +129,16 @@ const CreateSms = () => {
                               placeholder="Address"
                             />
                           </Form.Group>
+                          <Row>
+                          <div className="col-md-6">
+                           
+                          </div>
+                          <div className="col-md-6">
+                            {touched.country && errors.country && (
+                              <div className="text-danger">{errors.country}</div>
+                            )}
+                          </div>
+                        </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="ipAddress" className="form-label">
                               <b>IP Address:</b>
@@ -117,27 +158,58 @@ const CreateSms = () => {
                               <b>Country:</b>
                             </label>
                             <Field
-                              type="text"
-                              className="form-control"
-                              name="country"
-                              id="country"
-                              aria-describedby="name"
-                              required
-                              placeholder="country"
-                            />
+                            as="select"
+                            name="country"
+                            className="form-select"
+                            id="country"
+                            onChange={(e)=>{setFieldValue("country",e.target.value); getStates(e.target.value)(dispatch);}}
+                          >
+                            <option value="Select Country">
+                              Select Country
+                            </option>
+                            {countries?.map((item, idx) => (
+                              <option
+                                key={idx}
+                                value={item.value}
+                              >
+                                {item.name}
+                              </option>
+                            ))}
+                          </Field>
                           </Form.Group>
+                          <Row>
+                          <div className="col-md-6">
+                            {touched.state && errors.state && (
+                              <div className="text-danger">{errors.state}</div>
+                            )}
+                          </div>
+                          <div className="col-md-6">
+                            {touched.baseUrl && errors.baseUrl && (
+                              <div className="text-danger">{errors.baseUrl}</div>
+                            )}
+                          </div>
+                        </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
                               <b>State:</b>
                             </label>
                             <Field
-                              type="text"
-                              className="form-control"
-                              name="state"
-                              id="state"
-                              aria-describedby="name"
-                              placeholder="State"
-                            />
+                            as="select"
+                            name="state"
+                            className="form-select"
+                            id="state"
+                            onChange={(e)=>{setFieldValue("state",e.target.value);}}
+                          >
+                            <option value="Select State">Select State</option>
+                            {states?.map((item, idx) => (
+                              <option
+                                key={idx}
+                                value={item.value}
+                              >
+                                {item.name}
+                              </option>
+                            ))}
+                          </Field>
                           </Form.Group>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="baseUrl" className="form-label">
@@ -153,112 +225,124 @@ const CreateSms = () => {
                               placeholder="base URL"
                             />
                           </Form.Group>
+                          <Row>
+                          <div className="col-md-6">
+                            {touched.baseUrlAppendix && errors.baseUrlAppendix && (
+                              <div className="text-danger">{errors.baseUrlAppendix}</div>
+                            )}
+                          </div>
+                        </Row>
                           <Form.Group className="col-md-6 form-group">
-                            <label htmlFor="baseAppendix" className="form-label">
-                              <b>Base Appendix:</b>
+                            <label
+                              htmlFor="baseUrlAppendix"
+                              className="form-label"
+                            >
+                              <b>Base Suffix:</b>
                             </label>
                             <Field
                               type="text"
                               className="form-control text-lowercase"
-                              name="baseAppendix"
-                              id="baseAppendix"
+                              name="baseUrlAppendix"
+                              id="baseUrlAppendix"
                               aria-describedby="name"
                               required
-                              placeholder="base Appendix"
+                              placeholder="base suffix"
                             />
                           </Form.Group>
                           <div className="row form-group">
-                          <div className="col-md-6">
-                            <div className="header-title mt-3">
-                              <p className="card-title fw-bold">School Logo</p>
-                            </div>
-                            <div className="profile-img-edit position-relative">
-                              <div>
-                                <img
-                                  src={avatars1}
-                                  alt="User-Profile"
-                                  className="theme-color-default-img img-fluid avatar avatar-100 avatar-rounded-100"
-                                />
-                                <img
-                                  src={avatars2}
-                                  alt="User-Profile"
-                                  className="theme-color-purple-img img-fluid avatar avatar-100 avatar-rounded-100"
-                                />
-                                <img
-                                  src={avatars3}
-                                  alt="User-Profile"
-                                  className="theme-color-blue-img img-fluid avatar avatar-100 avatar-rounded-100"
-                                />
-                                <img
-                                  src={avatars5}
-                                  alt="User-Profile"
-                                  className="theme-color-green-img img-fluid avatar avatar-100 avatar-rounded-100"
-                                />
-                                <img
-                                  src={avatars6}
-                                  alt="User-Profile"
-                                  className="theme-color-yellow-img img-fluid avatar avatar-100 avatar-rounded-100"
-                                />
-                                <img
-                                  src={avatars4}
-                                  alt="User-Profile"
-                                  className="theme-color-pink-img img-fluid avatar avatar-100 avatar-rounded-100"
-                                />{" "}
+                            <div className="col-md-6">
+                              <div className="header-title mt-3">
+                                <p className="card-title fw-bold">
+                                  School Logo
+                                </p>
                               </div>
-                              <div className="upload-icone bg-primary">
-                                <label htmlFor="photo">
-                                  <svg
-                                    className="upload-button"
-                                    width="14"
-                                    height="14"
-                                    viewBox="0 0 24 24"
-                                    style={{ cursor: "pointer" }}
-                                  >
-                                    <path
-                                      fill="#ffffff"
-                                      d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"
-                                    ></path>
-                                  </svg>
-                                  <input
-                                    type="file"
-                                    id="photo"
-                                    style={{ display: "none" }}
-                                    name="photo"
-                                    accept="image/jpeg,image/jpg,image/png"
-                                    className="file-upload form-control"
-                                    data-original-title="upload photos"
-                                    onChange={(event) => {
-                                      setFieldValue(
-                                        "photo",
-                                        event.currentTarget.files[0]
-                                      );
-                                      ImageDisplay(event);
-                                    }}
+                              <div className="profile-img-edit position-relative">
+                                <div>
+                                  <img
+                                    src={avatars1}
+                                    alt="User-Profile"
+                                    className="theme-color-default-img img-fluid avatar avatar-100 avatar-rounded-100"
                                   />
-                                </label>
+                                  <img
+                                    src={avatars2}
+                                    alt="User-Profile"
+                                    className="theme-color-purple-img img-fluid avatar avatar-100 avatar-rounded-100"
+                                  />
+                                  <img
+                                    src={avatars3}
+                                    alt="User-Profile"
+                                    className="theme-color-blue-img img-fluid avatar avatar-100 avatar-rounded-100"
+                                  />
+                                  <img
+                                    src={avatars5}
+                                    alt="User-Profile"
+                                    className="theme-color-green-img img-fluid avatar avatar-100 avatar-rounded-100"
+                                  />
+                                  <img
+                                    src={avatars6}
+                                    alt="User-Profile"
+                                    className="theme-color-yellow-img img-fluid avatar avatar-100 avatar-rounded-100"
+                                  />
+                                  <img
+                                    src={avatars4}
+                                    alt="User-Profile"
+                                    className="theme-color-pink-img img-fluid avatar avatar-100 avatar-rounded-100"
+                                  />{" "}
+                                </div>
+                                <div className="upload-icone bg-primary">
+                                  <label htmlFor="photo">
+                                    <svg
+                                      className="upload-button"
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 24 24"
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <path
+                                        fill="#ffffff"
+                                        d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"
+                                      ></path>
+                                    </svg>
+                                    <input
+                                      type="file"
+                                      id="photo"
+                                      style={{ display: "none" }}
+                                      name="photo"
+                                      accept="image/jpeg,image/jpg,image/png"
+                                      className="file-upload form-control"
+                                      data-original-title="upload photos"
+                                      onChange={(event) => {
+                                        setFieldValue(
+                                          "photo",
+                                          event.currentTarget.files[0]
+                                        );
+                                        ImageDisplay(event);
+                                      }}
+                                    />
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="img-extension mt-3">
+                                <div className="d-inline-block align-items-center">
+                                  <span>Only</span> <span>.jpg</span>{" "}
+                                  <span>.png</span> <span>.jpeg</span>
+                                  <span> allowed</span>
+                                </div>
                               </div>
                             </div>
-                            <div className="img-extension mt-3">
-                              <div className="d-inline-block align-items-center">
-                                <span>Only</span> <span>.jpg</span>{" "}
-                                <span>.png</span> <span>.jpeg</span>
-                                <span> allowed</span>
-                              </div>
+                            <div className="col-md-6">
+                              {images ? (
+                                <img
+                                  className=" img-fluid mt-4"
+                                  id="displayImg"
+                                  src={images}
+                                  alt="School Logo"
+                                  height="180px"
+                                  width="180px"
+                                />
+                              ) : null}
                             </div>
                           </div>
-                          <div className="col-md-6">
-                            {images ? (
-                              <img
-                                className=" img-fluid mt-4"
-                                id="displayImg"
-                                src={images}
-                                alt="School Logo"
-                                height="180px"
-                                width="180px"
-                              />
-                            ) : null}
-                          </div>
-                        </div>
                         </div>
                         <div className="d-flex justify-content-end">
                           <Button

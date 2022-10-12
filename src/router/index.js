@@ -11,6 +11,7 @@ import SignIn from '../components/auth/sign-in'
 import FirstTimeLoginPassswordChange from '../components/auth/change-password-on-login'
 import { authLocations } from './fws-path-locations'
 import clientDefault from '../layouts/dashboard/client-default'
+import Register from '../components/auth/register-user'
 
 const IndexRouters = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +37,8 @@ const IndexRouters = () => {
 
                         <Route path={authLocations.login} component={SignIn}></Route>
                         
+                        <Route path={authLocations.register} component={Register}></Route>
+
                      <Route path={authLocations.firstTimeLogin} component={FirstTimeLoginPassswordChange}></Route> 
                         <Route path="/errors" component={Simple}></Route>
                     </>
