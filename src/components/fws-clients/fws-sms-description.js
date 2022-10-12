@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ const SmsDescription = () => {
   const { products } = state.product;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
+  const [navigation, setNavigation] = useState("overview");
   React.useEffect(() => {
     getAllProducts()(dispatch);
   }, []);
@@ -20,7 +21,7 @@ const SmsDescription = () => {
       <Row>
         <Card>
           <Card.Body>
-            <div className="d-flex justify-content-between align-items-center ">
+            <div className="d-md-flex  justify-content-between align-items-center ">
               <div className="d-flex ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -41,6 +42,7 @@ const SmsDescription = () => {
                       }
                     </span>
                   </h6>
+                  <div>by Flavetech</div>
                   <div className="">
                     <svg
                       width="20"
@@ -87,13 +89,29 @@ const SmsDescription = () => {
                   </div>
                 </div>
               </div>
-              <div>
-                <button className="btn btn-warning" onClick={()=>history.push(`${smsLocations.createSms}?productId=${productId}`)}>Add</button>
-              </div>
+              <div className="mt-md-0 mt-5">
+                <button className="btn mx-5 px-5 btn-sm text-dark fw-bold"style={{backgroundColor:"#ffc400"}} onClick={()=>history.push(`${smsLocations.createSms}?productId=${productId}`)}>Add</button>
+                <div className="mt-1">Estimated USD 0 / month
+                  <span className="mx-1"><svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M7.67 1.99927H16.34C19.73 1.99927 22 4.37927 22 7.91927V16.0903C22 19.6203 19.73 21.9993 16.34 21.9993H7.67C4.28 21.9993 2 19.6203 2 16.0903V7.91927C2 4.37927 4.28 1.99927 7.67 1.99927ZM11.99 9.06027C11.52 9.06027 11.13 8.66927 11.13 8.19027C11.13 7.70027 11.52 7.31027 12.01 7.31027C12.49 7.31027 12.88 7.70027 12.88 8.19027C12.88 8.66927 12.49 9.06027 11.99 9.06027ZM12.87 15.7803C12.87 16.2603 12.48 16.6503 11.99 16.6503C11.51 16.6503 11.12 16.2603 11.12 15.7803V11.3603C11.12 10.8793 11.51 10.4803 11.99 10.4803C12.48 10.4803 12.87 10.8793 12.87 11.3603V15.7803Z" fill="gray"></path></svg></span>
+                  </div> 
+              </div> 
             </div>
-            <hr className="mt-4" />
+            <div className="mt-4">
+              <div className="d-flex">
+                <div>
+            <h5 className={navigation === "overview" && "text-primary"} style={{cursor:"pointer"}} onClick={()=>setNavigation("overview")}>Overview</h5>
+            <div className={navigation === "overview" && "border border-primary px-3 rounded"}></div>
+            </div>
+            <div>
+            <h5 className={`${navigation === "support" && "text-primary "} mx-3`} style={{cursor:"pointer"}} onClick={()=>setNavigation("support")}>Support</h5>
+              <div className={navigation === "support" && "border border-primary px-3 mx-3 rounded"}></div>
+            </div>
+          
+            </div>
+            <hr  className="mt-0"/>
+            </div>
             <div className="d-flex ">
-              <h2 className=" my-5 w-50">
+              <h2 className=" my-3 w-50">
                 {
                   products?.find((p) => p.productId === productId)
                     ?.productDescription

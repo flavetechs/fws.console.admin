@@ -23,6 +23,28 @@ export const productReducer = (state = _state, { type, payload }) => {
               message: payload,
               isSuccessful: false,
             };
+           
+            case actions.FETCH_USER_PRODUCTS_LOADING:
+            return {
+              ...state,
+              loading: true,
+              message: "",
+              isSuccessful: false,
+            };
+          case actions.FETCH_USER_PRODUCTS_SUCCESS:
+            return {
+              ...state,
+              loading: false,
+              userProducts: payload,
+            };
+          case actions.FETCH_USER_PRODUCTS_FAILED:
+            return {
+              ...state,
+              loading: false,
+              message: payload,
+              isSuccessful: false,
+            };
+          
             default:
                 return state
     }}

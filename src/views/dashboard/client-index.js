@@ -40,7 +40,7 @@ import {
   getSidebarTypeMode,
 } from "../../store/setting/setting";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../store/actions/products-actions.js";
+import { getAllUserProducts } from "../../store/actions/products-actions.js";
 import { smsLocations } from "../../router/fws-client-path-locations.js";
 import { Card, Row } from "react-bootstrap";
 
@@ -298,10 +298,10 @@ const ClientIndex = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const state = useSelector((state) => state);
-  const { products } = state.product;
+  const { userProducts } = state.product;
 
   useEffect(() => {
-      getAllProducts()(dispatch);
+      getAllUserProducts()(dispatch);
   }, []);
 
   function truncateString(str) {
@@ -344,7 +344,7 @@ const ClientIndex = (props) => {
           </div>
         </div>
         <div className="col-lg-3 col-md-6">
-          <div className="card bg-warning">
+          <div className="card" style={{backgroundColor:"#f9cd39"}}>
             {" "}
             <div className="card-body ">
               {" "}
@@ -375,7 +375,7 @@ const ClientIndex = (props) => {
           </div>
         </div>
         <div className="col-lg-3 col-md-6">
-          <div className="card bg-danger">
+          <div className="card"style={{backgroundColor:"#fc114c"}}>
             {" "}
             <div className="card-body ">
               {" "}
@@ -402,7 +402,7 @@ const ClientIndex = (props) => {
           </div>
         </div>
         <div className="col-lg-3 col-md-6">
-          <div className="card bg-primary">
+          <div className="card"style={{backgroundColor:"#b3b3f9"}}>
             {" "}
             <div className="card-body ">
               {" "}
@@ -426,7 +426,7 @@ const ClientIndex = (props) => {
                   <h2 className="counter">
                     <span>4500</span>
                   </h2>
-                  Pharmacists
+                 Pharmacists
                 </div>
               </div>{" "}
             </div>{" "}
@@ -436,7 +436,7 @@ const ClientIndex = (props) => {
         <Card >
       <Card.Body>
       <Row className="p-3">
-      {products?.map((product, idx) => (
+      {userProducts?.map((product, idx) => (
           <div className="col-xl-3 col-lg-6">
             <div className=" card-transparent border  h-100 w-100  rounded" >
               {" "}

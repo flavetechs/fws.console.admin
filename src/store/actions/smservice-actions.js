@@ -64,3 +64,63 @@ export const updateSms = (values) => (dispatch) => {
             //showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
         });
 }
+
+export const getCountries = () => (dispatch) => {
+    dispatch({
+        type: actions.FETCH_COUNTRY_LOADING,
+    });
+
+    axiosInstance.get(`/fws/lookups/api/v1/get/country-select`)
+        .then(response => {
+            dispatch({
+                type: actions.FETCH_COUNTRY_SUCCESS,
+                payload: response.data.result
+            });
+        }).catch(err => {
+            dispatch({
+                type: actions.FETCH_COUNTRY_FAILED,
+                payload: err.response.data.result
+            });
+        })
+}
+
+export const getStates = (country) => (dispatch) => {
+    dispatch({
+        type: actions.FETCH_STATE_LOADING,
+    });
+
+    axiosInstance.get(`/fws/lookups/api/v1/get/state-select?country=${country}`)
+        .then(response => {
+            dispatch({
+                type: actions.FETCH_STATE_SUCCESS,
+                payload: response.data.result
+            });
+
+        }).catch(err => {
+            dispatch({
+                type: actions.FETCH_STATE_FAILED,
+                payload: err.response.data.result
+            });
+        })
+}
+
+
+export const getCities = (state) => (dispatch) => {
+    dispatch({
+        type: actions.FETCH_CITY_LOADING,
+    });
+
+    axiosInstance.get(`/fws/lookups/api/v1/get/city-select?state=${state}`)
+        .then(response => {
+            dispatch({
+                type: actions.FETCH_CITY_SUCCESS,
+                payload: response.data.result
+            });
+
+        }).catch(err => {
+            dispatch({
+                type: actions.FETCH_CITY_FAILED,
+                payload: err.response.data.result
+            });
+        })
+}
