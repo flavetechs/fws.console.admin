@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
-import { useHistory, useLocation } from "react-router-dom";
-import { createState, getCountryLookupList } from "../../../store/actions/location-lookup-actions";
+import { useHistory,useLocation } from "react-router-dom";
+import { createCountry, createState, getCountryLookupList } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
 
-const AddState = () => {
+const AddCountry = () => {
   //VARIABLE DECLARATIONS
   let locations = useLocation();
   const [isChecked, setIsChecked] = useState(true);
@@ -20,8 +20,8 @@ const AddState = () => {
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
     countryName: Yup.string()
-      .min(2, "State Name Too Short!")
-      .required("State is required"),
+      .min(2, "Country Name Too Short!")
+      .required("Country is required"),
   });
   //VALIDATIONS SCHEMA
 
@@ -35,17 +35,14 @@ const AddState = () => {
 
   React.useEffect(() => {
     getCountryLookupList()(dispatch)
-  }, [dispatch]);
+  }, [])
 
-  //   if (isSuccessful) {
-  //     history.push(sessionLocations.subjectSetupList);
+  // React.useEffect(() => {
+  //   if (!isSuccessful) {
+  //     history.push(locationLocations.country);
   //   }
+  // }, [!isSuccessful])
 
-  // const item = {
-  //   countryId: "443be913-6a4c-4602-5981-08da9731379b",
-  //   stateName: "calabar",
-  //   isActive: true,
-  // }
 
   console.log('isSuccessful', isSuccessful);
 
@@ -58,17 +55,17 @@ const AddState = () => {
               <Card.Body>
                 <Formik
                   initialValues={{
-                    countryId: "",
+                    countryId: countryIdQueryParam,
                     stateName: "",
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
+                    // values.countryId = "",
                     values.countryId = countryIdQueryParam;
-                    values.stateName = values.stateName;
+                    values.stateName = values.stateName.toUpperCase();
                     values.isActive = isChecked;
                     createState(values)(dispatch);
-                    console.log('values', values);
                   }}
                 >
                   {({
@@ -82,7 +79,6 @@ const AddState = () => {
                     isValid,
                   }) => (
                     <Form>
-                      {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
                         <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
                           <label htmlFor="countryId" className="form-label">
@@ -96,8 +92,8 @@ const AddState = () => {
                             id="countryId"
                             onChange={(e) => {
                               setFieldValue("countryId", e.target.value);
-                              // history.push(`${locationLocations.addState}?countryId=${e.target.value}`
-                              // );
+                              history.push(`${locationLocations.addState}?countryId=${e.target.value}`
+                              );
                             }}
                           >
                             <option value="">Select Country</option>
@@ -181,4 +177,4 @@ const AddState = () => {
   );
 };
 
-export default AddState;
+export default AddCountry;

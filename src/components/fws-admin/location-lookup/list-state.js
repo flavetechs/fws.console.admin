@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountryLookupList, getStateLookupList } from "../../../store/actions/location-lookup-actions";
+import { deleteStateItem, getCountryLookupList, getStateLookupList, pushId, removeId } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
 import { Field, Formik } from "formik";
+import { respondToDeleteDialog, showErrorToast, showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
 
 
 const ListState = () => {
@@ -20,8 +21,8 @@ const ListState = () => {
 
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state) => state);
-    const { stateList, countryList } = state.locationLookup;
-    //   const { deleteDialogResponse } = state.alert;
+    const { stateList, countryList, selectedIds } = state.locationLookup;
+    const { deleteDialogResponse } = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
     const queryParams = new URLSearchParams(locations.search);
@@ -64,27 +65,27 @@ const ListState = () => {
     }, [countryIdQueryParam]);
 
     //DELETE HANDLER
-    //   React.useEffect(() => {
-    //     if (deleteDialogResponse === "continue") {
-    //       if (selectedIds.length === 0) {
-    //         showErrorToast("No Item selected to be deleted")(dispatch);
-    //       } else {
-    //         deleteStaffAccount(selectedIds)(dispatch);
-    //         setDeleteButton(!showDeleteButton);
-    //         setShowCheckBoxes(false);
-    //         respondToDeleteDialog("")(dispatch);
-    //       }
-    //     } else {
-    //       setDeleteButton(true);
-    //       setShowCheckBoxes(false);
-    //       selectedIds.forEach((id) => {
-    //         dispatch(removeId(id));
-    //       });
-    //     }
-    //     return () => {
-    //       respondToDeleteDialog("")(dispatch);
-    //     };
-    //   }, [deleteDialogResponse, dispatch]);
+    React.useEffect(() => {
+        if (deleteDialogResponse === "continue") {
+            if (selectedIds.length === 0) {
+                showErrorToast("No Item selected to be deleted")(dispatch);
+            } else {
+                deleteStateItem(selectedIds)(dispatch);
+                setDeleteButton(!showDeleteButton);
+                setShowCheckBoxes(false);
+                respondToDeleteDialog("")(dispatch);
+            }
+        } else {
+            setDeleteButton(true);
+            setShowCheckBoxes(false);
+            selectedIds.forEach((id) => {
+                dispatch(removeId(id));
+            });
+        }
+        return () => {
+            respondToDeleteDialog("")(dispatch);
+        };
+    }, [deleteDialogResponse, dispatch]);
     //DELETE HANDLER
 
     //   const checkSingleItem = (isChecked, teacherUserAccountId, stafflists) => {
@@ -203,10 +204,10 @@ const ListState = () => {
                                                     <button
                                                         type="button"
                                                         className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
-                                                    //   onClick={() => {
-                                                    //     setDeleteButton(!showDeleteButton);
-                                                    //     setShowCheckBoxes(!showCheckBoxes);
-                                                    //   }}
+                                                        onClick={() => {
+                                                            setDeleteButton(!showDeleteButton);
+                                                            setShowCheckBoxes(!showCheckBoxes);
+                                                        }}
                                                     >
                                                         <i className="btn-inner">
                                                             <svg
@@ -245,9 +246,9 @@ const ListState = () => {
                                                     <button
                                                         type="button"
                                                         className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
-                                                    //   onClick={() => {
-                                                    //     showSingleDeleteDialog(true)(dispatch);
-                                                    //   }}
+                                                        onClick={() => {
+                                                            showSingleDeleteDialog(true)(dispatch);
+                                                        }}
                                                     >
                                                         <i className="btn-inner">
                                                             <svg
@@ -392,8 +393,7 @@ const ListState = () => {
                                                                             data-placement="top"
                                                                             title=""
                                                                             data-original-title="Details"
-                                                                            to="#"
-                                                                        //   to={`${staffLocations.staffDetails}?teacherAccountId=${item.teacherAccountId}`}
+                                                                            to={`${locationLocations.editState}?stateId=${item.stateId}`}
                                                                         >
                                                                             <span className="btn-inner">
                                                                                 <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -425,13 +425,13 @@ const ListState = () => {
                                                                             title=""
                                                                             data-original-title="Delete"
                                                                             to="#"
-                                                                        // data-id={item.teacherUserAccountId}
-                                                                        // onClick={() => {
-                                                                        //   dispatch(
-                                                                        //     pushId(item.teacherUserAccountId)
-                                                                        //   );
-                                                                        //   showSingleDeleteDialog(true)(dispatch);
-                                                                        // }}
+                                                                            data-id={item.stateId}
+                                                                            onClick={() => {
+                                                                                dispatch(
+                                                                                    pushId(item.stateId)
+                                                                                );
+                                                                                showSingleDeleteDialog(true)(dispatch);
+                                                                            }}
                                                                         >
                                                                             <span className="btn-inner">
                                                                                 <svg

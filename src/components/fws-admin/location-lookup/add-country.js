@@ -69,7 +69,6 @@ const AddCountry = () => {
                     isValid,
                   }) => (
                     <Form>
-                      {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
                         <div className="form-group">
                           {touched.countryName && errors.countryName && (

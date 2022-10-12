@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountryLookupList } from "../../../store/actions/location-lookup-actions";
+import { deleteCountryItem, getCountryLookupList, pushId, removeId, returnList } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
+import { respondToDeleteDialog, showErrorToast, showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
 
 
 const ListCountry = () => {
@@ -17,7 +18,8 @@ const ListCountry = () => {
 
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state) => state);
-    const { countryList } = state.locationLookup;
+    const { countryList, selectedIds } = state.locationLookup;
+    const { deleteDialogResponse } = state.alert;
     //   const { deleteDialogResponse } = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
@@ -45,52 +47,64 @@ const ListCountry = () => {
     }, [dispatch]);
 
     //DELETE HANDLER
-    //   React.useEffect(() => {
-    //     if (deleteDialogResponse === "continue") {
-    //       if (selectedIds.length === 0) {
-    //         showErrorToast("No Item selected to be deleted")(dispatch);
-    //       } else {
-    //         deleteStaffAccount(selectedIds)(dispatch);
-    //         setDeleteButton(!showDeleteButton);
-    //         setShowCheckBoxes(false);
-    //         respondToDeleteDialog("")(dispatch);
-    //       }
-    //     } else {
-    //       setDeleteButton(true);
-    //       setShowCheckBoxes(false);
-    //       selectedIds.forEach((id) => {
-    //         dispatch(removeId(id));
-    //       });
-    //     }
-    //     return () => {
-    //       respondToDeleteDialog("")(dispatch);
-    //     };
-    //   }, [deleteDialogResponse, dispatch]);
+    React.useEffect(() => {
+        if (deleteDialogResponse === "continue") {
+            if (selectedIds.length === 0) {
+                showErrorToast("No Item selected to be deleted")(dispatch);
+            } else {
+                deleteCountryItem(selectedIds)(dispatch);
+                setDeleteButton(!showDeleteButton);
+                setShowCheckBoxes(false);
+                respondToDeleteDialog("")(dispatch);
+            }
+        } else {
+            setDeleteButton(true);
+            setShowCheckBoxes(false);
+            selectedIds.forEach((id) => {
+                dispatch(removeId(id));
+            });
+        }
+        return () => {
+            respondToDeleteDialog("")(dispatch);
+        };
+    }, [deleteDialogResponse, dispatch]);
     //DELETE HANDLER
 
-    //   const checkSingleItem = (isChecked, teacherUserAccountId, stafflists) => {
-    //     stafflists.forEach((item) => {
-    //       if (item.teacherUserAccountId === teacherUserAccountId) {
-    //         item.isChecked = isChecked;
-    //       }
+    // React.useEffect(() => {
+    //     if (selectedIds.length === 0) {
+    //         return
+    //     } else {
+    //         deleteCountryItem(selectedIds)(dispatch);
+    //     }
+    // }, [selectedIds]);
+
+    // const checkSingleItem = (isChecked, countryId, countryList) => {
+    //     countryList.forEach((item) => {
+    //         if (item.countryId === countryId) {
+    //             item.isChecked = isChecked;
+    //         }
     //     });
     //     if (isChecked) {
-    //       dispatch(pushId(teacherUserAccountId));
+    //         dispatch(pushId(countryId));
     //     } else {
-    //       dispatch(removeId(teacherUserAccountId));
+    //         dispatch(removeId(countryId));
     //     }
-    //   };
-    //   const checkAllItems = (isChecked, stafflists) => {
-    //     stafflists.forEach((item) => {
-    //       item.isChecked = isChecked;
-    //       if (item.isChecked) {
-    //         dispatch(pushId(item.teacherUserAccountId));
-    //       } else {
-    //         dispatch(removeId(item.teacherUserAccountId));
-    //       }
+    // };
+    // const checkAllItems = (isChecked, countryList) => {
+    //     countryList.forEach((item) => {
+    //         item.isChecked = isChecked;
+    //         if (item.isChecked) {
+    //             dispatch(pushId(item.countryId));
+    //         } else {
+    //             dispatch(removeId(item.countryId));
+    //         }
     //     });
-    //     returnList(stafflists)(dispatch);
-    //   };
+    //     returnList(countryList)(dispatch);
+    // };
+
+
+
+    console.log('selectedIds', selectedIds);
 
     return (
         <>
@@ -373,13 +387,18 @@ const ListCountry = () => {
                                                                     title=""
                                                                     data-original-title="Delete"
                                                                     to="#"
-                                                                // data-id={item.teacherUserAccountId}
-                                                                // onClick={() => {
-                                                                //   dispatch(
-                                                                //     pushId(item.teacherUserAccountId)
-                                                                //   );
-                                                                //   showSingleDeleteDialog(true)(dispatch);
-                                                                // }}
+                                                                    data-id={item.countryId}
+                                                                    // onClick={()=> deleteCountryItem(item.countryId)(dispatch)}
+                                                                    // onClick={() => {
+                                                                    //     dispatch(pushId(item.countryId));
+                                                                    // }
+                                                                    // }
+                                                                    onClick={() => {
+                                                                        // dispatch(
+                                                                        //     pushId(item.countryId)
+                                                                        // );
+                                                                        showSingleDeleteDialog(true)(dispatch);
+                                                                    }}
                                                                 >
                                                                     <span className="btn-inner">
                                                                         <svg

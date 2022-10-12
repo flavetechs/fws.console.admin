@@ -1,6 +1,36 @@
 import axiosInstance from "../../axios/axiosInstance";
 import { actions } from "../action-types/location-lookup-action-types";
 
+
+
+export const pushId = (itemId) => {
+    return {
+        type: actions.PUSH_ITEM_ID,
+        payload: itemId
+    }
+}
+export const removeId = (itemId) => {
+    return {
+        type: actions.REMOVE_ITEM_ID,
+        payload: itemId
+    }
+}
+export const returnList = (items) => (dispatch) => {
+    dispatch({
+        type: actions.RETURN_ITEM_LIST,
+        payload: items
+    })
+}
+
+export const fetchSingleItem = (lookupId) => dispatch => {
+    dispatch({
+        type: actions.GET_SINGLE_ITEM,
+        payload: lookupId
+    });
+
+}
+
+
 export const getCountryLookupList = () => (dispatch) => {
     dispatch({
         type: actions.FETCH_COUNTRY_LOOKUP_LOADING
@@ -213,14 +243,38 @@ export const updateCity = (city) => (dispatch) => {
 
 
 
+// export const deleteCountryItem = (countryId) => (dispatch) => {
+//     dispatch({
+//         type: actions.DELETE_COUNTRY_LOOKUP_LOADING
+//     });
+//     const payload = {
+//         lookupId: countryId[0]
+//     }
+
+//     axiosInstance.post('/fws/lookups/api/v1/delete/country-lookup', payload)
+//         .then((res) => {
+//             dispatch({
+//                 type: actions.DELETE_COUNTRY_LOOKUP_SUCCESS,
+//                 payload: res.data.message.friendlyMessage
+//             });
+//             getCountryLookupList()(dispatch);
+//             // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+//         }).catch((err) => {
+//             dispatch({
+//                 type: actions.DELETE_COUNTRY_LOOKUP_FAILED,
+//                 payload: err.response.data.message.friendlyMessage
+//             });
+//             // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+//         });
+// }
+
 export const deleteCountryItem = (countryId) => (dispatch) => {
     dispatch({
         type: actions.DELETE_COUNTRY_LOOKUP_LOADING
     });
     const payload = {
-        items: countryId
+        lookupId: countryId[0]
     }
-
     axiosInstance.post('/fws/lookups/api/v1/delete/country-lookup', payload)
         .then((res) => {
             dispatch({
@@ -243,7 +297,7 @@ export const deleteStateItem = (stateId) => (dispatch) => {
         type: actions.DELETE_STATE_LOOKUP_LOADING
     });
     const payload = {
-        items: stateId
+        items: stateId[0]
     }
 
     axiosInstance.post('/fws/lookups/api/v1/delete/state-lookup', payload)
@@ -268,7 +322,7 @@ export const deleteCityItem = (cityId) => (dispatch) => {
         type: actions.DELETE_CITY_LOOKUP_LOADING
     });
     const payload = {
-        items: cityId
+        lookupId: cityId[0]
     }
     axiosInstance.post('/fws/lookups/api/v1/delete/city-lookup', payload)
         .then((res) => {
