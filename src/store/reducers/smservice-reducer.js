@@ -67,12 +67,28 @@ export const smserviceReducer = (state = _state, { type, payload }) => {
                       isSuccessful: false,
                     };
 
-                    case actions.VALIDATE_BASE_URL_SUFFIX:
+
+                    case actions.VALIDATE_BASE_URL_SUFFIX_LOADING:
+                      return {
+                        ...state,
+                        loading: false,
+                        validationSuccessful: false,
+                      };
+
+                    case actions.VALIDATE_BASE_URL_SUFFIX_SUCCESS:
                       return {
                         ...state,
                         loading: false,
                         baseUrlSuffixValidation: payload,
-                        isSuccessful: true,
+                        validationSuccessful: false,
+                      };
+
+                      case actions.VALIDATE_BASE_URL_SUFFIX_FAILED:
+                      return {
+                        ...state,
+                        loading: false,
+                        baseUrlSuffixValidation: payload,
+                        validationSuccessful: true,
                       };
 
                       case actions.FETCH_COUNTRY_LOADING:
@@ -112,7 +128,6 @@ export const smserviceReducer = (state = _state, { type, payload }) => {
                           loading: false,
                           states: [],
                         };
-                  
               
                 default:
                     return state

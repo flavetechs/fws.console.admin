@@ -104,3 +104,24 @@ export const getStates = (country) => (dispatch) => {
         })
 }
 
+export const validateBaseUrlSuffix = (suffix) => (dispatch) => {
+    dispatch({
+        type: actions.VALIDATE_BASE_URL_SUFFIX_LOADING,
+    });
+const payload={
+    suffix
+}
+    axiosInstance.post(`fws/sms/api/v1/validate-baseurl-suffix`,payload)
+        .then(response => {
+            dispatch({
+                type: actions.VALIDATE_BASE_URL_SUFFIX_SUCCESS,
+                payload: response.data.result
+            });
+
+        }).catch(err => {
+            dispatch({
+                type: actions.VALIDATE_BASE_URL_SUFFIX_FAILED,
+                payload: err.response.data.result
+            });
+})
+}

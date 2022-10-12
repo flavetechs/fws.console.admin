@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { createSms, getCountries, getStates } from "../../store/actions/smservice-actions";
+import { createSms, getCountries, getStates, validateBaseUrlSuffix } from "../../store/actions/smservice-actions";
 import avatars1 from "../../assets/images/avatars/01.png";
 import avatars2 from "../../assets/images/avatars/avtar_2.png";
 import avatars3 from "../../assets/images/avatars/avtar_2.png";
@@ -17,7 +17,7 @@ const CreateSms = () => {
   const history = useHistory();
   const locations = useLocation();
   const state = useSelector((state) => state);
-  const { countries, states } = state.smservice;
+  const { countries, states,baseUrlSuffixValidation,validationSuccessful } = state.smservice;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
   const [images, setImages] = useState(null);
@@ -44,6 +44,7 @@ const CreateSms = () => {
   useEffect(() => {
     getCountries()(dispatch);
   }, [dispatch]);
+  console.log("baseUrlSuffixValidation",baseUrlSuffixValidation);
   return (
     <>
       <div>
@@ -60,9 +61,10 @@ const CreateSms = () => {
             schoolLogo: "",
             productId: productId,
           }}
-          validationSchema={validation}
+          //validationSchema={validation}
           onSubmit={(values) => {
-           // createSms(values)(dispatch);
+           createSms(values)(dispatch);
+           history.goBack();
           }}
         >
           {({
@@ -149,7 +151,6 @@ const CreateSms = () => {
                               name="ipAddress"
                               id="ipAddress"
                               aria-describedby="name"
-                              required
                               placeholder="IP Address"
                             />
                           </Form.Group>
@@ -224,6 +225,7 @@ const CreateSms = () => {
                               required
                               placeholder="base URL"
                             />
+
                           </Form.Group>
                           <Row>
                           <div className="col-md-6">
@@ -244,10 +246,12 @@ const CreateSms = () => {
                               className="form-control text-lowercase"
                               name="baseUrlAppendix"
                               id="baseUrlAppendix"
+                               onKeyUp={(e)=>{validateBaseUrlSuffix(e.target.value)(dispatch)}}
                               aria-describedby="name"
                               required
                               placeholder="base suffix"
                             />
+                            <div className="text-danger mt-2">{!baseUrlSuffixValidation && validationSuccessful ? "Base suffix already taken": ""}</div>
                           </Form.Group>
                           <div className="row form-group">
                             <div className="col-md-6">
