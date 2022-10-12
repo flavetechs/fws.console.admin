@@ -253,27 +253,6 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         message: payload,
         isSuccessful: false
       };
-    // case actions.DELETE_COUNTRY_LOOKUP_LOADING:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //     isSuccessful: false,
-    //     message: ''
-    //   };
-    // case actions.DELETE_COUNTRY_LOOKUP_SUCCESS:
-    //   return {
-    //     ...state,
-    //     selectedIds: [],
-    //     message: payload,
-    //     isSuccessful: true,
-    //   };
-    // case actions.DELETE_COUNTRY_LOOKUP_FAILED:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     message: payload,
-    //     isSuccessful: false
-    //   };
 
     case actions.DELETE_STATE_LOOKUP_LOADING:
       return {

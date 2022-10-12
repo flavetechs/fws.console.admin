@@ -54,7 +54,7 @@ const IndexRouters = () => {
                      <Route path={locationLocations.addCity} component={AddCity}></Route>
                      <Route path={locationLocations.editCountry} component={EditCountry}></Route>
                      <Route path={locationLocations.editState} component={EditState}></Route>
-                     <Route path={locationLocations.addCity} component={EditCity}></Route>
+                     <Route path={locationLocations.editCity} component={EditCity}></Route>
                     
 
                         <Route path="/errors" component={Simple}></Route>

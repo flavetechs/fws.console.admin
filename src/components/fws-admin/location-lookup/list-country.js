@@ -20,7 +20,6 @@ const ListCountry = () => {
     const state = useSelector((state) => state);
     const { countryList, selectedIds } = state.locationLookup;
     const { deleteDialogResponse } = state.alert;
-    //   const { deleteDialogResponse } = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
     //   const filteredStaffList = countryList.filter((staffs) => {
@@ -394,9 +393,9 @@ const ListCountry = () => {
                                                                     // }
                                                                     // }
                                                                     onClick={() => {
-                                                                        // dispatch(
-                                                                        //     pushId(item.countryId)
-                                                                        // );
+                                                                        dispatch(
+                                                                            pushId(item.countryId)
+                                                                        );
                                                                         showSingleDeleteDialog(true)(dispatch);
                                                                     }}
                                                                 >

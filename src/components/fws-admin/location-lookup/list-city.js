@@ -21,11 +21,10 @@ const ListCity = () => {
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state) => state);
     const { cityList, stateList } = state.locationLookup;
-    //   const { deleteDialogResponse } = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
     const queryParams = new URLSearchParams(locations.search);
-    const stateIdQueryParam = queryParams.get("countryId") || "";
+    const stateIdQueryParam = queryParams.get("stateId") || "";
 
     //   const filteredStaffList = countryList.filter((staffs) => {
     //     if (searchQuery === "") {
@@ -103,7 +102,8 @@ const ListCity = () => {
     //     returnList(stafflists)(dispatch);
     //   };
 
-    console.log('cityList', cityList);
+    console.log('stateList', stateList);
+    console.log('stateIdQueryParam', stateIdQueryParam);
 
     return (
         <>
@@ -113,6 +113,8 @@ const ListCity = () => {
                         <Formik
                             initialValues={{
                                 stateId: stateIdQueryParam,
+                                cityName: "",
+                                isActive: true,
                             }}
                             enableReinitialize={true}
                             onSubmit={() => {
@@ -134,11 +136,11 @@ const ListCity = () => {
                                                 name="stateId"
                                                 className="form-select"
                                                 id="stateId"
-                                            // onChange={(e) => {
-                                            //     setFieldValue("stateId", e.target.value);
-                                            //     history.push(`${locationLocations.city}?stateId=${e.target.value}`
-                                            //     );
-                                            // }}
+                                                onChange={(e) => {
+                                                    setFieldValue("stateId", e.target.value);
+                                                    history.push(`${locationLocations.city}?stateId=${e.target.value}`
+                                                    );
+                                                }}
                                             >
                                                 <option value="">Select State</option>
                                                 {stateList?.map((item, idx) => (

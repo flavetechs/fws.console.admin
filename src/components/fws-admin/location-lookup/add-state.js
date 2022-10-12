@@ -4,18 +4,17 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
-import { useHistory,useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { createCountry, createState, getCountryLookupList } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
 
 const AddCountry = () => {
-  //VARIABLE DECLARATIONS
-  let locations = useLocation();
-  const [isChecked, setIsChecked] = useState(true);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  //VARIABLE DECLARATIONS
+
+  // ACCESSING STATE FROM REDUX STORE
+  const state = useSelector((state) => state);
+  const { isSuccessful, message, countryList } = state.locationLookup;
+  // ACCESSING STATE FROM REDUX STORE
 
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
@@ -25,13 +24,17 @@ const AddCountry = () => {
   });
   //VALIDATIONS SCHEMA
 
-  // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { isSuccessful, message, countryList } = state.locationLookup;
-  // ACCESSING STATE FROM REDUX STORE
-
+  //VARIABLE DECLARATIONS
+  let locations = useLocation();
+  const [isChecked, setIsChecked] = useState(true);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const queryParams = new URLSearchParams(locations.search);
   const countryIdQueryParam = queryParams.get("countryId") || "";
+  const [addStateItem, setAddStateItem] = useState({ countryId: countryIdQueryParam, stateName: "", isActive: isChecked })
+  //VARIABLE DECLARATIONS
+
+  // const addStateItem = { countryId: countryIdQueryParam, stateName: field, isActive: isChecked }
 
   React.useEffect(() => {
     getCountryLookupList()(dispatch)
@@ -44,7 +47,8 @@ const AddCountry = () => {
   // }, [!isSuccessful])
 
 
-  console.log('isSuccessful', isSuccessful);
+  console.log('countryIdQueryParam', countryIdQueryParam);
+  console.log('addStateItem', addStateItem);
 
   return (
     <>
@@ -61,7 +65,6 @@ const AddCountry = () => {
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    // values.countryId = "",
                     values.countryId = countryIdQueryParam;
                     values.stateName = values.stateName.toUpperCase();
                     values.isActive = isChecked;
@@ -140,6 +143,7 @@ const AddCountry = () => {
                             checked={isChecked}
                             onChange={(e) => {
                               setIsChecked(!isChecked);
+                              addStateItem.isActive = e.target.value
                             }}
                           />
                           <label htmlFor="isActive" className="check-label">
@@ -161,6 +165,9 @@ const AddCountry = () => {
                           type="button"
                           variant="btn btn-primary"
                           onClick={handleSubmit}
+                          // onClick={() => {
+                          //   createState(addStateItem)(dispatch)
+                          // }}
                         >
                           Submit
                         </Button>

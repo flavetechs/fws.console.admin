@@ -3,14 +3,16 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
-import { useHistory } from "react-router-dom";
-import { createCity, createState } from "../../../store/actions/location-lookup-actions";
+import { useHistory, useLocation } from "react-router-dom";
+import { createCity } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
+import { locationLocations } from "../../../router/fws-path-locations";
 
 const AddCity = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
   const history = useHistory();
+  let locations = useLocation();
   const dispatch = useDispatch();
   //VARIABLE DECLARATIONS
 
@@ -27,9 +29,8 @@ const AddCity = () => {
   const { isSuccessful, message, stateList } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
-  //   if (isSuccessful) {
-  //     history.push(sessionLocations.subjectSetupList);
-  //   }
+  const queryParams = new URLSearchParams(locations.search);
+  const stateIdQueryParam = queryParams.get("stateId") || "";
 
   return (
     <>
@@ -40,6 +41,7 @@ const AddCity = () => {
               <Card.Body>
                 <Formik
                   initialValues={{
+                    stateId: stateIdQueryParam,
                     cityName: "",
                     isActive: true,
                   }}
@@ -61,7 +63,6 @@ const AddCity = () => {
                     isValid,
                   }) => (
                     <Form>
-                      {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
                         <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
                           <label htmlFor="cityName" className="form-label">
@@ -73,11 +74,11 @@ const AddCity = () => {
                             name="stateId"
                             className="form-select"
                             id="stateId"
-                          // onChange={(e) => {
-                          //     setFieldValue("stateId", e.target.value);
-                          //     history.push(`${locationLocations.city}?stateId=${e.target.value}`
-                          //     );
-                          // }}
+                            onChange={(e) => {
+                              setFieldValue("stateId", e.target.value);
+                              history.push(`${locationLocations.addCity}?stateId=${e.target.value}`
+                              );
+                            }}
                           >
                             <option value="">Select State</option>
                             {stateList?.map((item, idx) => (
@@ -120,10 +121,10 @@ const AddCity = () => {
                             id="customCheck1"
                             className="form-check-input"
                             name="isActive"
-                          // checked={isChecked}
-                          // onChange={(e) => {
-                          //   setIsChecked(!isChecked);
-                          // }}
+                            checked={isChecked}
+                            onChange={(e) => {
+                              setIsChecked(!isChecked);
+                            }}
                           />
                           <label htmlFor="isActive" className="check-label">
                             isActive{" "}
@@ -135,10 +136,10 @@ const AddCity = () => {
                           type="button"
                           variant="btn btn-danger mx-2"
                           onClick={() => {
-                            history.goBack();
+                            history.push(locationLocations.city);
                           }}
                         >
-                          Cancel
+                          Back
                         </Button>{" "}
                         <Button
                           type="button"
