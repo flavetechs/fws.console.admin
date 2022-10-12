@@ -19,6 +19,7 @@ import AddCity from '../components/fws-admin/location-lookup/add-city'
 import EditCountry from '../components/fws-admin/location-lookup/edit-country'
 import EditState from '../components/fws-admin/location-lookup/edit-state'
 import EditCity from '../components/fws-admin/location-lookup/edit-city'
+import clientDefault from '../layouts/dashboard/client-default'
 
 const IndexRouters = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,11 +37,11 @@ const IndexRouters = () => {
             <Switch>
                 {
                     <>
-                        <Route exact path="/"
-                            component={SignIn}></Route>
+                         <Route exact path="/"
+                            component={userDetail?.userType == '0' ?  Default : clientDefault}></Route>
 
-                        <Route path={"/dashboard"}
-                            component={Default}></Route>
+                        <Route path={userDetail?.userType == '0' ? "/dashboard" : '/client-dashboard'}
+                            component={userDetail?.userType == '0' ?  Default : clientDefault}></Route>
 
                         <Route path={authLocations.login} component={SignIn}></Route>
                         

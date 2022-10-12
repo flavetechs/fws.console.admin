@@ -1,4 +1,4 @@
-import { Row, Col, Image, } from 'react-bootstrap'
+import { Row, Col, } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import Card from '../Card'
 
@@ -51,14 +51,14 @@ const SignIn = () => {
         <>
             <section className="login-content">
                 {/* <SmpLoader /> */}
-                <Row className="m-0 align-items-center bg-white vh-100">
+                <Row className="m-0 align-items-center d-flex justify-content-center bg-white vh-100">
                     <Col md="6">
                         <Row className="justify-content-center">
                             <Col md="10">
                                 <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                                     <Card.Body>
                                         <Link to={dashboardLocations.dashboard} className="navbar-brand d-flex align-items-center mb-3">
-                                            <Logo color={true} />
+                                            {/* <Logo color={true} /> */}
                                             {/* <h4 className="logo-title ms-3">FLAVTECH</h4> */}
                                         </Link>
                                         <h2 className="mb-2 text-center">Sign In</h2>
@@ -135,9 +135,9 @@ const SignIn = () => {
                             </svg>
                         </div>
                     </Col>
-                    <Col md="6" className="d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
-                        {/* <Image src={auth1} className="Image-fluid gradient-main animated-scaleX" alt="images" /> */}
-                    </Col>
+                    {/* <Col md="6" className="d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
+                        {/* <Image src={auth1} className="Image-fluid gradient-main animated-scaleX" alt="images" />
+                    </Col> */}
                 </Row>
             </section>
         </>
