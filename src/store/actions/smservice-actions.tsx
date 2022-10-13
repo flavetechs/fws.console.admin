@@ -2,7 +2,7 @@ import axiosInstance from "../../axios/axiosInstance";
 import { actions } from "../action-types/smservice-action-types";
 import { errorModal, successModal } from "./alert-actions";
 
-export const getAllSms = () => (dispatch) => {
+export const getAllSms = () => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_SMS_LOADING,
     });   
@@ -22,7 +22,7 @@ export const getAllSms = () => (dispatch) => {
 };
 
 
-export const createSms = (values) => (dispatch) => {
+export const createSms = (values: any) => (dispatch: any) => {
     dispatch({
         type: actions.CREATE_SMS_LOADING
     });
@@ -44,7 +44,7 @@ export const createSms = (values) => (dispatch) => {
         });
 }
 
-export const updateSms = (values) => (dispatch) => {
+export const updateSms = (values: any) => (dispatch: any) => {
     dispatch({
         type: actions.UPDATE_SMS_LOADING
     });
@@ -66,7 +66,7 @@ export const updateSms = (values) => (dispatch) => {
         });
 }
 
-export const getCountries = () => (dispatch) => {
+export const getCountries = () => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_COUNTRY_LOADING,
     });
@@ -85,7 +85,7 @@ export const getCountries = () => (dispatch) => {
         })
 }
 
-export const getStates = (country) => (dispatch) => {
+export const getStates = (country: any) => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_STATE_LOADING,
     });
@@ -105,7 +105,7 @@ export const getStates = (country) => (dispatch) => {
         })
 }
 
-export const validateBaseUrlSuffix = (suffix) => (dispatch) => {
+export const validateBaseUrlSuffix = (suffix: any) => (dispatch: any) => {
     dispatch({
         type: actions.VALIDATE_BASE_URL_SUFFIX_LOADING,
     });
