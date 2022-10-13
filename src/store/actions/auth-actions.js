@@ -33,7 +33,31 @@ export const loginOutUser = () => {
     }
 }
 
+export const registerUser = ({  email, password }) => (dispatch) => {
 
+    dispatch({
+        type: actions.REGISTER_USER_LOADING
+    });
+
+    const payload = {
+        email,
+        password
+    }
+
+    axiosInstance.post('/fws/user/api/v1/register', payload)
+        .then((res) => {
+            dispatch({
+                type: actions.REGISTER_USER_SUCCESS,
+                payload: res.data.result
+            });
+            
+        }).catch(err => {
+            dispatch({
+                type: actions.REGISTER_USER_FAILED,
+                payload: err.response.data.message.friendlyMessage
+            })
+        })
+}
 
 
 export const generatePasswordResetLink = ({ resetOption, resetOptionValue, userType }) => (dispatch) => {

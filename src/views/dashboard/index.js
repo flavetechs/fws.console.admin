@@ -1,20 +1,15 @@
-import React, { useEffect } from "react";
-import { Row, Col, Dropdown, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 import { bindActionCreators } from "redux";
 //circular
-import Circularprogressbar from "../../components/circularprogressbar.js";
 
 // AOS
 import AOS from "aos";
 import "../../../node_modules/aos/dist/aos";
 import "../../../node_modules/aos/dist/aos.css";
 //apexcharts
-import Chart from "react-apexcharts";
 
 //swiper
-import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 
 // Import Swiper styles
@@ -22,16 +17,9 @@ import "swiper/swiper-bundle.min.css";
 import "swiper/components/navigation/navigation.scss";
 
 //progressbar
-import Progress from "../../components/progress.js";
 //img
-import shapes1 from "../../assets/images/shapes/01.png";
-import shapes2 from "../../assets/images/shapes/02.png";
-import shapes3 from "../../assets/images/shapes/03.png";
-import shapes4 from "../../assets/images/shapes/04.png";
-import shapes5 from "../../assets/images/shapes/05.png";
 
 //Count-up
-import CountUp from "react-countup";
 // store
 import {
   NavbarstyleAction,
