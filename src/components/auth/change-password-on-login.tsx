@@ -11,16 +11,17 @@ import Logo from '../partials/components/logo'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeMyPassword } from '../../store/actions/auth-actions';
 import { authLocations } from '../../router/fws-path-locations';
+import { IAuthState } from '../../store/Models/AuthState';
 
 
 const FirstTimeLoginPassswordChange = () => {
 
     const locations = useLocation();
     const dispatch = useDispatch();
-    const state = useSelector((state) => state);
+    const state = useSelector((state:any) => state);
 
 
-    const { message } = state.auth;
+    const { message }: IAuthState = state.auth;
     var token = sessionStorage.getItem('token');
     var userDetail = sessionStorage.getItem('userDetail');
     const [userId, setId] = useState('');
@@ -51,7 +52,7 @@ const FirstTimeLoginPassswordChange = () => {
         confirmNewPassword: Yup.string().required("Confirm Password Required")
             .min(4, 'Password must be a minimum of 4 characters')
             .when("newPassword", {
-                is: val => (val && val.length > 0 ? true : false),
+                is: (val:any) => (val && val.length > 0 ? true : false),
                 then: Yup.string().oneOf([Yup.ref("newPassword")], "Confirm password need to be the same with new password")
             })
     })
@@ -130,7 +131,7 @@ const FirstTimeLoginPassswordChange = () => {
                                             <div className="d-flex justify-content-center">
                                                 <button onSubmit={() => {
                                                     handleSubmit()
-                                                }} type="submit" variant="btn btn-primary" className='btn btn-primary'>Sign In</button>
+                                                }} type="submit"  className='btn btn-primary'>Sign In</button>
                                             </div>
                                             {/* <p className="mt-3 text-center">
                                                         Don’t have an account? <Link to="/auth/sign-up" className="text-underline">Click here to sign up.</Link>

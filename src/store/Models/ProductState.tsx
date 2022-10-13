@@ -1,4 +1,4 @@
-import { ProductDetail } from "../../components/Models/ProductDetails";
+import { ProductDetail } from "../../components/Models/product/ProductDetails";
 
 export interface IProductState {
     loading: boolean,

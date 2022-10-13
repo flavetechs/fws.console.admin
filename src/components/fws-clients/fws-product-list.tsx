@@ -4,17 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { smsLocations } from "../../router/fws-client-path-locations";
 import { getAllProducts } from "../../store/actions/products-actions";
+import { IProductState } from "../../store/Models/ProductState";
 
 const Products = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const state = useSelector((state) => state);
-  const { products } = state.product;
+  const state = useSelector((state : any) => state);
+  const { products }: IProductState = state.product;
 
   React.useEffect(() => {
     getAllProducts()(dispatch);
   }, []);
-  function truncateString(str) {
+  function truncateString(str : any) {
    if (str.length > 80) {
         return  str.slice(0, 80) + "..."  ;
     }else return str
@@ -50,7 +51,7 @@ const Products = () => {
                   </div>
             </div>
           </div>
-          <div className=" border text-center mt-n3 mb-3 p-2"  style={{backgroundColor : product.installed ? "#f9cd39" : "white",color:product.installed && "white",cursor:"pointer"}} onClick={()=> product.productType == 0 && history.push(`${smsLocations.sms}?productId=${product.productId}`)}>
+          <div className=" border text-center mt-n3 mb-3 p-2"  style={{backgroundColor : product.installed ? "#f9cd39" : "white", color : product.installed ? "white" : "",cursor:"pointer"}} onClick={()=> product.productType == 0 && history.push(`${smsLocations.sms}?productId=${product.productId}`)}>
                   {!product.installed  ? "View" :"Installed"}
                   </div>
                 </div>
