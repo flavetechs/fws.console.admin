@@ -1,10 +1,10 @@
 export const getUserDetails = () => {
-    var userDetail = localStorage.getItem('userDetail');
-    if(userDetail !== 'undefined')
-        return JSON.parse(userDetail);
+    var user = sessionStorage.getItem('user');
+    if(user!== 'undefined')
+        return JSON.parse(user);
     else{
-        localStorage.removeItem('token');
-        localStorage.removeItem('permissions');
-        localStorage.removeItem('userDetail');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('permissions');
+        sessionStorage.removeItem('userDetail');
     }
 }

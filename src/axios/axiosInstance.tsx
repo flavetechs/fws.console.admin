@@ -9,9 +9,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use((response: any) => response, (error: any) => { 
     if(error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('permissions');
-        localStorage.removeItem('userDetail');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('permissions');
+        sessionStorage.removeItem('userDetail');
     }
     throw error;
 });
@@ -39,7 +39,7 @@ axiosInstance.interceptors.request.use(
         //     // alert('online');
         //     return config;
         // }
-        const sessionToken = await localStorage.getItem('token');
+        const sessionToken = await sessionStorage.getItem('token');
         if (sessionToken !== null) {
             config.headers.Authorization = 'Bearer ' + sessionToken
         }

@@ -21,8 +21,8 @@ const FirstTimeLoginPassswordChange = () => {
 
 
     const { message } = state.auth;
-    var token = localStorage.getItem('token');
-    var userDetail = localStorage.getItem('userDetail');
+    var token = sessionStorage.getItem('token');
+    var userDetail = sessionStorage.getItem('userDetail');
     const [userId, setId] = useState('');
     React.useEffect(() => {
         const queryParams = new URLSearchParams(locations.search);
@@ -33,8 +33,8 @@ const FirstTimeLoginPassswordChange = () => {
 
     React.useEffect(() => {
         if (userDetail) {
-            if (JSON.parse(userDetail).userType === 'Student') {
-                window.location.href = '/stds-dashboard';
+            if (JSON.parse(userDetail).userType === 'Client') {
+                window.location.href = '/client-dashboard';
             } else {
                 window.location.href = '/dashboard';
             }

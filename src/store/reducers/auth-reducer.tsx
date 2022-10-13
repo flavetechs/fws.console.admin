@@ -15,15 +15,10 @@ export const authReducer = (state = _state, { type, payload }: any) => {
             }
 
         case actions.LOGIN_USER_SUCCESS: {
-            localStorage.removeItem('token');
-            localStorage.removeItem('permissions');
-            localStorage.removeItem('userDetail');
+            sessionStorage.removeItem('token');
             const decodedToken = jwt<any>(payload.authResult.token);
-            localStorage.setItem('token', payload.authResult.token);
-            localStorage.setItem('permissions', decodedToken.permissions);
-            localStorage.setItem('userDetail', JSON.stringify(payload.userDetail));
-            
-       
+            sessionStorage.setItem('token', payload.authResult.token);
+            sessionStorage.setItem('user', JSON.stringify(decodedToken));
             
             return {
                 ...state,
@@ -46,15 +41,52 @@ export const authReducer = (state = _state, { type, payload }: any) => {
             }
 
         case actions.LOG_OUT_USER: {
-            localStorage.removeItem('token');
-            localStorage.removeItem('permissions');
-            localStorage.removeItem('userDetail');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('permissions');
+            sessionStorage.removeItem('userDetail');
             return {
                 message: '',
                 token: '',
                 refreshToken: '',
             }
         }
+
+        case actions.REGISTER_USER_LOADING:
+            return {
+                ...state,
+                loading: true,
+                message: '',
+                token: '',
+                refreshToken: '',
+                isSuccessful: false,
+            }
+
+        case actions.REGISTER_USER_SUCCESS: {
+            sessionStorage.removeItem('token');
+            const decodedToken = jwt<any>(payload.authResult.token);
+            sessionStorage.setItem('token', payload.authResult.token);
+            sessionStorage.setItem('user', JSON.stringify(decodedToken));
+            
+            return {
+                ...state,
+                loading: false,
+                token: payload.authResult.token,
+                refreshToken: payload.authResult.refreshToken,
+                message: '',
+                isSuccessful: true,
+            }
+        }
+
+        case actions.REGISTER_USER_FAILED:
+            return {
+                ...state,
+                loading: false,
+                token: null,
+                refreshToken: null,
+                message: payload,
+                isSuccessful: false,
+            }
+
 
         case actions.GENERATE_PASSWORD_RESET_LINK_LOADING:
             return {
@@ -85,13 +117,13 @@ export const authReducer = (state = _state, { type, payload }: any) => {
                 isSuccessful: false,
             }
         case actions.RESET_PASSWORD_SUCCESS:
-            localStorage.removeItem('token');
-            localStorage.setItem('token', payload.token);
+            sessionStorage.removeItem('token');
+            sessionStorage.setItem('token', payload.authResult.token);
             return {
                 ...state,
                 loading: false,
-                token: payload.token,
-                refreshToken: payload.refreshToken,
+                token: payload.authResult.token,
+                refreshToken: payload.authResult.refreshToken,
                 message: 'Password change successful',
                 isSuccessful: true,
             }

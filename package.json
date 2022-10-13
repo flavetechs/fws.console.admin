@@ -39,6 +39,7 @@
     "sass": "^1.36.0",
     "sass-loader": "^12.1.0",
     "smooth-scrollbar": "^8.6.3",
+    "sweetalert": "^2.1.2",
     "swiper": "^6.8.1",
     "waypoints": "^4.0.1",
     "web-vitals": "^1.1.2",
