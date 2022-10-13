@@ -22,7 +22,7 @@ const ClientRouter = () => {
                      <Route path={productsLocations.products} exact component={Products} /> 
                        {/* smservice */}
                     <Route path={smsLocations.sms} exact component={SmsDescription}/>
-                    <Route path={smsLocations.createSms} exact component={CreateSms}/>
+                    <Route path={smsLocations.createSms} exact component={InstallSms}/>
                     {/* <Route path={smsLocations.createSms}  exact component={userProfileEdit}/> */}
                  </Switch>
             </CSSTransition>

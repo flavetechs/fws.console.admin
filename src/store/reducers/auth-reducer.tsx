@@ -122,7 +122,7 @@ export const authReducer = (state = _state, { type, payload }: any) => {
             return {
                 ...state,
                 loading: false,
-                token: payload.token,
+                token: payload.authResult.token,
                 refreshToken: payload.authResult.refreshToken,
                 message: 'Password change successful',
                 isSuccessful: true,

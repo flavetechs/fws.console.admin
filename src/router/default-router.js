@@ -4,7 +4,17 @@ import {Switch,Route} from 'react-router-dom'
 
 //TransitionGroup
 import {TransitionGroup,CSSTransition} from "react-transition-group";
-import { dashboardLocations } from './fws-path-locations';
+import { dashboardLocations, locationLocations } from './fws-path-locations';
+import ListCountry from '../components/fws-admin/location-lookup/list-country';
+import ListState from '../components/fws-admin/location-lookup/list-state';
+import ListCity from '../components/fws-admin/location-lookup/list-city';
+import AddCity from '../components/fws-admin/location-lookup/add-city';
+import EditCountry from '../components/fws-admin/location-lookup/edit-country';
+import EditState from '../components/fws-admin/location-lookup/edit-state';
+import EditCity from '../components/fws-admin/location-lookup/edit-city';
+import AddCountry from '../components/fws-admin/location-lookup/add-country'
+import AddState from '../components/fws-admin/location-lookup/add-state'
+
 
 const DefaultRouter = () => {
     return (
@@ -14,6 +24,15 @@ const DefaultRouter = () => {
                 {/* dashboard */}
                 <Route exact path="/" component={Index}></Route>
                         <Route path={dashboardLocations.dashboard} exact component={Index} />
+                        <Route path={locationLocations.country} component={ListCountry}></Route>
+                     <Route path={locationLocations.state} component={ListState}></Route>
+                     <Route path={locationLocations.city} component={ListCity}></Route>
+                     <Route path={locationLocations.addCountry} component={AddCountry}></Route>
+                     <Route path={locationLocations.addState} component={AddState}></Route>
+                     <Route path={locationLocations.addCity} component={AddCity}></Route>
+                     <Route path={locationLocations.editCountry} component={EditCountry}></Route>
+                     <Route path={locationLocations.editState} component={EditState}></Route>
+                     <Route path={locationLocations.editCity} component={EditCity}></Route>
                   {/* location */}
                      {/* <Route path="/dashboard/app/user-profile"     exact component={UserProfile} /> */}
                     {/* <Route path="/dashboard/app/user-add"         exact component={UserAdd}/>

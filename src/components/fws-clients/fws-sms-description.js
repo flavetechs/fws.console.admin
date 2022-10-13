@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ const SmsDescription = () => {
   const { products } = state.product;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
+  const [navigation, setNavigation] = useState("overview");
   React.useEffect(() => {
     getAllProducts()(dispatch);
   }, []);
@@ -20,7 +21,7 @@ const SmsDescription = () => {
       <Row>
         <Card>
           <Card.Body>
-            <div className="d-flex justify-content-between align-items-center ">
+            <div className="d-md-flex  justify-content-between align-items-center ">
               <div className="d-flex ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -41,6 +42,7 @@ const SmsDescription = () => {
                       }
                     </span>
                   </h6>
+                  <div>by Flavetech</div>
                   <div className="">
                     <svg
                       width="20"
@@ -103,9 +105,8 @@ const SmsDescription = () => {
                 </button>
               </div>
             </div>
-            <hr className="mt-4" />
             <div className="d-flex ">
-              <h2 className=" my-5 w-50">
+              <h2 className=" my-3 w-50">
                 {
                   products?.find((p) => p.productId === productId)
                     ?.productDescription
