@@ -1,51 +1,35 @@
-import React from 'react';
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { createState, getCountryLookupList, updateState } from "../../../store/actions/location-lookup-actions";
-import Card from "../../Card";
-import { locationLocations } from "../../../router/fws-path-locations";
+import { createCity } from "../../../../store/actions/location-lookup-actions";
+import Card from "../../../Card";
+import { locationLocations } from "../../../../router/fws-path-locations";
 
-const EditState = () => {
-
-  // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { stateList, submittedSuccessfully } = state.locationLookup;
-  // ACCESSING STATE FROM REDUX STORE
+const AddCity = () => {
+  //VARIABLE DECLARATIONS
+  const [isChecked, setIsChecked] = useState(true);
+  const history = useHistory();
+  let locations = useLocation();
+  const dispatch = useDispatch();
+  //VARIABLE DECLARATIONS
 
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
-    stateName: Yup.string()
-      .required("state is required"),
+    cityName: Yup.string()
+      .required("City is required"),
   });
   //VALIDATIONS SCHEMA
 
-  //VARIABLE DECLARATIONS
-  let locations = useLocation();
-  const [isChecked, setIsChecked] = useState(true);
-  const history = useHistory();
-  const dispatch = useDispatch();
+  // ACCESSING STATE FROM REDUX STORE
+  const state = useSelector((state) => state);
+  const { stateList } = state.locationLookup;
+  // ACCESSING STATE FROM REDUX STORE
+
   const queryParams = new URLSearchParams(locations.search);
-  const countryIdQueryParam = queryParams.get("countryId") || "";
   const stateIdQueryParam = queryParams.get("stateId") || "";
-  //VARIABLE DECLARATIONS
-
-  let selectedStateValue = stateList?.filter((item) => {
-    if (item.stateId == stateIdQueryParam) {
-      return item.stateName
-    }
-  })
-
-  React.useEffect(() => {
-    getCountryLookupList()(dispatch)
-  }, [])
-
-  React.useEffect(() => {
-    submittedSuccessfully && history.push(`${locationLocations.state}?countryId=${countryIdQueryParam}`);
-  }, [submittedSuccessfully]);
 
   return (
     <>
@@ -55,24 +39,22 @@ const EditState = () => {
             <Card >
               <Card.Header>
                 <div>
-                  <h5>Edit State</h5>
+                  <h5>Add City</h5>
                 </div>
               </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
-                    countryId: countryIdQueryParam,
                     stateId: stateIdQueryParam,
-                    stateName: selectedStateValue[0]['stateName'] || [],
+                    cityName: "",
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.countryId = countryIdQueryParam;
-                    values.stateId = stateIdQueryParam;
-                    values.stateName = values.stateName.toUpperCase();
+                    values.values = values.stateId;
+                    values.cityName = values.cityName.toUpperCase();
                     values.isActive = isChecked;
-                    updateState(values)(dispatch);
+                    createCity(values)(dispatch);
                   }}
                 >
                   {({
@@ -83,52 +65,52 @@ const EditState = () => {
                   }) => (
                     <Form>
                       <Col lg="12">
-                        {/* <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
-                          <label htmlFor="countryId" className="form-label">
-                            {" "}
-                            <b>Choose Country</b>
-                          </label>
-                          <Field
-                            as="select"
-                            name="countryId"
-                            className="form-select"
-                            id="countryId"
-                            onChange={(e) => {
-                              setFieldValue("countryId", e.target.value);
-                              history.push(`${locationLocations.addState}?countryId=${e.target.value}`
-                              );
-                            }}
-                          >
-                            <option value="">Select Country</option>
-                            {countryList?.map((country, idx) => (
-                              <option
-                                key={idx}
-                                value={country?.countryId}
-                              >
-                                {country.countryName}
-                              </option>
-                            ))}
-                          </Field>
-                        </div> */}
-                      </Col>
-                      <Col lg="12">
-                        <div className="form-group">
-                          {touched.stateName && errors.stateName && (
-                            <div className="text-danger">{errors.stateName}</div>
-                          )}
-                          <label htmlFor="stateName" className="form-label">
+                        <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
+                          <label htmlFor="cityName" className="form-label">
                             {" "}
                             <b>State Name</b>
                           </label>
                           <Field
+                            as="select"
+                            name="stateId"
+                            className="form-select"
+                            id="stateId"
+                            onChange={(e) => {
+                              setFieldValue("stateId", e.target.value);
+                              history.push(`${locationLocations.addCity}?stateId=${e.target.value}`
+                              );
+                            }}
+                          >
+                            <option value="">Select State</option>
+                            {stateList?.map((item, idx) => (
+                              <option
+                                key={idx}
+                                value={item?.stateId}
+                              >
+                                {item.stateName}
+                              </option>
+                            ))}
+                          </Field>
+                        </div>
+                      </Col>
+                      <Col lg="12">
+                        <div className="form-group">
+                          {touched.cityName && errors.cityName && (
+                            <div className="text-danger">{errors.cityName}</div>
+                          )}
+                          <label htmlFor="cityName" className="form-label">
+                            {" "}
+                            <b>City Name</b>
+                          </label>
+                          <Field
                             type="text"
                             className="form-control"
-                            name="stateName"
-                            id="stateName"
-                            aria-describedby="stateName"
+                            name="cityName"
+                            id="cityName"
+                            aria-describedby="cityName"
                             required
-                            placeholder="Enter State name"
-                            onChange={(e) => setFieldValue("stateName", e.target.value)}
+                            placeholder="Enter City name"
+                            onChange={(e) => setFieldValue("cityName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -180,4 +162,4 @@ const EditState = () => {
   );
 };
 
-export default EditState;
+export default AddCity;

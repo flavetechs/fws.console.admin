@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory } from "react-router-dom";
-import { createCountry } from "../../../store/actions/location-lookup-actions";
-import Card from "../../Card";
-import { locationLocations } from "../../../router/fws-path-locations";
+import { createCountry } from "../../../../store/actions/location-lookup-actions";
+import Card from "../../../Card";
+import { locationLocations } from "../../../../router/fws-path-locations";
 
 const AddCountry = () => {
   //VARIABLE DECLARATIONS
@@ -34,7 +34,7 @@ const AddCountry = () => {
     if (!isSuccessful) {
       history.push(locationLocations.country);
     }
-  }, [!isSuccessful]);
+  }, [isSuccessful, history]);
 
   return (
     <>

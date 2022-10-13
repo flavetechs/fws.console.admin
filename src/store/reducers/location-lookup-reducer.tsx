@@ -1,18 +1,10 @@
 import { actions } from "../action-types/location-lookup-action-types";
+import { ILocationLookupState } from "../Models/LocationLookupState";
 import { _state } from "../states/location-lookup-state";
 
-export const locationLookupReducer = (state = _state, { type, payload }) => {
-  switch (type) {
 
-    case actions.GET_SINGLE_ITEM: {
-      const selectedItem = state.countryList.find(d => d.countryId === payload);
-      if (selectedItem) {
-        return {
-          ...state,
-          selectedItem
-        }
-      }
-    }
+export const locationLookupReducer = (state : ILocationLookupState  = _state, { type, payload }: any) => {
+  switch (type) {
     case actions.PUSH_ITEM_ID:
       var arrayToFilter = [...state.selectedIds, payload]
       return {

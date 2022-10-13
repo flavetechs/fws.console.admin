@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCityItem, getCityLookupList, getCountryLookupList, pushId, removeId, returnList } from "../../../store/actions/location-lookup-actions";
-import Card from "../../Card";
-import { locationLocations } from "../../../router/fws-path-locations";
+import { deleteCityItem, getCityLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
+import Card from "../../../Card";
+import { locationLocations } from "../../../../router/fws-path-locations";
 import { Field, Formik } from "formik";
-import { showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
+import { showSingleDeleteDialog } from "../../../../store/actions/toaster-actions";
 
 
 const ListCity = () => {
@@ -14,9 +14,7 @@ const ListCity = () => {
     const dispatch = useDispatch();
     let locations = useLocation();
     const history = useHistory();
-    const [showDeleteButton, setDeleteButton] = useState(true);
-    const [showCheckBoxes, setShowCheckBoxes] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [setSearchQuery] = useState("");
     //VARIABLE DECLARATIONS
 
     // ACCESSING STATE FROM REDUX STORE
@@ -35,32 +33,7 @@ const ListCity = () => {
             }
         };
         fetchCityLookupList();
-    }, [stateIdQueryParam]);
-
-
-    const checkSingleItem = (isChecked, cityId, cityList) => {
-        cityList.forEach((item) => {
-            if (item.cityId === cityId) {
-                item.isChecked = isChecked;
-            }
-        });
-        if (isChecked) {
-            dispatch(pushId(cityId));
-        } else {
-            dispatch(removeId(cityId));
-        }
-    };
-    const checkAllItems = (isChecked, cityList) => {
-        cityList.forEach((item) => {
-            item.isChecked = isChecked;
-            if (item.isChecked) {
-                dispatch(pushId(item.cityId));
-            } else {
-                dispatch(removeId(item.cityId));
-            }
-        });
-        returnList(cityList)(dispatch);
-    };
+    }, [stateIdQueryParam, dispatch]);
 
     React.useEffect(() => {
         if (selectedIds.length === 0) {
@@ -68,9 +41,7 @@ const ListCity = () => {
         } else {
             deleteCityItem(selectedIds, stateIdQueryParam)(dispatch);
         }
-    }, [selectedIds])
-
-    console.log('stateIdQueryParam', stateIdQueryParam);
+    }, [selectedIds, dispatch, stateIdQueryParam])
     return (
         <>
             <div>
@@ -99,7 +70,7 @@ const ListCity = () => {
                                     <div className="d-md-flex justify-content-between">
                                         <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
                                             <Field
-                                                disabled={stateList.length == 0 ? true : false}
+                                                disabled={stateList.length === 0 ? true : false}
                                                 as="select"
                                                 name="stateId"
                                                 className="form-select"
@@ -164,90 +135,6 @@ const ListCity = () => {
                                         </div>
                                         <div>
                                             <div className="d-flex justify-content-end">
-                                                {showDeleteButton ? (
-                                                    <button
-                                                        type="button"
-                                                        className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
-                                                        onClick={() => {
-                                                            setDeleteButton(!showDeleteButton);
-                                                            setShowCheckBoxes(!showCheckBoxes);
-                                                        }}
-                                                    >
-                                                        <i className="btn-inner">
-                                                            <svg
-                                                                width="20"
-                                                                viewBox="0 0 24 24"
-                                                                fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                stroke="currentColor"
-                                                            >
-                                                                <path
-                                                                    d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="1.5"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                ></path>
-                                                                <path
-                                                                    d="M20.708 6.23975H3.75"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="1.5"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                ></path>
-                                                                <path
-                                                                    d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="1.5"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                ></path>
-                                                            </svg>
-                                                        </i>
-                                                        <span> Delete</span>
-                                                    </button>
-                                                ) : (
-                                                    <button
-                                                        type="button"
-                                                        className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
-                                                        onClick={() => {
-                                                            showSingleDeleteDialog(true)(dispatch);
-                                                        }}
-                                                    >
-                                                        <i className="btn-inner">
-                                                            <svg
-                                                                width="20"
-                                                                viewBox="0 0 24 24"
-                                                                fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                stroke="currentColor"
-                                                            >
-                                                                <path
-                                                                    d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="1.5"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                ></path>
-                                                                <path
-                                                                    d="M20.708 6.23975H3.75"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="1.5"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                ></path>
-                                                                <path
-                                                                    d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="1.5"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                ></path>
-                                                            </svg>
-                                                        </i>
-                                                        <span> Delete Selected</span>
-                                                    </button>
-                                                )}
                                                 <Link
                                                     to={locationLocations.addCity}
                                                     className="d-flex justify-content-end"
@@ -279,7 +166,7 @@ const ListCity = () => {
                                         </div>
                                     </div>
                                     <Card.Body className="px-0">
-                                        {stateList.length == 0 || stateIdQueryParam == "" ?
+                                        {stateList.length === 0 || stateIdQueryParam === "" ?
                                             <div className="d-flex justify-content-center">
                                                 <p className="display-6">Ensure a state is selected to view cities</p>
                                             </div>
@@ -294,17 +181,7 @@ const ListCity = () => {
                                                     <thead>
                                                         <tr className="ligth">
                                                             <th>
-                                                                {showCheckBoxes ? (
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="checkbox"
-                                                                        onChange={(e) => {
-                                                                            checkAllItems(e.target.checked, cityList);
-                                                                        }}
-                                                                    />
-                                                                ) : (
-                                                                    "S/No"
-                                                                )}
+                                                                <b>S/NO.</b>
                                                             </th>
                                                             <th>
                                                                 <b>City</b>
@@ -321,22 +198,9 @@ const ListCity = () => {
                                                         {cityList.map((item, idx) => (
                                                             <tr key={idx}>
                                                                 <td className="text-dark">
-                                                                    {showCheckBoxes ? (
-                                                                        <input
-                                                                            className="form-check-input"
-                                                                            type="checkbox"
-                                                                            checked={selectedIds.find(i => i === item.teacherUserAccountId) || false}
-                                                                            onChange={(e) => {
-                                                                                checkSingleItem(
-                                                                                    e.target.checked,
-                                                                                    item.teacherUserAccountId,
-                                                                                    cityList
-                                                                                );
-                                                                            }}
-                                                                        />
-                                                                    ) : (
+                                                                    {
                                                                         idx + 1
-                                                                    )}
+                                                                    }
                                                                 </td>
                                                                 <td className="text-uppercase">
                                                                     <b>{item.cityName}</b>

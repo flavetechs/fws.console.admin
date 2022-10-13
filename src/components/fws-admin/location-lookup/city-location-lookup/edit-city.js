@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import {  updateCountry } from "../../../store/actions/location-lookup-actions";
-import Card from "../../Card";
-import { locationLocations } from "../../../router/fws-path-locations";
+import { updateCity } from "../../../../store/actions/location-lookup-actions";
+import Card from "../../../Card";
+import { locationLocations } from "../../../../router/fws-path-locations";
 
-const EditCountry = () => {
+const EditCity = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
   const history = useHistory();
@@ -17,33 +17,32 @@ const EditCountry = () => {
   //VARIABLE DECLARATIONS
 
   //VALIDATIONS SCHEMA
+  let locations = useLocation();
   const validation = Yup.object().shape({
-    countryName: Yup.string()
-      .required("Country is required"),
+    cityName: Yup.string()
+      .required("City is required"),
   });
   //VALIDATIONS SCHEMA
 
   // ACCESSING STATE FROM REDUX STORE
-  let locations = useLocation();
   const state = useSelector((state) => state);
-  const { isSuccessful, countryList } = state.locationLookup;
+  const { cityList, submittedSuccessfully } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   const queryParams = new URLSearchParams(locations.search);
-  const countryIdQueryParam = queryParams.get("countryId") || "";
+  const stateIdQueryParam = queryParams.get("stateId") || "";
+  const cityIdQueryParam = queryParams.get("cityId") || "";
 
-  let selectedCountryValue = countryList.filter((item) => {
-    if (item.countryId == countryIdQueryParam) {
-      return item.countryName
+  let selectedCityValue = cityList?.filter((item) => {
+    if (item.cityId === cityIdQueryParam) {
+      return item.cityName
     }
+
   })
 
-
   React.useEffect(() => {
-    if (!isSuccessful) {
-      history.push(locationLocations.country);
-    }
-  }, [!isSuccessful])
+    submittedSuccessfully && history.push(`${locationLocations.city}?stateId=${stateIdQueryParam}`);
+  }, [submittedSuccessfully, history, stateIdQueryParam]);
 
   return (
     <>
@@ -53,22 +52,24 @@ const EditCountry = () => {
             <Card >
               <Card.Header>
                 <div>
-                  <h5>Edit Country</h5>
+                  <h5>Edit City</h5>
                 </div>
               </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
-                    countryId: countryIdQueryParam,
-                    countryName: selectedCountryValue[0]['countryName'] || [],
+                    stateId: stateIdQueryParam,
+                    cityId: cityIdQueryParam,
+                    cityName: selectedCityValue[0]['cityName'] || [],
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.countryId = countryIdQueryParam;
-                    values.countryName = values.countryName.toUpperCase();
+                    values.stateId = stateIdQueryParam;
+                    values.cityId = cityIdQueryParam;
+                    values.cityName = values.cityName.toUpperCase();
                     values.isActive = isChecked;
-                    updateCountry(values)(dispatch);
+                    updateCity(values)(dispatch);
                   }}
                 >
                   {({
@@ -80,25 +81,26 @@ const EditCountry = () => {
                     <Form>
                       <Col lg="12">
                         <div className="form-group">
-                          {touched.countryName && errors.countryName && (
-                            <div className="text-danger">{errors.countryName}</div>
+                          {touched.cityName && errors.cityName && (
+                            <div className="text-danger">{errors.cityName}</div>
                           )}
-                          <label htmlFor="countryName" className="form-label">
+                          <label htmlFor="cityName" className="form-label">
                             {" "}
-                            <b>Country Name</b>
+                            <b>City Name</b>
                           </label>
                           <Field
                             type="text"
                             className="form-control"
-                            name="countryName"
-                            id="countryName"
-                            aria-describedby="countryName"
+                            name="cityName"
+                            id="cityName"
+                            aria-describedby="cityName"
                             required
-                            placeholder="Enter Country name e.g Ghana... etc"
-                            onChange={(e) => setFieldValue("countryName", e.target.value)}
+                            placeholder="Enter City name"
+                            onChange={(e) => setFieldValue("cityName", e.target.value)}
                           />
                         </div>
                       </Col>
+
                       <Col lg="12" className="d-flex justify-content-between">
                         <div className="form-check mb-3 form-Check">
                           <input
@@ -146,4 +148,4 @@ const EditCountry = () => {
   );
 };
 
-export default EditCountry;
+export default EditCity;
