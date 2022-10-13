@@ -26,7 +26,7 @@ const AddCountry = () => {
 
   // ACCESSING STATE FROM REDUX STORE
   const state = useSelector((state) => state);
-  const { isSuccessful, message } = state.locationLookup;
+  const { isSuccessful } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
 
@@ -34,10 +34,7 @@ const AddCountry = () => {
     if (!isSuccessful) {
       history.push(locationLocations.country);
     }
-  }, [!isSuccessful])
-  
-
-  console.log('isSuccessful', isSuccessful);
+  }, [!isSuccessful]);
 
   return (
     <>
@@ -45,6 +42,11 @@ const AddCountry = () => {
         <Row>
           <Col sm="12">
             <Card >
+              <Card.Header>
+                <div>
+                  <h5>Add Country</h5>
+                </div>
+              </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
@@ -59,14 +61,10 @@ const AddCountry = () => {
                   }}
                 >
                   {({
-                    handleChange,
-                    handleBlur,
                     handleSubmit,
                     setFieldValue,
-                    values,
                     touched,
                     errors,
-                    isValid,
                   }) => (
                     <Form>
                       <Col lg="12">
@@ -98,7 +96,7 @@ const AddCountry = () => {
                             className="form-check-input"
                             name="isActive"
                             checked={isChecked}
-                            onChange={(e) => {
+                            onChange={() => {
                               setIsChecked(!isChecked);
                             }}
                           />

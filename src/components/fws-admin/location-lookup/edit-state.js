@@ -1,35 +1,51 @@
+import React from 'react';
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
-import { useHistory } from "react-router-dom";
-import { createCountry, createState } from "../../../store/actions/location-lookup-actions";
+import { useHistory, useLocation } from "react-router-dom";
+import { createState, getCountryLookupList, updateState } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
+import { locationLocations } from "../../../router/fws-path-locations";
 
 const EditState = () => {
-  //VARIABLE DECLARATIONS
-  const [isChecked, setIsChecked] = useState(true);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  //VARIABLE DECLARATIONS
-
-  //VALIDATIONS SCHEMA
-  const validation = Yup.object().shape({
-    countryName: Yup.string()
-      .min(2, "State Name Too Short!")
-      .required("State is required"),
-  });
-  //VALIDATIONS SCHEMA
 
   // ACCESSING STATE FROM REDUX STORE
   const state = useSelector((state) => state);
-  const { isSuccessful, message } = state.locationLookup;
+  const { stateList, submittedSuccessfully } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
-//   if (isSuccessful) {
-//     history.push(sessionLocations.subjectSetupList);
-//   }
+  //VALIDATIONS SCHEMA
+  const validation = Yup.object().shape({
+    stateName: Yup.string()
+      .required("state is required"),
+  });
+  //VALIDATIONS SCHEMA
+
+  //VARIABLE DECLARATIONS
+  let locations = useLocation();
+  const [isChecked, setIsChecked] = useState(true);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const queryParams = new URLSearchParams(locations.search);
+  const countryIdQueryParam = queryParams.get("countryId") || "";
+  const stateIdQueryParam = queryParams.get("stateId") || "";
+  //VARIABLE DECLARATIONS
+
+  let selectedStateValue = stateList?.filter((item) => {
+    if (item.stateId == stateIdQueryParam) {
+      return item.stateName
+    }
+  })
+
+  React.useEffect(() => {
+    getCountryLookupList()(dispatch)
+  }, [])
+
+  React.useEffect(() => {
+    submittedSuccessfully && history.push(`${locationLocations.state}?countryId=${countryIdQueryParam}`);
+  }, [submittedSuccessfully]);
 
   return (
     <>
@@ -37,31 +53,64 @@ const EditState = () => {
         <Row>
           <Col sm="12">
             <Card >
+              <Card.Header>
+                <div>
+                  <h5>Edit State</h5>
+                </div>
+              </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
-                    stateName: "",
+                    countryId: countryIdQueryParam,
+                    stateId: stateIdQueryParam,
+                    stateName: selectedStateValue[0]['stateName'] || [],
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
+                    values.countryId = countryIdQueryParam;
+                    values.stateId = stateIdQueryParam;
                     values.stateName = values.stateName.toUpperCase();
                     values.isActive = isChecked;
-                    createState(values)(dispatch);
+                    updateState(values)(dispatch);
                   }}
                 >
                   {({
-                    handleChange,
-                    handleBlur,
                     handleSubmit,
                     setFieldValue,
-                    values,
                     touched,
                     errors,
-                    isValid,
                   }) => (
                     <Form>
-                      {message && <div className="text-danger">{message}</div>}
+                      <Col lg="12">
+                        {/* <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
+                          <label htmlFor="countryId" className="form-label">
+                            {" "}
+                            <b>Choose Country</b>
+                          </label>
+                          <Field
+                            as="select"
+                            name="countryId"
+                            className="form-select"
+                            id="countryId"
+                            onChange={(e) => {
+                              setFieldValue("countryId", e.target.value);
+                              history.push(`${locationLocations.addState}?countryId=${e.target.value}`
+                              );
+                            }}
+                          >
+                            <option value="">Select Country</option>
+                            {countryList?.map((country, idx) => (
+                              <option
+                                key={idx}
+                                value={country?.countryId}
+                              >
+                                {country.countryName}
+                              </option>
+                            ))}
+                          </Field>
+                        </div> */}
+                      </Col>
                       <Col lg="12">
                         <div className="form-group">
                           {touched.stateName && errors.stateName && (
@@ -79,7 +128,7 @@ const EditState = () => {
                             aria-describedby="stateName"
                             required
                             placeholder="Enter State name"
-                            onChange={(e)=> setFieldValue("stateName",e.target.value)}
+                            onChange={(e) => setFieldValue("stateName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -91,10 +140,10 @@ const EditState = () => {
                             id="customCheck1"
                             className="form-check-input"
                             name="isActive"
-                            // checked={isChecked}
-                            // onChange={(e) => {
-                            //   setIsChecked(!isChecked);
-                            // }}
+                            checked={isChecked}
+                            onChange={() => {
+                              setIsChecked(!isChecked);
+                            }}
                           />
                           <label htmlFor="isActive" className="check-label">
                             isActive{" "}
@@ -109,7 +158,7 @@ const EditState = () => {
                             history.goBack();
                           }}
                         >
-                          Cancel
+                          Back
                         </Button>{" "}
                         <Button
                           type="button"

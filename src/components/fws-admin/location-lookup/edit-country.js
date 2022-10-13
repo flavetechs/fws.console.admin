@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { createCountry, updateCountry } from "../../../store/actions/location-lookup-actions";
+import {  updateCountry } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
 
@@ -19,7 +19,6 @@ const EditCountry = () => {
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
     countryName: Yup.string()
-      .min(2, "Country Name Too Short!")
       .required("Country is required"),
   });
   //VALIDATIONS SCHEMA
@@ -27,11 +26,17 @@ const EditCountry = () => {
   // ACCESSING STATE FROM REDUX STORE
   let locations = useLocation();
   const state = useSelector((state) => state);
-  const { isSuccessful, message } = state.locationLookup;
+  const { isSuccessful, countryList } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   const queryParams = new URLSearchParams(locations.search);
   const countryIdQueryParam = queryParams.get("countryId") || "";
+
+  let selectedCountryValue = countryList.filter((item) => {
+    if (item.countryId == countryIdQueryParam) {
+      return item.countryName
+    }
+  })
 
 
   React.useEffect(() => {
@@ -40,9 +45,6 @@ const EditCountry = () => {
     }
   }, [!isSuccessful])
 
-
-  console.log('countryIdQueryParam', countryIdQueryParam);
-
   return (
     <>
       <div className="col-md-8 mx-auto">
@@ -50,15 +52,15 @@ const EditCountry = () => {
           <Col sm="12">
             <Card >
               <Card.Header>
-                <div className='header'>
-                    <h4>Edit Country Details</h4>
+                <div>
+                  <h5>Edit Country</h5>
                 </div>
               </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
                     countryId: countryIdQueryParam,
-                    countryName: "",
+                    countryName: selectedCountryValue[0]['countryName'] || [],
                     isActive: true,
                   }}
                   validationSchema={validation}
@@ -70,14 +72,10 @@ const EditCountry = () => {
                   }}
                 >
                   {({
-                    handleChange,
-                    handleBlur,
                     handleSubmit,
                     setFieldValue,
-                    values,
                     touched,
                     errors,
-                    isValid,
                   }) => (
                     <Form>
                       <Col lg="12">
@@ -109,7 +107,7 @@ const EditCountry = () => {
                             className="form-check-input"
                             name="isActive"
                             checked={isChecked}
-                            onChange={(e) => {
+                            onChange={() => {
                               setIsChecked(!isChecked);
                             }}
                           />

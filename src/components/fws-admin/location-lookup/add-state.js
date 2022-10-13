@@ -5,22 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { createCountry, createState, getCountryLookupList } from "../../../store/actions/location-lookup-actions";
+import { createState, getCountryLookupList } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
 
-const AddCountry = () => {
+const AddState = () => {
 
   // ACCESSING STATE FROM REDUX STORE
   const state = useSelector((state) => state);
-  const { isSuccessful, message, countryList } = state.locationLookup;
+  const { countryList } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
-    countryName: Yup.string()
-      .min(2, "Country Name Too Short!")
-      .required("Country is required"),
+    stateName: Yup.string()
+      .required("State is required"),
   });
   //VALIDATIONS SCHEMA
 
@@ -31,24 +30,12 @@ const AddCountry = () => {
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(locations.search);
   const countryIdQueryParam = queryParams.get("countryId") || "";
-  const [addStateItem, setAddStateItem] = useState({ countryId: countryIdQueryParam, stateName: "", isActive: isChecked })
   //VARIABLE DECLARATIONS
-
-  // const addStateItem = { countryId: countryIdQueryParam, stateName: field, isActive: isChecked }
 
   React.useEffect(() => {
     getCountryLookupList()(dispatch)
   }, [])
 
-  // React.useEffect(() => {
-  //   if (!isSuccessful) {
-  //     history.push(locationLocations.country);
-  //   }
-  // }, [!isSuccessful])
-
-
-  console.log('countryIdQueryParam', countryIdQueryParam);
-  console.log('addStateItem', addStateItem);
 
   return (
     <>
@@ -56,6 +43,11 @@ const AddCountry = () => {
         <Row>
           <Col sm="12">
             <Card >
+              <Card.Header>
+                <div>
+                  <h5>Add State</h5>
+                </div>
+              </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
@@ -65,21 +57,17 @@ const AddCountry = () => {
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.countryId = countryIdQueryParam;
+                    values.countryId = values.countryId;
                     values.stateName = values.stateName.toUpperCase();
                     values.isActive = isChecked;
                     createState(values)(dispatch);
                   }}
                 >
                   {({
-                    handleChange,
-                    handleBlur,
                     handleSubmit,
                     setFieldValue,
-                    values,
                     touched,
                     errors,
-                    isValid,
                   }) => (
                     <Form>
                       <Col lg="12">
@@ -141,9 +129,8 @@ const AddCountry = () => {
                             className="form-check-input"
                             name="isActive"
                             checked={isChecked}
-                            onChange={(e) => {
+                            onChange={() => {
                               setIsChecked(!isChecked);
-                              addStateItem.isActive = e.target.value
                             }}
                           />
                           <label htmlFor="isActive" className="check-label">
@@ -156,7 +143,7 @@ const AddCountry = () => {
                           type="button"
                           variant="btn btn-danger mx-2"
                           onClick={() => {
-                            history.push(locationLocations.state)
+                            history.goBack();
                           }}
                         >
                           Back
@@ -165,9 +152,6 @@ const AddCountry = () => {
                           type="button"
                           variant="btn btn-primary"
                           onClick={handleSubmit}
-                          // onClick={() => {
-                          //   createState(addStateItem)(dispatch)
-                          // }}
                         >
                           Submit
                         </Button>
@@ -184,4 +168,4 @@ const AddCountry = () => {
   );
 };
 
-export default AddCountry;
+export default AddState;

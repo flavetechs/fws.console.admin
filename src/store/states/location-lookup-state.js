@@ -10,4 +10,5 @@ export const _state = {
     citySelectedItem: {},
     selectedItem: null,
     selectedIds: [],
+    submittedSuccessfully: false,
 }

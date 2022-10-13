@@ -114,14 +114,12 @@ export const createState = (values) => (dispatch) => {
 
     axiosInstance.post('/fws/lookups/api/v1/create/state-lookup', values)
         .then((res) => {
-            console.log('res', res);
             dispatch({
                 type: actions.CREATE_STATE_LOOKUP_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
             // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
         }).catch((err) => {
-            console.log('err', err);
             dispatch({
                 type: actions.CREATE_STATE_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
@@ -292,12 +290,12 @@ export const deleteCountryItem = (countryId) => (dispatch) => {
         });
 }
 
-export const deleteStateItem = (stateId) => (dispatch) => {
+export const deleteStateItem = (stateId, countryIdQueryParam) => (dispatch) => {
     dispatch({
         type: actions.DELETE_STATE_LOOKUP_LOADING
     });
     const payload = {
-        items: stateId[0]
+        lookupId: stateId[0]
     }
 
     axiosInstance.post('/fws/lookups/api/v1/delete/state-lookup', payload)
@@ -306,7 +304,7 @@ export const deleteStateItem = (stateId) => (dispatch) => {
                 type: actions.DELETE_STATE_LOOKUP_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-            getCountryLookupList()(dispatch);
+            getStateLookupList(countryIdQueryParam)(dispatch);
             // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
         }).catch((err) => {
             dispatch({
@@ -317,7 +315,7 @@ export const deleteStateItem = (stateId) => (dispatch) => {
         });
 }
 
-export const deleteCityItem = (cityId) => (dispatch) => {
+export const deleteCityItem = (cityId, stateIdQueryParam) => (dispatch) => {
     dispatch({
         type: actions.DELETE_CITY_LOOKUP_LOADING
     });
@@ -330,7 +328,7 @@ export const deleteCityItem = (cityId) => (dispatch) => {
                 type: actions.DELETE_CITY_LOOKUP_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-            getCountryLookupList()(dispatch);
+            getCityLookupList(stateIdQueryParam)(dispatch);
             // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
         }).catch((err) => {
             dispatch({

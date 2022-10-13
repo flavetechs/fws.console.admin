@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteCountryItem, getCountryLookupList, pushId, removeId, returnList } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
-import { respondToDeleteDialog, showErrorToast, showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
+import { showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
 
 
 const ListCountry = () => {
@@ -13,7 +13,7 @@ const ListCountry = () => {
     const dispatch = useDispatch();
     const [showDeleteButton, setDeleteButton] = useState(true);
     const [showCheckBoxes, setShowCheckBoxes] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [ setSearchQuery] = useState("");
     //VARIABLE DECLARATIONS
 
     // ACCESSING STATE FROM REDUX STORE
@@ -22,88 +22,43 @@ const ListCountry = () => {
     const { deleteDialogResponse } = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
-    //   const filteredStaffList = countryList.filter((staffs) => {
-    //     if (searchQuery === "") {
-    //       //if query is empty
-    //       return staffs;
-    //     } else if (
-    //       staffs.firstName.toLowerCase().includes(searchQuery.toLowerCase())
-    //     ) {
-    //       //returns filtered array
-    //       return staffs;
-    //     } else if (staffs.lastName.toLowerCase().includes(searchQuery.toLowerCase())) {
-    //       //returns filtered array
-    //       return staffs;
-    //     } else if (staffs.email.toLowerCase().includes(searchQuery.toLowerCase())) {
-    //       //returns filtered array
-    //       return staffs;
-    //     }
-
-    //   });
 
     React.useEffect(() => {
         getCountryLookupList()(dispatch)
     }, [dispatch]);
 
-    //DELETE HANDLER
-    React.useEffect(() => {
-        if (deleteDialogResponse === "continue") {
-            if (selectedIds.length === 0) {
-                showErrorToast("No Item selected to be deleted")(dispatch);
-            } else {
-                deleteCountryItem(selectedIds)(dispatch);
-                setDeleteButton(!showDeleteButton);
-                setShowCheckBoxes(false);
-                respondToDeleteDialog("")(dispatch);
+    const checkSingleItem = (isChecked, countryId, countryList) => {
+        countryList.forEach((item) => {
+            if (item.countryId === countryId) {
+                item.isChecked = isChecked;
             }
+        });
+        if (isChecked) {
+            dispatch(pushId(countryId));
         } else {
-            setDeleteButton(true);
-            setShowCheckBoxes(false);
-            selectedIds.forEach((id) => {
-                dispatch(removeId(id));
-            });
+            dispatch(removeId(countryId));
         }
-        return () => {
-            respondToDeleteDialog("")(dispatch);
-        };
-    }, [deleteDialogResponse, dispatch]);
-    //DELETE HANDLER
-
-    // React.useEffect(() => {
-    //     if (selectedIds.length === 0) {
-    //         return
-    //     } else {
-    //         deleteCountryItem(selectedIds)(dispatch);
-    //     }
-    // }, [selectedIds]);
-
-    // const checkSingleItem = (isChecked, countryId, countryList) => {
-    //     countryList.forEach((item) => {
-    //         if (item.countryId === countryId) {
-    //             item.isChecked = isChecked;
-    //         }
-    //     });
-    //     if (isChecked) {
-    //         dispatch(pushId(countryId));
-    //     } else {
-    //         dispatch(removeId(countryId));
-    //     }
-    // };
-    // const checkAllItems = (isChecked, countryList) => {
-    //     countryList.forEach((item) => {
-    //         item.isChecked = isChecked;
-    //         if (item.isChecked) {
-    //             dispatch(pushId(item.countryId));
-    //         } else {
-    //             dispatch(removeId(item.countryId));
-    //         }
-    //     });
-    //     returnList(countryList)(dispatch);
-    // };
+    };
+    const checkAllItems = (isChecked, countryList) => {
+        countryList.forEach((item) => {
+            item.isChecked = isChecked;
+            if (item.isChecked) {
+                dispatch(pushId(item.countryId));
+            } else {
+                dispatch(removeId(item.countryId));
+            }
+        });
+        returnList(countryList)(dispatch);
+    };
 
 
-
-    console.log('selectedIds', selectedIds);
+    React.useEffect(() => {
+        if (selectedIds.length === 0) {
+            return
+        } else {
+            deleteCountryItem(selectedIds)(dispatch)
+        }
+    }, [selectedIds]);
 
     return (
         <>
@@ -207,9 +162,9 @@ const ListCountry = () => {
                                             <button
                                                 type="button"
                                                 className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
-                                            //   onClick={() => {
-                                            //     showSingleDeleteDialog(true)(dispatch);
-                                            //   }}
+                                                onClick={() => {
+                                                    showSingleDeleteDialog(true)(dispatch);
+                                                }}
                                             >
                                                 <i className="btn-inner">
                                                     <svg
@@ -290,9 +245,9 @@ const ListCountry = () => {
                                                         <input
                                                             className="form-check-input"
                                                             type="checkbox"
-                                                        //   onChange={(e) => {
-                                                        //     checkAllItems(e.target.checked, staffList);
-                                                        //   }}
+                                                            onChange={(e) => {
+                                                                checkAllItems(e.target.checked, countryList);
+                                                            }}
                                                         />
                                                     ) : (
                                                         "S/No"
@@ -317,14 +272,14 @@ const ListCountry = () => {
                                                             <input
                                                                 className="form-check-input"
                                                                 type="checkbox"
-                                                            // checked={selectedIds.find(i=> i === item.teacherUserAccountId) ||false}
-                                                            // onChange={(e) => {
-                                                            //   checkSingleItem(
-                                                            //     e.target.checked,
-                                                            //     item.teacherUserAccountId,
-                                                            //     staffList
-                                                            //   );
-                                                            // }}
+                                                                checked={selectedIds.find(i => i === item.countryId) || false}
+                                                                onChange={(e) => {
+                                                                    checkSingleItem(
+                                                                        e.target.checked,
+                                                                        item.countryId,
+                                                                        countryList
+                                                                    );
+                                                                }}
                                                             />
                                                         ) : (
                                                             idx + 1
@@ -387,11 +342,6 @@ const ListCountry = () => {
                                                                     data-original-title="Delete"
                                                                     to="#"
                                                                     data-id={item.countryId}
-                                                                    // onClick={()=> deleteCountryItem(item.countryId)(dispatch)}
-                                                                    // onClick={() => {
-                                                                    //     dispatch(pushId(item.countryId));
-                                                                    // }
-                                                                    // }
                                                                     onClick={() => {
                                                                         dispatch(
                                                                             pushId(item.countryId)

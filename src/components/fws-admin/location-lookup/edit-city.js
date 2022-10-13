@@ -1,11 +1,13 @@
+import React from 'react'
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
-import { useHistory } from "react-router-dom";
-import { createCity, createState } from "../../../store/actions/location-lookup-actions";
+import { useHistory, useLocation } from "react-router-dom";
+import { createCity, createState, updateCity } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
+import { locationLocations } from "../../../router/fws-path-locations";
 
 const EditCity = () => {
   //VARIABLE DECLARATIONS
@@ -15,21 +17,32 @@ const EditCity = () => {
   //VARIABLE DECLARATIONS
 
   //VALIDATIONS SCHEMA
+  let locations = useLocation();
   const validation = Yup.object().shape({
-    countryName: Yup.string()
-      .min(2, "City Name Too Short!")
+    cityName: Yup.string()
       .required("City is required"),
   });
   //VALIDATIONS SCHEMA
 
   // ACCESSING STATE FROM REDUX STORE
   const state = useSelector((state) => state);
-  const { isSuccessful, message } = state.locationLookup;
+  const { cityList, submittedSuccessfully } = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
-//   if (isSuccessful) {
-//     history.push(sessionLocations.subjectSetupList);
-//   }
+  const queryParams = new URLSearchParams(locations.search);
+  const stateIdQueryParam = queryParams.get("stateId") || "";
+  const cityIdQueryParam = queryParams.get("cityId") || "";
+
+  let selectedCityValue = cityList?.filter((item) => {
+    if (item.cityId == cityIdQueryParam) {
+      return item.cityName
+    }
+
+  })
+
+  React.useEffect(() => {
+    submittedSuccessfully && history.push(`${locationLocations.city}?stateId=${stateIdQueryParam}`);
+  }, [submittedSuccessfully]);
 
   return (
     <>
@@ -37,31 +50,35 @@ const EditCity = () => {
         <Row>
           <Col sm="12">
             <Card >
+              <Card.Header>
+                <div>
+                  <h5>Edit City</h5>
+                </div>
+              </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
-                    cityName: "",
+                    stateId: stateIdQueryParam,
+                    cityId: cityIdQueryParam,
+                    cityName: selectedCityValue[0]['cityName'] || [],
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
+                    values.stateId = stateIdQueryParam;
+                    values.cityId = cityIdQueryParam;
                     values.cityName = values.cityName.toUpperCase();
                     values.isActive = isChecked;
-                    createCity(values)(dispatch);
+                    updateCity(values)(dispatch);
                   }}
                 >
                   {({
-                    handleChange,
-                    handleBlur,
                     handleSubmit,
                     setFieldValue,
-                    values,
                     touched,
                     errors,
-                    isValid,
                   }) => (
                     <Form>
-                      {message && <div className="text-danger">{message}</div>}
                       <Col lg="12">
                         <div className="form-group">
                           {touched.cityName && errors.cityName && (
@@ -79,7 +96,7 @@ const EditCity = () => {
                             aria-describedby="cityName"
                             required
                             placeholder="Enter City name"
-                            onChange={(e)=> setFieldValue("cityName",e.target.value)}
+                            onChange={(e) => setFieldValue("cityName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -91,10 +108,10 @@ const EditCity = () => {
                             id="customCheck1"
                             className="form-check-input"
                             name="isActive"
-                            // checked={isChecked}
-                            // onChange={(e) => {
-                            //   setIsChecked(!isChecked);
-                            // }}
+                            checked={isChecked}
+                            onChange={() => {
+                              setIsChecked(!isChecked);
+                            }}
                           />
                           <label htmlFor="isActive" className="check-label">
                             isActive{" "}
@@ -109,7 +126,7 @@ const EditCity = () => {
                             history.goBack();
                           }}
                         >
-                          Cancel
+                          Back
                         </Button>{" "}
                         <Button
                           type="button"

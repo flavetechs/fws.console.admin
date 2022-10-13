@@ -18,8 +18,7 @@ const AddCity = () => {
 
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
-    countryName: Yup.string()
-      .min(2, "City Name Too Short!")
+    cityName: Yup.string()
       .required("City is required"),
   });
   //VALIDATIONS SCHEMA
@@ -38,6 +37,11 @@ const AddCity = () => {
         <Row>
           <Col sm="12">
             <Card >
+              <Card.Header>
+                <div>
+                  <h5>Add City</h5>
+                </div>
+              </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
@@ -47,6 +51,7 @@ const AddCity = () => {
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
+                    values.values = values.stateId;
                     values.cityName = values.cityName.toUpperCase();
                     values.isActive = isChecked;
                     createCity(values)(dispatch);
@@ -136,7 +141,7 @@ const AddCity = () => {
                           type="button"
                           variant="btn btn-danger mx-2"
                           onClick={() => {
-                            history.push(locationLocations.city);
+                            history.goBack();
                           }}
                         >
                           Back

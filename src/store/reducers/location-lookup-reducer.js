@@ -60,7 +60,8 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         ...state,
         loading: true,
         message: '',
-        isSuccessful: false
+        isSuccessful: false,
+        submittedSuccessfully: false,
       };
     case actions.FETCH_STATE_LOOKUP_SUCCESS:
       return {
@@ -68,13 +69,15 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         loading: false,
         stateList: payload,
         isSuccessful: true,
+        submittedSuccessfully: false,
       };
     case actions.FETCH_STATE_LOOKUP_FAILED:
       return {
         ...state,
         loading: false,
         isSuccessful: false,
-        message: payload
+        message: payload,
+        submittedSuccessfully: false,
       };
 
     case actions.FETCH_CITY_LOOKUP_LOADING:
@@ -82,7 +85,8 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         ...state,
         loading: true,
         message: '',
-        isSuccessful: false
+        isSuccessful: false,
+        submittedSuccessfully: false,
       };
     case actions.FETCH_CITY_LOOKUP_SUCCESS:
       return {
@@ -90,13 +94,15 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         loading: false,
         cityList: payload,
         isSuccessful: true,
+        submittedSuccessfully: false,
       };
     case actions.FETCH_CITY_LOOKUP_FAILED:
       return {
         ...state,
         loading: false,
         isSuccessful: false,
-        message: payload
+        message: payload,
+        submittedSuccessfully: false,
       };
 
     case actions.CREATE_COUNTRY_LOOKUP_LOADING:
@@ -193,21 +199,24 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         ...state,
         loading: true,
         isSuccessful: false,
-        message: ''
+        message: '',
+        submittedSuccessfully: false,
       };
     case actions.UPDATE_STATE_LOOKUP_SUCCESS:
       return {
         ...state,
         isSuccessful: true,
         loading: false,
-        message: payload
+        message: payload,
+        submittedSuccessfully: true,
       };
     case actions.UPDATE_STATE_LOOKUP_FAILED:
       return {
         ...state,
         loading: false,
         message: '',
-        isSuccessful: false
+        isSuccessful: false,
+        submittedSuccessfully: false,
       };
 
     case actions.UPDATE_CITY_LOOKUP_LOADING:
@@ -215,21 +224,24 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         ...state,
         loading: true,
         isSuccessful: false,
-        message: ''
+        message: '',
+        submittedSuccessfully: false,
       };
     case actions.UPDATE_CITY_LOOKUP_SUCCESS:
       return {
         ...state,
         isSuccessful: true,
         loading: false,
-        message: payload
+        message: payload,
+        submittedSuccessfully: false,
       };
     case actions.UPDATE_CITY_LOOKUP_FAILED:
       return {
         ...state,
         loading: false,
         message: '',
-        isSuccessful: false
+        isSuccessful: false,
+        submittedSuccessfully: false,
       };
 
     case actions.DELETE_COUNTRY_LOOKUP_LOADING:
