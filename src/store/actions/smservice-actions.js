@@ -1,5 +1,7 @@
 import axiosInstance from "../../axios/axiosInstance";
+import { SuccessToast } from "../../components/hoc-tools/alert";
 import { actions } from "../action-types/smservice-action-types";
+import swal from 'sweetalert';
 
 export const getAllSms = () => (dispatch) => {
     dispatch({
@@ -32,6 +34,7 @@ export const createSms = (values) => (dispatch) => {
                 type: actions.CREATE_SMS_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
+             swal("Successful", res.data.message.friendlyMessage, "success")
             //showSuccessToast(res.data.message.friendlyMessage)(dispatch)
             getAllSms()(dispatch);
         }).catch((err) => {
@@ -39,6 +42,7 @@ export const createSms = (values) => (dispatch) => {
                 type: actions.CREATE_SMS_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
+            swal("Successful", err.data.message.friendlyMessage, "error")
             //showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
         });
 }
@@ -48,7 +52,7 @@ export const updateSms = (values) => (dispatch) => {
         type: actions.UPDATE_SMS_LOADING
     });
                 
-    axiosInstance.post('/fws/sms/api/v1/create-sms',  values)
+    axiosInstance.post('/fws/sms/api/v1/update-sms',  values)
         .then((res) => {
             dispatch({
                 type: actions.UPDATE_SMS_SUCCESS,
@@ -104,23 +108,24 @@ export const getStates = (country) => (dispatch) => {
         })
 }
 
-
-export const getCities = (state) => (dispatch) => {
+export const validateBaseUrlSuffix = (suffix) => (dispatch) => {
     dispatch({
-        type: actions.FETCH_CITY_LOADING,
+        type: actions.VALIDATE_BASE_URL_SUFFIX_LOADING,
     });
-
-    axiosInstance.get(`/fws/lookups/api/v1/get/city-select?state=${state}`)
+const payload={
+    suffix
+}
+    axiosInstance.post(`fws/sms/api/v1/validate-baseurl-suffix`,payload)
         .then(response => {
             dispatch({
-                type: actions.FETCH_CITY_SUCCESS,
+                type: actions.VALIDATE_BASE_URL_SUFFIX_SUCCESS,
                 payload: response.data.result
             });
 
         }).catch(err => {
             dispatch({
-                type: actions.FETCH_CITY_FAILED,
+                type: actions.VALIDATE_BASE_URL_SUFFIX_FAILED,
                 payload: err.response.data.result
             });
-        })
+})
 }

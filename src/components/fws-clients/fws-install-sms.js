@@ -3,12 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import {
-  createSms,
-  getCities,
-  getCountries,
-  getStates,
-} from "../../store/actions/smservice-actions";
+import { createSms, getCountries, getStates, validateBaseUrlSuffix } from "../../store/actions/smservice-actions";
 import avatars1 from "../../assets/images/avatars/01.png";
 import avatars2 from "../../assets/images/avatars/avtar_2.png";
 import avatars3 from "../../assets/images/avatars/avtar_2.png";
@@ -17,42 +12,38 @@ import avatars5 from "../../assets/images/avatars/avtar_4.png";
 import avatars6 from "../../assets/images/avatars/avtar_5.png";
 import * as Yup from "yup";
 
-const InstallSms = () => {
-  //VALIDATION
-  const validation = Yup.object().shape({
-    schoolName: Yup.string().required("School Name is required"),
-    address: Yup.string().required("Address is required"),
-    country: Yup.string().required("Country is required"),
-    state: Yup.string().required("State is required"),
-    city: Yup.string().required("City is required"),
-    baseUrl: Yup.string()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      )
-      .required("Base URL is required"),
-    baseUrlAppendix: Yup.string().required("Base Appendix is required"),
-  });
-  //VALIDATION
+const CreateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
   const state = useSelector((state) => state);
-  const { countries, states, cities } = state.smservice;
+  const { countries, states,baseUrlSuffixValidation,validationSuccessful } = state.smservice;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
   const [images, setImages] = useState(null);
-
-  useEffect(() => {
-    getCountries()(dispatch);
-  }, [dispatch]);
-
   const ImageDisplay = (event) => {
     if (event.target.files[0]) {
       setImages(URL.createObjectURL(event.target.files[0]));
     }
   };
-
+  //VALIDATIONS SCHEMA
+  const validation = Yup.object().shape({
+    schoolName: Yup.string().required("School Name is required"),
+    address: Yup.string().required("Address is required"),
+    country: Yup.string().required("Country is required"),
+    state: Yup.string().required("State is required"),
+    baseUrl: Yup.string()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      )
+      .required("Base Url is required"),
+    baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
+  });
+  //VALIDATIONS SCHEMA
+  useEffect(() => {
+    getCountries()(dispatch);
+  }, [dispatch]);
   return (
     <>
       <div>
@@ -63,7 +54,7 @@ const InstallSms = () => {
             ipAddress: "",
             country: "",
             state: "",
-            city: "",
+            // city: "",
             baseUrl: "",
             baseUrlAppendix: "",
             schoolLogo: "",
@@ -71,7 +62,8 @@ const InstallSms = () => {
           }}
           validationSchema={validation}
           onSubmit={(values) => {
-            createSms(values)(dispatch);
+           createSms(values)(dispatch);
+           history.goBack();
           }}
         >
           {({
@@ -97,23 +89,19 @@ const InstallSms = () => {
                   <Card.Body>
                     <div className="new-user-info">
                       <div>
-                        <Row>
-                          <Row>
-                            <div className="col-md-6">
-                              {touched.schoolName && errors.schoolName && (
-                                <div className="text-danger">
-                                  {errors.schoolName}
-                                </div>
-                              )}
-                            </div>
-                            <div className="col-md-6">
-                              {touched.address && errors.address && (
-                                <div className="text-danger">
-                                  {errors.address}
-                                </div>
-                              )}
-                            </div>
-                          </Row>
+                      <Row>
+                          <div className="col-md-6">
+                            {touched.schoolName && errors.schoolName && (
+                              <div className="text-danger">{errors.schoolName}</div>
+                            )}
+                          </div>
+                          <div className="col-md-6">
+                            {touched.address && errors.address && (
+                              <div className="text-danger">{errors.address}</div>
+                            )}
+                          </div>
+                        </Row>
+                        <div className="row">
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="schoolName" className="form-label">
                               <b>School Name:</b>
@@ -143,15 +131,15 @@ const InstallSms = () => {
                             />
                           </Form.Group>
                           <Row>
-                            <div className="col-md-6"></div>
-                            <div className="col-md-6">
-                              {touched.country && errors.country && (
-                                <div className="text-danger">
-                                  {errors.country}
-                                </div>
-                              )}
-                            </div>
-                          </Row>
+                          <div className="col-md-6">
+                           
+                          </div>
+                          <div className="col-md-6">
+                            {touched.country && errors.country && (
+                              <div className="text-danger">{errors.country}</div>
+                            )}
+                          </div>
+                        </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="ipAddress" className="form-label">
                               <b>IP Address:</b>
@@ -166,100 +154,63 @@ const InstallSms = () => {
                             />
                           </Form.Group>
                           <Form.Group className="col-md-6 form-group">
-                            <label htmlFor="country" className="form-label">
+                            <label htmlFor="address" className="form-label">
                               <b>Country:</b>
                             </label>
                             <Field
-                              as="select"
-                              name="country"
-                              className="form-select"
-                              id="country"
-                              onChange={(e) => {
-                                setFieldValue("country", e.target.value);
-                                getStates(e.target.value)(dispatch);
-                              }}
-                            >
-                              <option value="Select Country">
-                                Select Country
+                            as="select"
+                            name="country"
+                            className="form-select"
+                            id="country"
+                            onChange={(e)=>{setFieldValue("country",e.target.value); getStates(e.target.value)(dispatch);}}
+                          >
+                            <option value="Select Country">
+                              Select Country
+                            </option>
+                            {countries?.map((item, idx) => (
+                              <option
+                                key={idx}
+                                value={item.value}
+                              >
+                                {item.name}
                               </option>
-                              {countries?.map((item, idx) => (
-                                <option key={idx} value={item.value}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </Field>
+                            ))}
+                          </Field>
                           </Form.Group>
                           <Row>
-                            <div className="col-md-6">
-                              {touched.state && errors.state && (
-                                <div className="text-danger">
-                                  {errors.state}
-                                </div>
-                              )}
-                            </div>
-                            <div className="col-md-6">
-                              {touched.city && errors.city && (
-                                <div className="text-danger">{errors.city}</div>
-                              )}
-                            </div>
-                          </Row>
+                          <div className="col-md-6">
+                            {touched.state && errors.state && (
+                              <div className="text-danger">{errors.state}</div>
+                            )}
+                          </div>
+                          <div className="col-md-6">
+                            {touched.baseUrl && errors.baseUrl && (
+                              <div className="text-danger">{errors.baseUrl}</div>
+                            )}
+                          </div>
+                        </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
                               <b>State:</b>
                             </label>
                             <Field
-                              as="select"
-                              name="state"
-                              className="form-select"
-                              id="state"
-                              onChange={(e) => {
-                                setFieldValue("state", e.target.value);
-                                getCities(e.target.value)(dispatch);
-                              }}
-                            >
-                              <option value="Select State">Select State</option>
-                              {states?.map((item, idx) => (
-                                <option key={idx} value={item.value}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </Field>
+                            as="select"
+                            name="state"
+                            className="form-select"
+                            id="state"
+                            onChange={(e)=>{setFieldValue("state",e.target.value);}}
+                          >
+                            <option value="Select State">Select State</option>
+                            {states?.map((item, idx) => (
+                              <option
+                                key={idx}
+                                value={item.value}
+                              >
+                                {item.name}
+                              </option>
+                            ))}
+                          </Field>
                           </Form.Group>
-                          <Form.Group className="col-md-6 form-group">
-                            <label htmlFor="city" className="form-label">
-                              <b>City:</b>
-                            </label>
-                            <Field
-                              as="select"
-                              name="city"
-                              className="form-select"
-                              id="city"
-                            >
-                              <option value="Select City">Select City</option>
-                              {cities?.map((item, idx) => (
-                                <option key={idx} value={item.value}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </Field>
-                          </Form.Group>
-                          <Row>
-                            <div className="col-md-6">
-                              {touched.baseUrl && errors.baseUrl && (
-                                <div className="text-danger">
-                                  {errors.baseUrl}
-                                </div>
-                              )}
-                            </div>
-                            <div className="col-md-6">
-                              {touched.baseUrlAppendix &&
-                                errors.baseUrlAppendix && (
-                                  <div className="text-danger">
-                                    {errors.baseUrlAppendix}
-                                  </div>
-                                )}
-                            </div>
-                          </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="baseUrl" className="form-label">
                               <b>Base URL:</b>
@@ -273,23 +224,33 @@ const InstallSms = () => {
                               required
                               placeholder="base URL"
                             />
+
                           </Form.Group>
+                          <Row>
+                          <div className="col-md-6">
+                            {touched.baseUrlAppendix && errors.baseUrlAppendix && (
+                              <div className="text-danger">{errors.baseUrlAppendix}</div>
+                            )}
+                          </div>
+                        </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label
                               htmlFor="baseUrlAppendix"
                               className="form-label"
                             >
-                              <b>Base Appendix:</b>
+                              <b>Base Suffix:</b>
                             </label>
                             <Field
                               type="text"
                               className="form-control text-lowercase"
                               name="baseUrlAppendix"
                               id="baseUrlAppendix"
+                               onKeyUp={(e)=>{validateBaseUrlSuffix(e.target.value)(dispatch)}}
                               aria-describedby="name"
                               required
-                              placeholder="base Appendix"
+                              placeholder="base suffix"
                             />
+                            <div className="text-danger mt-2">{!baseUrlSuffixValidation && validationSuccessful ? "Base suffix already taken": ""}</div>
                           </Form.Group>
                           <div className="row form-group">
                             <div className="col-md-6">
@@ -385,7 +346,7 @@ const InstallSms = () => {
                               ) : null}
                             </div>
                           </div>
-                        </Row>
+                        </div>
                         <div className="d-flex justify-content-end">
                           <Button
                             type="button"
@@ -416,4 +377,4 @@ const InstallSms = () => {
     </>
   );
 };
-export default InstallSms;
+export default CreateSms;

@@ -1,32 +1,31 @@
 import { actions } from "../action-types/toaster-action-types"
 
+// export const showStickyInfoToast = (message) => dispatch =>{
+//     dispatch({
+//         type: actions.SHOW_STICKY_INFO_TOAST,
+//         payload: message
+//     })
+// }
 
-export const showStickyInfoToast = (message) => dispatch =>{
-    dispatch({
-        type: actions.SHOW_STICKY_INFO_TOAST,
-        payload: message
-    })
-}
+// export const hideStickyInfoToast = () => dispatch =>{
+//     dispatch({
+//         type: actions.HIDE_STICKY_INFO_TOAST
+//     })
+// }
 
-export const hideStickyInfoToast = () => dispatch =>{
-    dispatch({
-        type: actions.HIDE_STICKY_INFO_TOAST
-    })
-}
+// export const showAlertInfoToast = (message) => dispatch =>{
+//     console.log('some toast');
+//     dispatch({
+//         type: actions.SHOW_ALERT_INFO_TOAST,
+//         payload: message
+//     })
+// }
 
-export const showAlertInfoToast = (message) => dispatch =>{
-    console.log('some toast');
-    dispatch({
-        type: actions.SHOW_ALERT_INFO_TOAST,
-        payload: message
-    })
-}
-
-export const hideAlertInfoToast = () => dispatch =>{
-    dispatch({
-        type: actions.HIDE_ALERT_INFO_TOAST
-    })
-}
+// export const hideAlertInfoToast = () => dispatch =>{
+//     dispatch({
+//         type: actions.HIDE_ALERT_INFO_TOAST
+//     })
+// }
 
 export const showSuccessToast = (message) => dispatch =>{
     dispatch({
@@ -94,23 +93,23 @@ export const showHideModal = (value) => (dispatch) => {
     });
 }
 
-export const showHideTimeOutModal = (value) => (dispatch) => {
-    dispatch({
-        type: actions.SHOW_HIDE_TIME_OUT_MODAL,
-        payload: value
-    });
-}
+// export const showHideTimeOutModal = (value) => (dispatch) => {
+//     dispatch({
+//         type: actions.SHOW_HIDE_TIME_OUT_MODAL,
+//         payload: value
+//     });
+// }
 
-export const respondModal = (message) => dispatch=> {
-    dispatch({
-        type: actions.RESPOND_MODAL,
-        payload: message
-    })
-}
+// export const respondModal = (message) => dispatch=> {
+//     dispatch({
+//         type: actions.RESPOND_MODAL,
+//         payload: message
+//     })
+// }
 
-export const timeOutRespondModal = (message) => dispatch=> {
-    dispatch({
-        type: actions.RESPOND_TIME_OUT_MODAL,
-        payload: message
-    })
-}
+// export const timeOutRespondModal = (message) => dispatch=> {
+//     dispatch({
+//         type: actions.RESPOND_TIME_OUT_MODAL,
+//         payload: message
+//     })
+// }

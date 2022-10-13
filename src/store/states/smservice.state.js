@@ -5,5 +5,6 @@ export const _state = {
     isSuccessful: false,
     countries:[],
     states:[],
-    cities:[],
+    baseUrlSuffixValidation:true,
+    validationSuccessful:false,
 }

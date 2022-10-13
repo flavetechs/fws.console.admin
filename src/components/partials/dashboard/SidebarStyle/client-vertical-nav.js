@@ -46,9 +46,7 @@ const ClientVerticalNav = () => {
                     </Link>
                 </li>
                
-                            <Accordion.Item as="li" eventKey="horizontal-menu" bsPrefix="nav-item" >
-                            <CustomToggle eventKey="sidebar-user" onClick={(activeKey) => {
-                }}>
+                <li className="nav-item">  
                     <Link className={`${location.pathname === productsLocations.products ? 'active' : ''} nav-link `} aria-current="page" to={productsLocations.products} >
                         <i className="icon">
                         <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,10 +62,8 @@ const ClientVerticalNav = () => {
                         {/* <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                         </svg> */}
-                    {/* </i> */}
-                    </CustomToggle>
-                   
-                </Accordion.Item>
+                    {/* </i> */} 
+                </li>
                 {/* <Accordion.Item as="li" eventKey="horizontal-menu" bsPrefix="nav-item" >
                     <CustomToggle eventKey="horizontal-menu" onClick={(activeKey) => setActiveMenu(activeKey)}>
                     <i className="icon">

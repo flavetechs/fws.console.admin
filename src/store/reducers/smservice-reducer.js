@@ -67,64 +67,67 @@ export const smserviceReducer = (state = _state, { type, payload }) => {
                       isSuccessful: false,
                     };
 
-                    case actions.FETCH_COUNTRY_LOADING:
-                      return {
-                        ...state,
-                        loading: true,
-                      };
-                
-                    case actions.FETCH_COUNTRY_SUCCESS:
+
+                    case actions.VALIDATE_BASE_URL_SUFFIX_LOADING:
                       return {
                         ...state,
                         loading: false,
-                        countries: payload,
+                        validationSuccessful: false,
                       };
-                    case actions.FETCH_COUNTRY_FAILED:
+
+                    case actions.VALIDATE_BASE_URL_SUFFIX_SUCCESS:
                       return {
                         ...state,
                         loading: false,
-                        countries: [],
+                        baseUrlSuffixValidation: payload,
+                        validationSuccessful: false,
                       };
-                
-                    case actions.FETCH_STATE_LOADING:
-                      return {
-                        ...state,
-                        loading: true,
-                      };
-                    case actions.FETCH_STATE_SUCCESS:
+
+                      case actions.VALIDATE_BASE_URL_SUFFIX_FAILED:
                       return {
                         ...state,
                         loading: false,
-                        states: payload,
+                        baseUrlSuffixValidation: payload,
+                        validationSuccessful: true,
                       };
-                
-                    case actions.FETCH_STATE_FAILED:
-                      return {
-                        ...state,
-                        loading: false,
-                        states: [],
-                      };
-                
-                    case actions.FETCH_CITY_LOADING:
-                      return {
-                        ...state,
-                        loading: true,
-                      };
-                    case actions.FETCH_CITY_SUCCESS:
-                      return {
-                        ...state,
-                        loading: false,
-                        cities: payload,
-                      };
-                
-                    case actions.FETCH_CITY_FAILED:
-                      return {
-                        ...state,
-                        loading: false,
-                        cities: [],
-                      };
-                
-                
+
+                      case actions.FETCH_COUNTRY_LOADING:
+                        return {
+                          ...state,
+                          loading: true,
+                        };
+                  
+                      case actions.FETCH_COUNTRY_SUCCESS:
+                        return {
+                          ...state,
+                          loading: false,
+                          countries: payload,
+                        };
+                      case actions.FETCH_COUNTRY_FAILED:
+                        return {
+                          ...state,
+                          loading: false,
+                          countries: [],
+                        };
+                  
+                      case actions.FETCH_STATE_LOADING:
+                        return {
+                          ...state,
+                          loading: true,
+                        };
+                      case actions.FETCH_STATE_SUCCESS:
+                        return {
+                          ...state,
+                          loading: false,
+                          states: payload,
+                        };
+                  
+                      case actions.FETCH_STATE_FAILED:
+                        return {
+                          ...state,
+                          loading: false,
+                          states: [],
+                        };
               
                 default:
                     return state

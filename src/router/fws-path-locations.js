@@ -4,6 +4,7 @@ export const dashboardLocations = {
 
   export const authLocations = {
     login: "/fws/sign-in",
+    register: "/fws/register",
     firstTimeLogin: "/fws/change-password-on-login",
   };
 
