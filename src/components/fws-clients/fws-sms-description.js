@@ -92,7 +92,7 @@ const SmsDescription = () => {
                   className="btn"
                   style={{backgroundColor:"#ffc400",color:"black"}}
                   onClick={() =>
-                    history.push(
+                    !products?.find((p) => p.productId === productId)?.installed && history.push(
                       `${smsLocations.createSms}?productId=${productId}`
                     )
                   }

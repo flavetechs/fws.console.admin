@@ -44,7 +44,6 @@ const CreateSms = () => {
   useEffect(() => {
     getCountries()(dispatch);
   }, [dispatch]);
-  console.log("baseUrlSuffixValidation",baseUrlSuffixValidation);
   return (
     <>
       <div>
@@ -61,7 +60,7 @@ const CreateSms = () => {
             schoolLogo: "",
             productId: productId,
           }}
-          //validationSchema={validation}
+          validationSchema={validation}
           onSubmit={(values) => {
            createSms(values)(dispatch);
            history.goBack();

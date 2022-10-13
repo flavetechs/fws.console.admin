@@ -1,7 +1,7 @@
 
 import { Toast, ToastContainer } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { hideAlertInfoToast, hideErrorToast, hideSuccessToast } from '../../../../store/actions/toaster-actions';
+// import { hideAlertInfoToast, hideErrorToast, hideSuccessToast } from '../../../../store/actions/toaster-actions';
 
 
 // export function SMP_TOAST() {
@@ -49,7 +49,7 @@ export function SuccessToast() {
 
         <Toast className="alert-left alert-success  alert-dismissible fade show mb-0 sticky-top" role="alert"
             aria-live="assertive" aria-atomic="true"
-            onClose={() => { hideSuccessToast()(dispatch); }}
+            //onClose={() => { hideSuccessToast()(dispatch); }}
             show={showSuccessToast} delay={6000} autohide
             style={{ width: '100%' }}>
             <Toast.Body className='border-0'>{message}</Toast.Body>
@@ -68,7 +68,7 @@ export function ErrorToast() {
 
         <Toast className="alert-left alert-danger  alert-dismissible fade show mb-0 sticky-top" role="alert"
             aria-live="assertive" aria-atomic="true"
-            onClose={() => { hideErrorToast()(dispatch); }}
+           // onClose={() => { hideErrorToast()(dispatch); }}
             show={showErrorToast} delay={6000} autohide
             style={{ width: '100%' }}>
             <Toast.Body className='border-0'>{message}</Toast.Body>
