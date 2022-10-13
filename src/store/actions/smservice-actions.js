@@ -1,7 +1,6 @@
 import axiosInstance from "../../axios/axiosInstance";
-import { SuccessToast } from "../../components/hoc-tools/alert";
 import { actions } from "../action-types/smservice-action-types";
-import swal from 'sweetalert';
+import { errorModal, successModal } from "./alert-actions";
 
 export const getAllSms = () => (dispatch) => {
     dispatch({
@@ -34,16 +33,14 @@ export const createSms = (values) => (dispatch) => {
                 type: actions.CREATE_SMS_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-             swal("Successful", res.data.message.friendlyMessage, "success")
-            //showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
             getAllSms()(dispatch);
         }).catch((err) => {
             dispatch({
                 type: actions.CREATE_SMS_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            swal("Successful", err.data.message.friendlyMessage, "error")
-            //showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+           errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
