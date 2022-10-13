@@ -5,17 +5,12 @@ import Card from '../Card'
 
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-// img
-// import auth1 from '../../assets/images/auth/01.png'
-// import { authLocations, dashboardLocations } from '../../router/spm-path-locations';
+
 import { useDispatch, useSelector } from 'react-redux';
-// import { loginUser } from '../../store/actions/auth-actions';
 import { useEffect } from 'react';
-import { authLocations, dashboardLocations } from '../../router/fws-path-locations';
-import Logo from '../partials/components/logo';
-import { loginUser, registerUser } from '../../store/actions/auth-actions';
-// import SmpLoader from '../loader/smp-loader';
-// import Logo from '../partials/components/logo';
+import {  dashboardLocations } from '../../router/fws-path-locations';
+import {  registerUser } from '../../store/actions/auth-actions';
+
 
 const Register = () => {
     let history = useHistory();

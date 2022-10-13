@@ -1,8 +1,9 @@
 import { actions } from "../action-types/auth-action-types"
 import { _state } from "../states/auth-state"
 import jwt from 'jwt-decode'
+import { IUserState } from "../Models/UserState"
 
-export const authReducer = (state = _state, { type, payload }: any) => {
+export const authReducer = (state : IUserState = _state, { type, payload }: any) => {
     switch (type) {
         case actions.LOGIN_USER_LOADING:
             return {

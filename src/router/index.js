@@ -29,17 +29,17 @@ const IndexRouters = () => {
             <Switch>
                 {
                     <>
-                         <Route exact path="/"
-                            component={userDetail?.userType == '0' ?  Default : clientDefault}></Route>
+                        <Route exact path="/"
+                            component={userDetail?.userType == '0' ? Default : clientDefault}></Route>
 
                         <Route path={userDetail?.userType == '0' ? "/dashboard" : '/client-dashboard'}
-                            component={userDetail?.userType == '0' ?  Default : clientDefault}></Route>
+                            component={userDetail?.userType == '0' ? Default : clientDefault}></Route>
 
                         <Route path={authLocations.login} component={SignIn}></Route>
-                        
+
                         <Route path={authLocations.register} component={Register}></Route>
 
-                     <Route path={authLocations.firstTimeLogin} component={FirstTimeLoginPassswordChange}></Route> 
+                        <Route path={authLocations.firstTimeLogin} component={FirstTimeLoginPassswordChange}></Route>
                         <Route path="/errors" component={Simple}></Route>
                     </>
                 }

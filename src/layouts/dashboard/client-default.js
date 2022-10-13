@@ -93,7 +93,7 @@ const ClientDefault = (props) => {
                     <div className="py-0 conatiner-fluid content-inner mt-n5">
                         <ClientRouter />
                     </div>
-                    <div className="btn-download">
+                    {/* <div className="btn-download">
                         <Button variant=" " href="https://iqonic.design/product/admin-templates/hope-ui-admin-free-open-source-bootstrap-admin-template/" target="_blank" >   
                             <svg width="22" className="me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path opacity="0.4" fillRule="evenodd" clipRule="evenodd" d="M5.91064 20.5886C5.91064 19.7486 6.59064 19.0686 7.43064 19.0686C8.26064 19.0686 8.94064 19.7486 8.94064 20.5886C8.94064 21.4186 8.26064 22.0986 7.43064 22.0986C6.59064 22.0986 5.91064 21.4186 5.91064 20.5886ZM17.1606 20.5886C17.1606 19.7486 17.8406 19.0686 18.6806 19.0686C19.5106 19.0686 20.1906 19.7486 20.1906 20.5886C20.1906 21.4186 19.5106 22.0986 18.6806 22.0986C17.8406 22.0986 17.1606 21.4186 17.1606 20.5886Z" fill="currentColor"></path>
@@ -101,7 +101,7 @@ const ClientDefault = (props) => {
                             </svg>
                             <span>Download</span>
                         </Button>
-                    </div>
+                    </div> */}
                         <Footer />
                 </main>
             <SettingOffcanvas  />

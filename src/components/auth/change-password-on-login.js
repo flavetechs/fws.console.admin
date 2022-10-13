@@ -29,7 +29,7 @@ const FirstTimeLoginPassswordChange = () => {
         const id = queryParams.get("id");
         if (!id) return;
         setId(id);
-    }, [userId]);
+    }, [userId, locations.search]);
 
     React.useEffect(() => {
         if (userDetail) {

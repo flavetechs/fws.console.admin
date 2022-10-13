@@ -71,6 +71,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "fslightbox-react": "^1.6.2-2",
     "sortablejs": "^1.14.0",
     "vanillajs-datepicker": "^1.2.0"

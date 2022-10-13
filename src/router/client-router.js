@@ -6,7 +6,7 @@ import {TransitionGroup,CSSTransition} from "react-transition-group";
 import { clientDashboardLocations, productsLocations, smsLocations } from './fws-client-path-locations';
 import clientIndex from '../views/dashboard/client-index';
 import SmsDescription from '../components/fws-clients/fws-sms-description';
-import Products from '../components/fws-clients/fws-products';
+import Products from '../components/fws-clients/fws-product-list';
 import CreateSms from '../components/fws-clients/fws-install-sms';
 
 
@@ -22,7 +22,7 @@ const ClientRouter = () => {
                      <Route path={productsLocations.products} exact component={Products} /> 
                        {/* smservice */}
                     <Route path={smsLocations.sms} exact component={SmsDescription}/>
-                    <Route path={smsLocations.createSms} exact component={InstallSms}/>
+                    <Route path={smsLocations.createSms} exact component={CreateSms}/>
                     {/* <Route path={smsLocations.createSms}  exact component={userProfileEdit}/> */}
                  </Switch>
             </CSSTransition>

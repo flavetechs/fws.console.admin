@@ -5,23 +5,22 @@ import Card from '../Card'
 
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-// img
-// import auth1 from '../../assets/images/auth/01.png'
-// import { authLocations, dashboardLocations } from '../../router/spm-path-locations';
+
 import { useDispatch, useSelector } from 'react-redux';
-// import { loginUser } from '../../store/actions/auth-actions';
+
 import { useEffect } from 'react';
 import { authLocations, dashboardLocations } from '../../router/fws-path-locations';
-import Logo from '../partials/components/logo';
 import { loginUser } from '../../store/actions/auth-actions';
-// import SmpLoader from '../loader/smp-loader';
-// import Logo from '../partials/components/logo';
+import { IUserState } from '../../store/Models/UserState';
+
 
 const SignIn = () => {
     let history = useHistory();
     const dispatch = useDispatch();
-    const state = useSelector((state) => state);
-    const { message } = state.auth;
+    
+    const state = useSelector((state: any) => state);
+    const { message } : IUserState = state.auth;
+
     var token = sessionStorage.getItem('token');
     var user = sessionStorage.getItem('user')
     console.log("token", token);
@@ -29,7 +28,7 @@ const SignIn = () => {
         
        
         if (token) {
-            if (JSON.parse(user).userType === '0') {
+            if (JSON.parse(user || '').userType === '0') {
                 window.location.href = '/dashboard';
             } else {
                 window.location.href = '/client-dashboard';
@@ -112,7 +111,7 @@ const SignIn = () => {
                                                     <div className="d-flex justify-content-center">
                                                         <button onSubmit={() => {
                                                             handleSubmit()
-                                                        }} type="submit" variant="btn btn-primary" className='btn btn-primary'>Sign In</button>
+                                                        }} type="submit"  className='btn btn-primary'>Sign In</button>
                                                     </div>
                                                     {/* <p className="mt-3 text-center">
                                                         Don’t have an account? <Link to="/auth/sign-up" className="text-underline">Click here to sign up.</Link>

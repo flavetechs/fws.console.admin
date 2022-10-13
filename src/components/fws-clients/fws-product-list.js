@@ -25,7 +25,7 @@ const Products = () => {
       <Card.Body>
       <Row className="p-3">
         {products?.map((product, idx) => (
-          <div className="col-xl-3 col-lg-6">
+          <div className="col-xl-3 col-lg-6" key={idx}>
             <div className=" card-transparent border  h-100 w-100  rounded" >
               {" "}
               <div className="card-body ">
