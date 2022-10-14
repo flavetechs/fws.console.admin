@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { authLocations, dashboardLocations } from '../../router/fws-path-locations';
 import { loginUser } from '../../store/actions/auth-actions';
-import { IUserState } from '../../store/Models/UserState';
+import { IAuthState } from '../../store/Models/AuthState';
 
 
 const SignIn = () => {
@@ -19,7 +19,7 @@ const SignIn = () => {
     const dispatch = useDispatch();
     
     const state = useSelector((state: any) => state);
-    const { message } : IUserState = state.auth;
+    const { message } : IAuthState = state.auth;
 
     var token = sessionStorage.getItem('token');
     var user = sessionStorage.getItem('user')

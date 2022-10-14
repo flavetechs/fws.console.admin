@@ -10,13 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import {  dashboardLocations } from '../../router/fws-path-locations';
 import {  registerUser } from '../../store/actions/auth-actions';
+import { IAuthState } from '../../store/Models/AuthState';
 
 
 const Register = () => {
     let history = useHistory();
     const dispatch = useDispatch();
-    const state = useSelector((state) => state);
-    const { message } = state.auth;
+    const state = useSelector((state: any) => state);
+    const { message }: IAuthState  = state.auth;
     var token = sessionStorage.getItem('token');
     var user = sessionStorage.getItem('user')
     console.log("token", token);
@@ -24,7 +25,7 @@ const Register = () => {
         
        
         if (token) {
-            if (JSON.parse(user).userType === '0') {
+            if (JSON.parse(user|| '').userType === '0') {
                 window.location.href = '/dashboard';
             } else {
                 window.location.href = '/client-dashboard';
@@ -106,7 +107,7 @@ const Register = () => {
                                                     <div className="d-flex justify-content-center">
                                                         <button onSubmit={() => {
                                                             handleSubmit()
-                                                        }} type="submit" variant="btn btn-primary" className='btn btn-primary'>Sign Up</button>
+                                                        }} type="submit"  className='btn btn-primary'>Sign Up</button>
                                                     </div>
                                                     {/* <p className="mt-3 text-center">
                                                         Don’t have an account? <Link to="/auth/sign-up" className="text-underline">Click here to sign up.</Link>

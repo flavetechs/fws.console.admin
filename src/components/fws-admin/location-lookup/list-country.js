@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteCountryItem, getCountryLookupList, pushId, removeId, returnList } from "../../../store/actions/location-lookup-actions";
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
-import { showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
+import { deleteDialogModal } from "../../../store/actions/alert-actions";
+//import { showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
 
 
 const ListCountry = () => {
@@ -163,7 +164,8 @@ const ListCountry = () => {
                                                 type="button"
                                                 className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
                                                 onClick={() => {
-                                                    showSingleDeleteDialog(true)(dispatch);
+                                                   // showSingleDeleteDialog(true)(dispatch);
+                                                   deleteDialogModal();
                                                 }}
                                             >
                                                 <i className="btn-inner">
@@ -346,7 +348,8 @@ const ListCountry = () => {
                                                                         dispatch(
                                                                             pushId(item.countryId)
                                                                         );
-                                                                        showSingleDeleteDialog(true)(dispatch);
+                                                                        deleteDialogModal();
+                                                                        //showSingleDeleteDialog(true)(dispatch);
                                                                     }}
                                                                 >
                                                                     <span className="btn-inner">

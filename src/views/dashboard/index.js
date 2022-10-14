@@ -291,6 +291,7 @@ const Index = (props) => {
       },
     ],
   };
+  console.log("decodedToken",sessionStorage.getItem("user"));
   return (
     <>
       <div className="row">
