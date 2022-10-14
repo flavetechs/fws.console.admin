@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory } from "react-router-dom";
-import { createCountry } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
-import { locationLocations } from "../../../../router/fws-path-locations";
+import { ILocationLookupState } from '../../../../store/Models/LocationLookupState';
+import { locationLocations } from '../../../../router/fws-path-locations';
+import { createCountry } from '../../../../store/actions/location-lookup-actions';
 
 const AddCountry = () => {
   //VARIABLE DECLARATIONS
@@ -25,8 +26,8 @@ const AddCountry = () => {
   //VALIDATIONS SCHEMA
 
   // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { isSuccessful } = state.locationLookup;
+  const state = useSelector((state: any) => state);
+  const { isSuccessful }: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
 
@@ -35,6 +36,9 @@ const AddCountry = () => {
       history.push(locationLocations.country);
     }
   }, [isSuccessful, history]);
+
+  console.log('isSuccessful', isSuccessful);
+  
 
   return (
     <>
@@ -84,7 +88,7 @@ const AddCountry = () => {
                             aria-describedby="countryName"
                             required
                             placeholder="Enter Country name e.g Ghana... etc"
-                            onChange={(e) => setFieldValue("countryName", e.target.value)}
+                            onChange={(e: any) => setFieldValue("countryName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -117,8 +121,8 @@ const AddCountry = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>

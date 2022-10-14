@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { createState, getCountryLookupList } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
-import { locationLocations } from "../../../../router/fws-path-locations";
+import { ILocationLookupState } from '../../../../store/Models/LocationLookupState';
+import { createState, getCountryLookupList } from '../../../../store/actions/location-lookup-actions';
+import { locationLocations } from '../../../../router/fws-path-locations';
 
 const AddState = () => {
 
   // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { countryList } = state.locationLookup;
+  const state = useSelector((state: any) => state);
+  const { countryList }: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   //VALIDATIONS SCHEMA
@@ -25,7 +26,7 @@ const AddState = () => {
 
   //VARIABLE DECLARATIONS
   let locations = useLocation();
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState<any>(true);
   const history = useHistory();
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(locations.search);
@@ -81,7 +82,7 @@ const AddState = () => {
                             name="countryId"
                             className="form-select"
                             id="countryId"
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               setFieldValue("countryId", e.target.value);
                               history.push(`${locationLocations.addState}?countryId=${e.target.value}`
                               );
@@ -116,7 +117,7 @@ const AddState = () => {
                             aria-describedby="stateName"
                             required
                             placeholder="Enter State name"
-                            onChange={(e) => setFieldValue("stateName", e.target.value)}
+                            onChange={(e: any) => setFieldValue("stateName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -150,8 +151,8 @@ const AddState = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>

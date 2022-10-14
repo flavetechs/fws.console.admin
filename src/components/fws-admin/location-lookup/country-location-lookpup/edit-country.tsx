@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import {  updateCountry } from "../../../../store/actions/location-lookup-actions";
+import { updateCountry } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
 import { locationLocations } from "../../../../router/fws-path-locations";
+import { ILocationLookupState } from '../../../../store/Models/LocationLookupState';
 
 const EditCountry = () => {
   //VARIABLE DECLARATIONS
@@ -25,14 +26,14 @@ const EditCountry = () => {
 
   // ACCESSING STATE FROM REDUX STORE
   let locations = useLocation();
-  const state = useSelector((state) => state);
-  const { isSuccessful, countryList } = state.locationLookup;
+  const state = useSelector((state: any) => state);
+  const { isSuccessful, countryList }: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   const queryParams = new URLSearchParams(locations.search);
   const countryIdQueryParam = queryParams.get("countryId") || "";
 
-  let selectedCountryValue = countryList.filter((item) => {
+  let selectedCountryValue = countryList.filter((item: any) => {
     if (item.countryId === countryIdQueryParam) {
       return item.countryName
     }
@@ -66,7 +67,7 @@ const EditCountry = () => {
                   validationSchema={validation}
                   onSubmit={(values) => {
                     values.countryId = countryIdQueryParam;
-                    values.countryName = values.countryName.toUpperCase();
+                    values.countryName = values.countryName;
                     values.isActive = isChecked;
                     updateCountry(values)(dispatch);
                   }}
@@ -95,7 +96,7 @@ const EditCountry = () => {
                             aria-describedby="countryName"
                             required
                             placeholder="Enter Country name e.g Ghana... etc"
-                            onChange={(e) => setFieldValue("countryName", e.target.value)}
+                            onChange={(e: any) => setFieldValue("countryName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -128,8 +129,8 @@ const EditCountry = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>

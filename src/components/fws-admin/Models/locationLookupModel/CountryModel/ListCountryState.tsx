@@ -1,8 +1,6 @@
-// export class ICountryList {
-//     searchParam: ''
-// }
 
-
-export class SearchParameters {
-    searchParam: string = "";
+export class CountryDetail {
+    countryId: string = "";
+    countryName: string  = "";
+    isActive: boolean  = false;
 }

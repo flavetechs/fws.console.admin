@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteStateItem, getCountryLookupList, getStateLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
-import { locationLocations } from "../../../../router/fws-path-locations";
 import { Field, Formik } from "formik";
-import { showSingleDeleteDialog } from "../../../../store/actions/toaster-actions";
+import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
+import { deleteStateItem, getCountryLookupList, getStateLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
+import { locationLocations } from "../../../../router/fws-path-locations";
+import { deleteDialogModal } from "../../../../store/actions/alert-actions";
 
 
 const ListState = () => {
@@ -14,12 +15,12 @@ const ListState = () => {
     const dispatch = useDispatch();
     let locations = useLocation();
     const history = useHistory();
-    const [ setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState<any>("");
     //VARIABLE DECLARATIONS
 
     // ACCESSING STATE FROM REDUX STORE
-    const state = useSelector((state) => state);
-    const { stateList, countryList, selectedIds } = state.locationLookup;
+    const state = useSelector((state: any) => state);
+    const { stateList, countryList, selectedIds }: ILocationLookupState = state.locationLookup;
     // ACCESSING STATE FROM REDUX STORE
 
     const queryParams = new URLSearchParams(locations.search);
@@ -37,6 +38,18 @@ const ListState = () => {
         };
         fetchStateLookupList();
     }, [countryIdQueryParam, dispatch]);
+
+    const filteredStateList = stateList.filter((items) => {
+        if (searchQuery === "") {
+            //if query is empty
+            return items;
+        } else if (
+            items.stateName.toLowerCase().includes(searchQuery.toLowerCase())
+        ) {
+            //returns filtered array
+            return items;
+        }
+    });
 
 
     React.useEffect(() => {
@@ -77,7 +90,7 @@ const ListState = () => {
                                                 name="countryId"
                                                 className="form-select"
                                                 id="countryId"
-                                                onChange={(e) => {
+                                                onChange={(e: any) => {
                                                     setFieldValue("countryId", e.target.value);
                                                     history.push(`${locationLocations.state}?countryId=${e.target.value}`
                                                     );
@@ -196,7 +209,7 @@ const ListState = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {stateList.map((item, idx) => (
+                                                        {filteredStateList.map((item, idx) => (
                                                             <tr key={idx}>
                                                                 <td className="text-dark">
                                                                     {
@@ -264,8 +277,7 @@ const ListState = () => {
                                                                                     dispatch(
                                                                                         pushId(item.stateId)
                                                                                     );
-                                                                                    //showSingleDeleteDialog(true)(dispatch);
-                                                                                    deleteDialogModal();
+                                                                                    // deleteDialogModal('Successfully Deleted');
                                                                                 }}
                                                                             >
                                                                                 <span className="btn-inner">

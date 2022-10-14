@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { updateCity } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
-import { locationLocations } from "../../../../router/fws-path-locations";
-
+import { ILocationLookupState } from '../../../../store/Models/LocationLookupState';
+import { locationLocations } from '../../../../router/fws-path-locations';
+import { updateCity } from '../../../../store/actions/location-lookup-actions';
 const EditCity = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
@@ -25,15 +25,15 @@ const EditCity = () => {
   //VALIDATIONS SCHEMA
 
   // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { cityList, submittedSuccessfully } = state.locationLookup;
+  const state = useSelector((state: any) => state);
+  const { cityList, submittedSuccessfully }: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   const queryParams = new URLSearchParams(locations.search);
   const stateIdQueryParam = queryParams.get("stateId") || "";
   const cityIdQueryParam = queryParams.get("cityId") || "";
 
-  let selectedCityValue = cityList?.filter((item) => {
+  let selectedCityValue = cityList?.filter((item: any) => {
     if (item.cityId === cityIdQueryParam) {
       return item.cityName
     }
@@ -43,6 +43,7 @@ const EditCity = () => {
   React.useEffect(() => {
     submittedSuccessfully && history.push(`${locationLocations.city}?stateId=${stateIdQueryParam}`);
   }, [submittedSuccessfully, history, stateIdQueryParam]);
+  
 
   return (
     <>
@@ -67,7 +68,7 @@ const EditCity = () => {
                   onSubmit={(values) => {
                     values.stateId = stateIdQueryParam;
                     values.cityId = cityIdQueryParam;
-                    values.cityName = values.cityName.toUpperCase();
+                    values.cityName = values.cityName;
                     values.isActive = isChecked;
                     updateCity(values)(dispatch);
                   }}
@@ -96,7 +97,7 @@ const EditCity = () => {
                             aria-describedby="cityName"
                             required
                             placeholder="Enter City name"
-                            onChange={(e) => setFieldValue("cityName", e.target.value)}
+                            onChange={(e: any) => setFieldValue("cityName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -130,8 +131,8 @@ const EditCity = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>

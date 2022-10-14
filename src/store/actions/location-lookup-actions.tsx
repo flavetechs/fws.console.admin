@@ -1,5 +1,6 @@
 import axiosInstance from "../../axios/axiosInstance"
 import { actions } from "../action-types/location-lookup-action-types"
+import { errorModal, successModal } from "./alert-actions"
 
 export const pushId = (itemId: any) => {
     return {
@@ -93,13 +94,13 @@ export const createCountry = (form: any) => (dispatch: any) => {
                 payload: res.data.message.friendlyMessage
             });
             getCountryLookupList()(dispatch)
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.CREATE_COUNTRY_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -114,13 +115,13 @@ export const createState = (values: any) => (dispatch: any) => {
                 type: actions.CREATE_STATE_LOOKUP_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.CREATE_STATE_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -135,13 +136,13 @@ export const createCity = (form: any) => (dispatch: any) => {
                 payload: res.data.message.friendlyMessage
             });
             getCountryLookupList()(dispatch)
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.CREATE_CITY_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -156,13 +157,13 @@ export const updateCountry = (country: any) => (dispatch: any) => {
                 type: actions.UPDATE_COUNTRY_LOOKUP_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.UPDATE_COUNTRY_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -177,13 +178,13 @@ export const updateState = (states: any) => (dispatch: any) => {
                 type: actions.UPDATE_STATE_LOOKUP_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.UPDATE_STATE_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -198,13 +199,13 @@ export const updateCity = (city: any) => (dispatch: any) => {
                 type: actions.UPDATE_CITY_LOOKUP_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.UPDATE_CITY_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -222,13 +223,13 @@ export const deleteCountryItem = (countryId: any) => (dispatch: any) => {
                 payload: res.data.message.friendlyMessage
             });
             getCountryLookupList()(dispatch);
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.DELETE_COUNTRY_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -247,13 +248,13 @@ export const deleteStateItem = (stateId: any, countryIdQueryParam: any) => (disp
                 payload: res.data.message.friendlyMessage
             });
             getStateLookupList(countryIdQueryParam)(dispatch);
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.DELETE_STATE_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -271,12 +272,12 @@ export const deleteCityItem = (cityId: any, stateIdQueryParam: any) => (dispatch
                 payload: res.data.message.friendlyMessage
             });
             getCityLookupList(stateIdQueryParam)(dispatch);
-            // showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
         }).catch((err) => {
             dispatch({
                 type: actions.DELETE_CITY_LOOKUP_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-            // showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }

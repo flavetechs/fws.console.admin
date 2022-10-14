@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { createCity } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
+import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
 import { locationLocations } from "../../../../router/fws-path-locations";
+import { createCity } from "../../../../store/actions/location-lookup-actions";
 
 const AddCity = () => {
   //VARIABLE DECLARATIONS
@@ -24,8 +25,8 @@ const AddCity = () => {
   //VALIDATIONS SCHEMA
 
   // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { stateList } = state.locationLookup;
+  const state = useSelector((state: any) => state);
+  const { stateList }: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   const queryParams = new URLSearchParams(locations.search);
@@ -51,8 +52,8 @@ const AddCity = () => {
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.values = values.stateId;
-                    values.cityName = values.cityName.toUpperCase();
+                    values.stateId = values.stateId;
+                    values.cityName = values.cityName;
                     values.isActive = isChecked;
                     createCity(values)(dispatch);
                   }}
@@ -75,7 +76,7 @@ const AddCity = () => {
                             name="stateId"
                             className="form-select"
                             id="stateId"
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               setFieldValue("stateId", e.target.value);
                               history.push(`${locationLocations.addCity}?stateId=${e.target.value}`
                               );
@@ -110,7 +111,7 @@ const AddCity = () => {
                             aria-describedby="cityName"
                             required
                             placeholder="Enter City name"
-                            onChange={(e) => setFieldValue("cityName", e.target.value)}
+                            onChange={(e: any) => setFieldValue("cityName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -144,8 +145,8 @@ const AddCity = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCityItem, getCityLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
-import { locationLocations } from "../../../../router/fws-path-locations";
 import { Field, Formik } from "formik";
-import { showSingleDeleteDialog } from "../../../../store/actions/toaster-actions";
+import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
+import { deleteCityItem, getCityLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
+import { locationLocations } from "../../../../router/fws-path-locations";
+import { deleteDialogModal } from "../../../../store/actions/alert-actions";
 
 
 const ListCity = () => {
@@ -14,12 +15,12 @@ const ListCity = () => {
     const dispatch = useDispatch();
     let locations = useLocation();
     const history = useHistory();
-    const [setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState<any>("");
     //VARIABLE DECLARATIONS
 
     // ACCESSING STATE FROM REDUX STORE
-    const state = useSelector((state) => state);
-    const { cityList, stateList, selectedIds } = state.locationLookup;
+    const state = useSelector((state: any) => state);
+    const { cityList, stateList, selectedIds }: ILocationLookupState = state.locationLookup;
     // ACCESSING STATE FROM REDUX STORE
 
     const queryParams = new URLSearchParams(locations.search);
@@ -35,6 +36,18 @@ const ListCity = () => {
         fetchCityLookupList();
     }, [stateIdQueryParam, dispatch]);
 
+    const filteredCityList = cityList.filter((city) => {
+        if (searchQuery === "") {
+            //if query is empty
+            return city;
+        } else if (
+            city.cityName.toLowerCase().includes(searchQuery.toLowerCase())
+        ) {
+            //returns filtered array
+            return city;
+        }
+    });
+
     React.useEffect(() => {
         if (selectedIds.length === 0) {
             return
@@ -42,6 +55,8 @@ const ListCity = () => {
             deleteCityItem(selectedIds, stateIdQueryParam)(dispatch);
         }
     }, [selectedIds, dispatch, stateIdQueryParam])
+
+
     return (
         <>
             <div>
@@ -75,11 +90,10 @@ const ListCity = () => {
                                                 name="stateId"
                                                 className="form-select"
                                                 id="stateId"
-                                                onChange={(e) => {
+                                                onChange={(e: any) => {
                                                     setFieldValue("stateId", e.target.value);
                                                     history.push(`${locationLocations.city}?stateId=${e.target.value}`
                                                     );
-                                                    console.log('e.target.value', e.target.value);
                                                 }}
                                             >
                                                 <option value="">Select State</option>
@@ -195,7 +209,7 @@ const ListCity = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {cityList.map((item, idx) => (
+                                                        {filteredCityList.map((item, idx) => (
                                                             <tr key={idx}>
                                                                 <td className="text-dark">
                                                                     {
@@ -263,8 +277,7 @@ const ListCity = () => {
                                                                                     dispatch(
                                                                                         pushId(item.cityId)
                                                                                     );
-                                                                                   // showSingleDeleteDialog(true)(dispatch);
-                                                                                deleteDialogModal()
+                                                                                    // deleteDialogModal("Successfully deleted")
                                                                                 }}
                                                                             >
                                                                                 <span className="btn-inner">

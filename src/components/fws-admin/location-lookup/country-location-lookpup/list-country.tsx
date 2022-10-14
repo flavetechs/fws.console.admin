@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCountryItem, getCountryLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
-import { locationLocations } from "../../../../router/fws-path-locations";
 import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
-import { SearchParameters } from "../../Models/locationLookupModel/CountryModel/ListCountryState";
-
+import { deleteCountryItem, getCountryLookupList, pushId, removeId } from "../../../../store/actions/location-lookup-actions";
+import { locationLocations } from "../../../../router/fws-path-locations";
+import { decisionDialogModal, deleteDialogModal } from "../../../../store/actions/alert-actions";
 
 const ListCountry = () => {
     //VARIABLE DECLARATIONS
@@ -16,13 +15,15 @@ const ListCountry = () => {
     //VARIABLE DECLARATIONS
 
     // ACCESSING STATE FROM REDUX STORE
-    const state = useSelector((state) => state);
+    const state = useSelector((state: any) => state);
     const { countryList, selectedIds }: ILocationLookupState = state.locationLookup;
     // ACCESSING STATE FROM REDUX STORE
 
     React.useEffect(() => {
         getCountryLookupList()(dispatch)
     }, [dispatch]);
+
+    //DELETE HANDLER
 
     React.useEffect(() => {
         if (selectedIds.length === 0) {
@@ -31,6 +32,19 @@ const ListCountry = () => {
             deleteCountryItem(selectedIds)(dispatch)
         }
     }, [selectedIds, dispatch]);
+
+    const filteredCountryList = countryList.filter((country) => {
+        if (searchQuery === "") {
+            //if query is empty
+            return country;
+        } else if (
+            country.countryName.toLowerCase().includes(searchQuery.toLowerCase())
+        ) {
+            //returns filtered array
+            return country;
+        }
+    });
+    
 
     return (
         <>
@@ -143,7 +157,7 @@ const ListCountry = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {countryList.map((item, idx) => (
+                                            {filteredCountryList.map((item, idx) => (
                                                 <tr key={idx}>
                                                     <td className="text-dark">
                                                         {
@@ -210,7 +224,7 @@ const ListCountry = () => {
                                                                         dispatch(
                                                                             pushId(item.countryId)
                                                                         );
-                                                                        // deleteDialogModal();
+                                                                        // deleteDialogModal('are you sure you want to delete item?');
                                                                     }}
                                                                 >
                                                                     <span className="btn-inner">
