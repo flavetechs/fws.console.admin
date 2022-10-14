@@ -1,7 +1,7 @@
 import axiosInstance from "../../axios/axiosInstance";
 import { actions } from "../action-types/auth-action-types"
 
-export const loginUser = ({ userName, password }) => (dispatch) => {
+export const loginUser = ({ userName, password }: any) => (dispatch : any) => {
 
     dispatch({
         type: actions.LOGIN_USER_LOADING
@@ -33,7 +33,7 @@ export const loginOutUser = () => {
     }
 }
 
-export const registerUser = ({  email, password }) => (dispatch) => {
+export const registerUser = ({  email , password  } : any) => (dispatch : any) => {
 
     dispatch({
         type: actions.REGISTER_USER_LOADING
@@ -60,7 +60,7 @@ export const registerUser = ({  email, password }) => (dispatch) => {
 }
 
 
-export const generatePasswordResetLink = ({ resetOption, resetOptionValue, userType }) => (dispatch) => {
+export const generatePasswordResetLink = ({ resetOption, resetOptionValue, userType }: any) => (dispatch : any) => {
 
     dispatch({
         type: actions.GENERATE_PASSWORD_RESET_LINK_LOADING
@@ -86,7 +86,7 @@ export const generatePasswordResetLink = ({ resetOption, resetOptionValue, userT
         })
 }
 
-export const ResetPassword = ({ userId, password, resetToken }) => (dispatch) => {
+export const ResetPassword = ({ userId, password, resetToken } : any) => (dispatch : any) => {
 
     dispatch({
         type: actions.RESET_PASSWORD_LOADING
@@ -112,7 +112,7 @@ export const ResetPassword = ({ userId, password, resetToken }) => (dispatch) =>
         })
 }
 
-export const changeMyPassword = ({ userId, oldPassword, newPassword }) => (dispatch) => {
+export const changeMyPassword = ({ userId, oldPassword, newPassword }: any) => (dispatch : any) => {
     dispatch({
         type: actions.LOGIN_USER_LOADING
     });

@@ -1,9 +1,9 @@
 import { actions } from "../action-types/auth-action-types"
 import { _state } from "../states/auth-state"
 import jwt from 'jwt-decode'
-import { IUserState } from "../Models/UserState"
+import { IAuthState } from "../Models/AuthState"
 
-export const authReducer = (state : IUserState = _state, { type, payload }: any) => {
+export const authReducer = (state : IAuthState = _state, { type, payload }: any) => {
     switch (type) {
         case actions.LOGIN_USER_LOADING:
             return {
@@ -20,7 +20,7 @@ export const authReducer = (state : IUserState = _state, { type, payload }: any)
             const decodedToken = jwt<any>(payload.authResult.token);
             sessionStorage.setItem('token', payload.authResult.token);
             sessionStorage.setItem('user', JSON.stringify(decodedToken));
-            
+           
             return {
                 ...state,
                 loading: false,

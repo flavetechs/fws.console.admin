@@ -116,7 +116,6 @@ const ClientIndex = (props) => {
     }
   });
 
-
   return (
     <>
       <div className="row">
@@ -241,11 +240,9 @@ const ClientIndex = (props) => {
           </div>
         </div>
         <div className="my-3">Recommended Products</div>
-        <Card >
+        <Card>
           <Card.Body>
-            <Row className="p-3">
-              <Products />
-            </Row>
+            <Products />
           </Card.Body>
         </Card>
       </div>

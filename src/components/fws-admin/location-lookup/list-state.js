@@ -6,7 +6,8 @@ import { deleteStateItem, getCountryLookupList, getStateLookupList, pushId, remo
 import Card from "../../Card";
 import { locationLocations } from "../../../router/fws-path-locations";
 import { Field, Formik } from "formik";
-import { showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
+import { deleteDialogModal } from "../../../store/actions/alert-actions";
+//import { showSingleDeleteDialog } from "../../../store/actions/toaster-actions";
 
 
 const ListState = () => {
@@ -210,7 +211,8 @@ const ListState = () => {
                                                         type="button"
                                                         className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
                                                         onClick={() => {
-                                                            showSingleDeleteDialog(true)(dispatch);
+                                                            //showSingleDeleteDialog(true)(dispatch);
+                                                            deleteDialogModal();
                                                         }}
                                                     >
                                                         <i className="btn-inner">
@@ -398,7 +400,8 @@ const ListState = () => {
                                                                                     dispatch(
                                                                                         pushId(item.stateId)
                                                                                     );
-                                                                                    showSingleDeleteDialog(true)(dispatch);
+                                                                                    //showSingleDeleteDialog(true)(dispatch);
+                                                                                    deleteDialogModal();
                                                                                 }}
                                                                             >
                                                                                 <span className="btn-inner">
