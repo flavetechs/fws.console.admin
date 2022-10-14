@@ -1,10 +1,10 @@
 export interface ILocationLookupState {
     loading: boolean,
     message: string,
-    isSuccessful: false,
-    countryList: Array<[]>,
-    stateList: Array<[]>,
-    cityList: Array<[]>,
-    selectedIds: Array<[]>,
+    isSuccessful: boolean,
+    countryList: any[],
+    stateList: any[],
+    cityList: any[],
+    selectedIds: any[],
     submittedSuccessfully: boolean,
 }

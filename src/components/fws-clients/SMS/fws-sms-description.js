@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { smsLocations } from "../../router/fws-client-path-locations";
-import { getAllProducts } from "../../store/actions/products-actions";
+import { smsLocations } from "../../../router/fws-client-path-locations";
+import { getAllProducts } from "../../../store/actions/products-actions";
 const SmsDescription = () => {
   const dispatch = useDispatch();
   const history = useHistory();

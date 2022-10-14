@@ -1,7 +1,7 @@
 import axiosInstance from "../../axios/axiosInstance";
 import { actions } from "../action-types/products-action-types";
 
-export const getAllProducts = () => (dispatch) => {
+export const getAllProducts = () => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_PRODUCTS_LOADING,
     });   
@@ -20,7 +20,7 @@ export const getAllProducts = () => (dispatch) => {
         });
 };
 
-export const getAllUserProducts = () => (dispatch) => {
+export const getAllUserProducts = () => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_USER_PRODUCTS_LOADING,
     });   

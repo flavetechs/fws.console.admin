@@ -1,3 +1,5 @@
+import { UserDetail } from "../../components/Models/auth/UserDetail";
+
 export const _state = {
     loading: false,
     token: '',
@@ -5,5 +7,6 @@ export const _state = {
     message: '',
     isSuccessful: false,
     permissions: [],
-    userDetail: null,
+    userDetail: new UserDetail()
 }
+

@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteCountryItem, getCountryLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
 import { locationLocations } from "../../../../router/fws-path-locations";
-import { showSingleDeleteDialog } from "../../../../store/actions/toaster-actions";
 import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
+import { SearchParameters } from "../../Models/locationLookupModel/CountryModel/ListCountryState";
 
 
 const ListCountry = () => {
     //VARIABLE DECLARATIONS
     const dispatch = useDispatch();
-    const [setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState<any>("");
     //VARIABLE DECLARATIONS
 
     // ACCESSING STATE FROM REDUX STORE
@@ -210,7 +210,7 @@ const ListCountry = () => {
                                                                         dispatch(
                                                                             pushId(item.countryId)
                                                                         );
-                                                                        showSingleDeleteDialog(true)(dispatch);
+                                                                        // deleteDialogModal();
                                                                     }}
                                                                 >
                                                                     <span className="btn-inner">

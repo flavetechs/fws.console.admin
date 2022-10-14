@@ -1,53 +1,47 @@
 import React, { useState } from "react";
 import { Row, Col, OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteStateItem, getCountryLookupList, getStateLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
+import { deleteCityItem, getCityLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
 import Card from "../../../Card";
 import { locationLocations } from "../../../../router/fws-path-locations";
 import { Field, Formik } from "formik";
 import { showSingleDeleteDialog } from "../../../../store/actions/toaster-actions";
 
 
-const ListState = () => {
+const ListCity = () => {
     //VARIABLE DECLARATIONS
     const dispatch = useDispatch();
     let locations = useLocation();
     const history = useHistory();
-    const [ setSearchQuery] = useState("");
+    const [setSearchQuery] = useState("");
     //VARIABLE DECLARATIONS
 
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state) => state);
-    const { stateList, countryList, selectedIds } = state.locationLookup;
+    const { cityList, stateList, selectedIds } = state.locationLookup;
     // ACCESSING STATE FROM REDUX STORE
 
     const queryParams = new URLSearchParams(locations.search);
-    const countryIdQueryParam = queryParams.get("countryId") || "";
+    const stateIdQueryParam = queryParams.get("stateId") || "";
+    const cityIdQueryParam = queryParams.get("cityId") || "";
 
     React.useEffect(() => {
-        getCountryLookupList()(dispatch)
-    }, [dispatch]);
-
-    React.useEffect(() => {
-        const fetchStateLookupList = () => {
-            if (countryIdQueryParam) {
-                getStateLookupList(countryIdQueryParam)(dispatch)
+        const fetchCityLookupList = () => {
+            if (stateIdQueryParam) {
+                getCityLookupList(stateIdQueryParam)(dispatch);
             }
         };
-        fetchStateLookupList();
-    }, [countryIdQueryParam, dispatch]);
-
+        fetchCityLookupList();
+    }, [stateIdQueryParam, dispatch]);
 
     React.useEffect(() => {
         if (selectedIds.length === 0) {
             return
         } else {
-            deleteStateItem(selectedIds, countryIdQueryParam)(dispatch);
-            getStateLookupList(countryIdQueryParam)(dispatch);
+            deleteCityItem(selectedIds, stateIdQueryParam)(dispatch);
         }
-    }, [selectedIds, dispatch, countryIdQueryParam])
-
+    }, [selectedIds, dispatch, stateIdQueryParam])
     return (
         <>
             <div>
@@ -55,7 +49,10 @@ const ListState = () => {
                     <Col sm="12">
                         <Formik
                             initialValues={{
-                                countryId: countryIdQueryParam,
+                                stateId: stateIdQueryParam,
+                                cityId: cityIdQueryParam,
+                                cityName: "",
+                                isActive: true,
                             }}
                             enableReinitialize={true}
                             onSubmit={() => {
@@ -66,30 +63,32 @@ const ListState = () => {
                                     <Card.Header className="d-flex justify-content-between">
                                         <div className="header-title">
                                             <h4 className="card-title mb-3">
-                                                <b>State List</b>
+                                                <b>City List</b>
                                             </h4>
                                         </div>
                                     </Card.Header>
                                     <div className="d-md-flex justify-content-between">
                                         <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
                                             <Field
+                                                disabled={stateList.length === 0 ? true : false}
                                                 as="select"
-                                                name="countryId"
+                                                name="stateId"
                                                 className="form-select"
-                                                id="countryId"
+                                                id="stateId"
                                                 onChange={(e) => {
-                                                    setFieldValue("countryId", e.target.value);
-                                                    history.push(`${locationLocations.state}?countryId=${e.target.value}`
+                                                    setFieldValue("stateId", e.target.value);
+                                                    history.push(`${locationLocations.city}?stateId=${e.target.value}`
                                                     );
+                                                    console.log('e.target.value', e.target.value);
                                                 }}
                                             >
-                                                <option value="">Select Country</option>
-                                                {countryList?.map((country, idx) => (
+                                                <option value="">Select State</option>
+                                                {stateList?.map((item, idx) => (
                                                     <option
                                                         key={idx}
-                                                        value={country?.countryId}
+                                                        value={item?.stateId}
                                                     >
-                                                        {country.countryName}
+                                                        {item.stateName}
                                                     </option>
                                                 ))}
                                             </Field>
@@ -137,7 +136,7 @@ const ListState = () => {
                                         <div>
                                             <div className="d-flex justify-content-end">
                                                 <Link
-                                                    to={locationLocations.addState}
+                                                    to={locationLocations.addCity}
                                                     className="d-flex justify-content-end"
                                                 >
                                                     <button
@@ -160,16 +159,16 @@ const ListState = () => {
                                                                 ></path>
                                                             </svg>
                                                         </i>
-                                                        <span>Add State</span>
+                                                        <span>Add City</span>
                                                     </button>
                                                 </Link>
                                             </div>
                                         </div>
                                     </div>
                                     <Card.Body className="px-0">
-                                        {countryIdQueryParam === "" ?
+                                        {stateList.length === 0 || stateIdQueryParam === "" ?
                                             <div className="d-flex justify-content-center">
-                                                <p className="display-6">Please select country to view state</p>
+                                                <p className="display-6">Ensure a state is selected to view cities</p>
                                             </div>
                                             :
                                             <div className="table-responsive">
@@ -185,7 +184,7 @@ const ListState = () => {
                                                                 <b>S/NO.</b>
                                                             </th>
                                                             <th>
-                                                                <b>State</b>
+                                                                <b>City</b>
                                                             </th>
                                                             <th>
                                                                 <b>Status</b>
@@ -196,7 +195,7 @@ const ListState = () => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {stateList.map((item, idx) => (
+                                                        {cityList.map((item, idx) => (
                                                             <tr key={idx}>
                                                                 <td className="text-dark">
                                                                     {
@@ -204,7 +203,7 @@ const ListState = () => {
                                                                     }
                                                                 </td>
                                                                 <td className="text-uppercase">
-                                                                    <b>{item.stateName}</b>
+                                                                    <b>{item.cityName}</b>
                                                                 </td>
                                                                 <td className="text-uppercase">
                                                                     {item.isActive ? <Badge bg="success">Active</Badge>
@@ -217,7 +216,7 @@ const ListState = () => {
                                                                             placement="top"
                                                                             overlay={
                                                                                 <Tooltip id="button-tooltip-2">
-                                                                                    Edit State
+                                                                                    Edit City
                                                                                 </Tooltip>
                                                                             }
                                                                         >
@@ -227,7 +226,7 @@ const ListState = () => {
                                                                                 data-placement="top"
                                                                                 title=""
                                                                                 data-original-title="Details"
-                                                                                to={`${locationLocations.editState}?countryId=${countryIdQueryParam}&stateId=${item.stateId}`}
+                                                                                to={`${locationLocations.editCity}?stateId=${stateIdQueryParam}&cityId=${item.cityId}`}
                                                                             >
                                                                                 <span className="btn-inner">
                                                                                     <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +247,7 @@ const ListState = () => {
                                                                             placement="top"
                                                                             overlay={
                                                                                 <Tooltip id="button-tooltip-2">
-                                                                                    Delete State
+                                                                                    Delete City
                                                                                 </Tooltip>
                                                                             }
                                                                         >
@@ -258,13 +257,14 @@ const ListState = () => {
                                                                                 data-placement="top"
                                                                                 title=""
                                                                                 data-original-title="Delete"
-                                                                                to={`${locationLocations.state}?countryId=${countryIdQueryParam}`}
-                                                                                data-id={item.stateId}
+                                                                                to={`${locationLocations.city}?stateId=${stateIdQueryParam}`}
+                                                                                data-id={item.cityId}
                                                                                 onClick={() => {
                                                                                     dispatch(
-                                                                                        pushId(item.stateId)
+                                                                                        pushId(item.cityId)
                                                                                     );
-                                                                                    showSingleDeleteDialog(true)(dispatch);
+                                                                                   // showSingleDeleteDialog(true)(dispatch);
+                                                                                deleteDialogModal()
                                                                                 }}
                                                                             >
                                                                                 <span className="btn-inner">
@@ -320,4 +320,4 @@ const ListState = () => {
     );
 };
 
-export default ListState;
+export default ListCity;

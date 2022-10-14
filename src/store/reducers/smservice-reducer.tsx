@@ -1,7 +1,8 @@
 import { actions } from "../action-types/smservice-action-types";
+import { ISmserviceState } from "../Models/SmserviceState";
 import { _state } from "../states/smservice.state";
 
-export const smserviceReducer = (state = _state, { type, payload }) => {
+export const smserviceReducer = (state : ISmserviceState = _state, { type, payload }: any) => {
         switch (type) {
             case actions.FETCH_SMS_LOADING:
                 return {

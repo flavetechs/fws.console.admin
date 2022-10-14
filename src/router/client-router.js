@@ -5,9 +5,9 @@ import { Switch, Route } from 'react-router-dom'
 import {TransitionGroup,CSSTransition} from "react-transition-group";
 import { clientDashboardLocations, productsLocations, smsLocations } from './fws-client-path-locations';
 import clientIndex from '../views/dashboard/client-index';
-import SmsDescription from '../components/fws-clients/fws-sms-description';
+import SmsDescription from '../components/fws-clients/SMS/fws-sms-description';
 import Products from '../components/fws-clients/fws-product-list';
-import CreateSms from '../components/fws-clients/fws-install-sms';
+import CreateSms from '../components/fws-clients/SMS/fws-install-sms';
 
 
 const ClientRouter = () => {
