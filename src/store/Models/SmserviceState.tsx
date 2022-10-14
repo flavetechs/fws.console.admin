@@ -1,10 +1,12 @@
+import { locationDetail } from "../../components/Models/Sms/SmserviceDetail";
+
 export interface ISmserviceState {
     loading: boolean,
-    smservice:any[],
+    smservice:locationDetail[],
     message: string,
     isSuccessful: boolean,
-    countries:any[],
-    states:any[],
+    countries:locationDetail[],
+    states:locationDetail[],
     baseUrlSuffixValidation:boolean,
     validationSuccessful:boolean,
 }
