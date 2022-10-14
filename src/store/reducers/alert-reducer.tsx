@@ -9,6 +9,12 @@ export const alertReducer = (state : IAlertState =_state, { type, payload }: any
                 ...state,
                 deleteDialogResponse: payload
             }
+
+            case actions.CUSTOMISED_MODAL_RESPONSE:
+                return {
+                    ...state,
+                    customisedModalValue: payload
+                }
        
         case actions.RESPOND_DECISION_DIALOG:
             return {

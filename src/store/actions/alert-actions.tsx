@@ -42,12 +42,31 @@ export const deleteDialogModal= (message : any) => {swal({
       respondDialog('')
     }
   });} 
+
+  export const customisedModal= (text : any,content:any)=> {
+    swal(text, {
+      content: content,
+    })
+    .then((value) => {
+      customisedValueForModals(value)
+    });
+  }
+
+  export const customisedValueForModals = (value: any) =>(dispatch: any) => {
+    dispatch({
+        type: actions.CUSTOMISED_MODAL_RESPONSE,
+        payload: value
+    })
+}
+
   export const respondToDeleteDialog = (value: any) =>(dispatch: any) => {
     dispatch({
         type: actions.DELETE_DIALOG_RESPPONSE,
         payload: value
     })
 }
+
+
 
 export const respondDialog = (value: any) => (dispatch: any)=> {
     dispatch({

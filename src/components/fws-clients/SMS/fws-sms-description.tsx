@@ -135,12 +135,7 @@ const SmsDescription = () => {
                 </div>
               </div>
             </div>
-            <div className="d-flex ">
-              <h2 className=" my-3 w-50">
-                {singleProduct?.productDescription}
-              </h2>
-            </div>
-            <div className="d-flex">
+            <div className="d-flex mt-3">
               <div>
                 <h6
                   className={`${navigation === "overview" && "text-primary"}`}
@@ -175,6 +170,82 @@ const SmsDescription = () => {
               </div>
             </div>
             <hr className="mt-0" />
+            <div>
+              <section className="d-md-flex py-5">
+                <h2 className=" w-50">{singleProduct?.productDescription}</h2>
+              </section>
+              <section className="d-md-flex py-5">
+                <div className="m-2" style={{width:"60%"}}>
+                  <p>
+                    Our school management system includes a website and a portal
+                    that you may customize in terms of color, design, and
+                    pattern to fit your institution
+                  </p>
+                  <img style={{maxWidth:"100%"}}src="http://flavetech-001-site1.etempurl.com/ProfileImage/449c0014-4e21-4049-8e6f-7e0b39e695fe.PNG" alt="score entry" />
+                </div>
+                <div className=" m-2 "style={{width:"40%"}}>
+                  <h5>EXAMS AND ASSESSEMENT SCORE ENTRY</h5>
+                  <div className="mt-2">
+                    By double tapping on the score columns, you can quickly add
+                    student exam and assessment results, and it will be saved
+                    automatically.
+                  </div>
+                </div>
+              </section>
+
+              <section className="d-md-flex py-5">
+                <div className="m-2"style={{width:"40%"}}>
+                  <h5>ONLINE STAFF AND STUDENT ATTENDANCE SYSTEM</h5>
+                  <div className="mt-2">
+                    Daily student and staff attendance made easy with our
+                    software and you can generate attendance report.
+                  </div>
+                </div>
+                <div className="m-2 " style={{width:"60%"}}>
+                  <img src="http://flavetech-001-site1.etempurl.com/ProfileImage/97c1c4fc-2763-4f21-ae9a-e78902796134.png" alt="attendance board"style={{maxWidth:"100%"}} />
+                </div>
+              </section>
+              <section className="d-md-flex py-5">
+                <div className="m-2 "style={{width:"60%"}}>
+                  <img style={{maxWidth:"100%"}} src="http://flavetech-001-site1.etempurl.com/ProfileImage/125d612a-1639-4f97-a17b-35d1046a835f.png" alt="time table" />
+                </div>
+                <div className="m-2 "style={{width:"40%"}}>
+                  <h5>Customizable Timetable</h5>
+                  <div className="mt-2">
+                    Create a unique timetable for your institution with ease,
+                    and it will be distributed instantly to the dashboards of
+                    the students and staff for easy access.
+                  </div>
+                  <br />
+                  <div className="mt-2 ">
+                    <h6>Full detail:</h6>
+                    <br />
+                    Awesome aspects of this educational software include:
+                    <div>&#x2022; students can be admitted online</div>
+                    <div>
+                      &#x2022; administration of registration for students and
+                      staff via the portal
+                    </div>
+                    <div>&#x2022; computerized attendance system</div>
+                    <div>&#x2022; computerized Result entering</div>
+                    <div>&#x2022; online result printing with e-pins</div>
+                    <div>&#x2022; taking and recording assessments online</div>
+                    <div>
+                      &#x2022; drafting, reviewing, and distributing lesson
+                      notes
+                    </div>
+                    <div>
+                      &#x2022; announcements and other information are provided
+                      through the portal and emails.
+                    </div>
+                    <div>
+                      &#x2022; The interface also allows for the design,
+                      printing, and sharing of schedules.
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
           </Card.Body>
         </Card>
       </Row>
