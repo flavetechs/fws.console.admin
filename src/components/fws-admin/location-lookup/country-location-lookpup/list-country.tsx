@@ -6,7 +6,8 @@ import Card from "../../../Card";
 import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
 import { deleteCountryItem, getCountryLookupList, pushId, removeId } from "../../../../store/actions/location-lookup-actions";
 import { locationLocations } from "../../../../router/fws-path-locations";
-import { decisionDialogModal, deleteDialogModal } from "../../../../store/actions/alert-actions";
+import { decisionDialogModal, deleteDialogModal, errorModal, respondToDeleteDialog } from "../../../../store/actions/alert-actions";
+import { IAlertState } from "../../../../store/Models/AlertState";
 
 const ListCountry = () => {
     //VARIABLE DECLARATIONS
@@ -17,13 +18,36 @@ const ListCountry = () => {
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state: any) => state);
     const { countryList, selectedIds }: ILocationLookupState = state.locationLookup;
+    // const { deleteDialogResponse }: IAlertState = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
     React.useEffect(() => {
         getCountryLookupList()(dispatch)
     }, [dispatch]);
 
+
+
     //DELETE HANDLER
+    //DELETE HANDLER
+    // React.useEffect(() => {
+    //     if (deleteDialogResponse === "continue") {
+    //         if (selectedIds.length === 0) {
+    //             errorModal("No Item selected to be deleted")
+    //         } else {
+    //             deleteCountryItem(selectedIds)(dispatch);
+    //             respondToDeleteDialog("")(dispatch);
+    //         }
+    //     } else {
+    //         selectedIds.forEach((id) => {
+    //             dispatch(removeId(id));
+    //         });
+    //     }
+    //     return () => {
+    //         respondToDeleteDialog("")(dispatch);
+    //     };
+    // }, [deleteDialogResponse, dispatch]);
+    //DELETE HANDLER
+
 
     React.useEffect(() => {
         if (selectedIds.length === 0) {
@@ -32,7 +56,7 @@ const ListCountry = () => {
             deleteCountryItem(selectedIds)(dispatch)
         }
     }, [selectedIds, dispatch]);
-
+    //DELETE HANDLER
     const filteredCountryList = countryList.filter((country) => {
         if (searchQuery === "") {
             //if query is empty
@@ -44,8 +68,9 @@ const ListCountry = () => {
             return country;
         }
     });
-    
 
+    // console.log('deleteDialogResponse', deleteDialogResponse);
+    
     return (
         <>
             <div>
@@ -224,7 +249,7 @@ const ListCountry = () => {
                                                                         dispatch(
                                                                             pushId(item.countryId)
                                                                         );
-                                                                        // deleteDialogModal('are you sure you want to delete item?');
+                                                                        deleteDialogModal('are you sure you want to delete item?');
                                                                     }}
                                                                 >
                                                                     <span className="btn-inner">
