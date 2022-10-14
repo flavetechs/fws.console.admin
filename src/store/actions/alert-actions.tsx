@@ -43,21 +43,24 @@ export const deleteDialogModal= (message : any) => {swal({
     }
   });} 
 
-  export const customisedModal= (text : any,content:any)=> {
+  export const customisedModal= (text : any,content:any)=>(dispatch :any)=> {
     swal(text, {
       content: content,
     })
     .then((value) => {
-      customisedValueForModals(value)
-    });
-  }
-
-  export const customisedValueForModals = (value: any) =>(dispatch: any) => {
-    dispatch({
+      dispatch({
         type: actions.CUSTOMISED_MODAL_RESPONSE,
         payload: value
     })
-}
+    });
+  }
+
+//   export const customisedValueForModals = (value: any) =>(dispatch: any) => {
+//     dispatch({
+//         type: actions.CUSTOMISED_MODAL_RESPONSE,
+//         payload: value
+//     })
+// }
 
   export const respondToDeleteDialog = (value: any) =>(dispatch: any) => {
     dispatch({

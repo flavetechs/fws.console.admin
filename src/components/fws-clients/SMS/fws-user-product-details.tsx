@@ -43,7 +43,7 @@ console.log("customisedModalValue",customisedModalValue);
                     <span> - Flavetech</span>
                   </div>
                 </div>
-            <button className="btn btn-sm btn-primary" onClick={()=> {customisedModal("Number of pins:","input")}}>Export Pins</button>
+            <button className="btn btn-sm btn-primary" onClick={()=>{customisedModal("Number of pins:","input")(dispatch)}}>Export Pins</button>
               </div>
             </div>
           </div>
