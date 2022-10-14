@@ -4,6 +4,7 @@ export const clientDashboardLocations = {
 
   export const productsLocations = {
     products: "/client-dashboard/products",
+    userProductDetails: "/client-dashboard/user-product-details",
   };
 
   export const smsLocations = {

@@ -12,6 +12,7 @@ import {bindActionCreators} from "redux"
 import {NavbarstyleAction, getDirMode, SchemeDirAction,  getNavbarStyleMode, getSidebarActiveMode, SidebarActiveStyleAction, getDarkMode, ModeAction,  SidebarColorAction, getSidebarColorMode, getSidebarTypeMode} from '../../../../store/setting/setting'
 import {connect} from "react-redux"
 import ClientVerticalNav from './client-vertical-nav'
+import { clientDashboardLocations } from '../../../../router/fws-client-path-locations'
 
 const mapStateToProps = (state) => {
     return {
@@ -76,7 +77,7 @@ const ClientSidebar = (props) => {
         <>
             <aside className="sidebar sidebar-default navs-rounded-all {{ sidebarVariants }}">
                 <div className="sidebar-header d-flex align-items-center justify-content-start">
-                    <Link to="/dashboard" className="navbar-brand">
+                    <Link to={clientDashboardLocations.dashboard} className="navbar-brand">
                         <svg width="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"/>
                             <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"/>

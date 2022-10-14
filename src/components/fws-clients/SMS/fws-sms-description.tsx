@@ -1,47 +1,60 @@
-import React, { useState } from "react";
-import { Card, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Card, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { smsLocations } from "../../../router/fws-client-path-locations";
-import { getAllProducts } from "../../../store/actions/products-actions";
+import { getSingleProduct } from "../../../store/actions/products-actions";
 import { IProductState } from "../../../store/Models/ProductState";
 const SmsDescription = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
-  const state = useSelector((state : any) => state);
-  const { products }: IProductState = state.product;
+  const state = useSelector((state: any) => state);
+  const { singleProduct }: IProductState = state.product;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
   const [navigation, setNavigation] = useState("overview");
-  React.useEffect(() => {
-    getAllProducts()(dispatch);
+  useEffect(() => {
+    getSingleProduct(productId || "")(dispatch);
   }, []);
   return (
     <>
       <Row>
         <Card>
+          <Card.Header>
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip id="button-tooltip-2"> back</Tooltip>}
+            >
+              <svg
+                style={{ cursor: "pointer" }}
+                onClick={() => history.goBack()}
+                className=" text-primary"
+                width="25"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M13.165 11.9934L13.1634 11.6393C13.1513 10.2348 13.0666 8.98174 12.9206 8.18763C12.9206 8.17331 12.7613 7.38572 12.6599 7.12355C12.5006 6.74463 12.2126 6.42299 11.8515 6.2192C11.5624 6.0738 11.2592 6 10.9417 6C10.6922 6.01157 10.2806 6.13714 9.98692 6.24242L9.74283 6.33596C8.12612 6.97815 5.03561 9.07656 3.85199 10.3598L3.76473 10.4495L3.37527 10.8698C3.12982 11.1915 3 11.5847 3 12.0077C3 12.3866 3.11563 12.7656 3.3469 13.0718C3.41614 13.171 3.52766 13.2983 3.62693 13.4058L4.006 13.8026C5.31046 15.1243 8.13485 16.9782 9.59883 17.5924C9.59883 17.6057 10.5086 17.9857 10.9417 18H10.9995C11.6639 18 12.2846 17.6211 12.6021 17.0086C12.6888 16.8412 12.772 16.5132 12.8352 16.2252L12.949 15.6813C13.0788 14.8067 13.165 13.465 13.165 11.9934ZM19.4967 13.5183C20.3269 13.5183 21 12.8387 21 12.0004C21 11.1622 20.3269 10.4825 19.4967 10.4825L15.7975 10.8097C15.1463 10.8097 14.6183 11.3417 14.6183 12.0004C14.6183 12.6581 15.1463 13.1912 15.7975 13.1912L19.4967 13.5183Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </OverlayTrigger>
+          </Card.Header>
           <Card.Body>
             <div className="d-md-flex  justify-content-between align-items-center ">
               <div className="d-flex ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="80"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="green"
-                    d="M17 10.645v-2.29c-1.17-.417-1.907-.533-2.28-1.431-.373-.9.07-1.512.6-2.625l-1.618-1.619c-1.105.525-1.723.974-2.626.6-.9-.373-1.017-1.116-1.431-2.28h-2.29c-.412 1.158-.53 1.907-1.431 2.28h-.001c-.9.374-1.51-.07-2.625-.6l-1.617 1.619c.527 1.11.973 1.724.6 2.625-.375.901-1.123 1.019-2.281 1.431v2.289c1.155.412 1.907.531 2.28 1.431.376.908-.081 1.534-.6 2.625l1.618 1.619c1.107-.525 1.724-.974 2.625-.6h.001c.9.373 1.018 1.118 1.431 2.28h2.289c.412-1.158.53-1.905 1.437-2.282h.001c.894-.372 1.501.071 2.619.602l1.618-1.619c-.525-1.107-.974-1.723-.601-2.625.374-.899 1.126-1.019 2.282-1.43zm-8.5 1.689c-1.564 0-2.833-1.269-2.833-2.834s1.269-2.834 2.833-2.834 2.833 1.269 2.833 2.834-1.269 2.834-2.833 2.834zm15.5 4.205v-1.077c-.55-.196-.897-.251-1.073-.673-.176-.424.033-.711.282-1.236l-.762-.762c-.52.248-.811.458-1.235.283-.424-.175-.479-.525-.674-1.073h-1.076c-.194.545-.25.897-.674 1.073-.424.176-.711-.033-1.235-.283l-.762.762c.248.523.458.812.282 1.236-.176.424-.528.479-1.073.673v1.077c.544.193.897.25 1.073.673.177.427-.038.722-.282 1.236l.762.762c.521-.248.812-.458 1.235-.283.424.175.479.526.674 1.073h1.076c.194-.545.25-.897.676-1.074h.001c.421-.175.706.034 1.232.284l.762-.762c-.247-.521-.458-.812-.282-1.235s.529-.481 1.073-.674zm-4 .794c-.736 0-1.333-.597-1.333-1.333s.597-1.333 1.333-1.333 1.333.597 1.333 1.333-.597 1.333-1.333 1.333zm-4 3.071v-.808c-.412-.147-.673-.188-.805-.505s.024-.533.212-.927l-.572-.571c-.389.186-.607.344-.926.212s-.359-.394-.506-.805h-.807c-.146.409-.188.673-.506.805-.317.132-.533-.024-.926-.212l-.572.571c.187.393.344.609.212.927-.132.318-.396.359-.805.505v.808c.408.145.673.188.805.505.133.32-.028.542-.212.927l.572.571c.39-.186.608-.344.926-.212.318.132.359.395.506.805h.807c.146-.409.188-.673.507-.805h.001c.315-.131.529.025.924.213l.572-.571c-.186-.391-.344-.609-.212-.927s.397-.361.805-.506zm-3 .596c-.552 0-1-.447-1-1s.448-1 1-1 1 .447 1 1-.448 1-1 1z"
-                  />
-                </svg>
+                <img
+                  src={singleProduct?.productUrl}
+                  style={{ maxWidth: "12%" }}
+                  alt="product"
+                />
                 <div className="mx-2">
                   <h6 className="counter fw-bold  my-2 mt-3 ">
-                    <span>
-                      {
-                        products?.find((p) => p.productId === productId)
-                          ?.productName
-                      }
-                    </span>
+                    <span>{singleProduct?.productName}</span>
                   </h6>
                   <div>by Flavetech</div>
                   <div className="">
@@ -92,40 +105,76 @@ const SmsDescription = () => {
               </div>
               <div>
                 <button
-                  className="btn"
-                  style={{backgroundColor:"#ffc400",color:"black"}}
+                  className="btn btn-sm mx-2"
+                  style={{ backgroundColor: "#ffc400", color: "black" }}
                   onClick={() =>
-                    !products?.find((p) => p.productId === productId)?.installed && history.push(
+                    !singleProduct?.installed &&
+                    history.push(
                       `${smsLocations.createSms}?productId=${productId}`
                     )
                   }
                 >
-                  {!products?.find((p) => p.productId === productId)?.installed
-                    ? "Add"
-                    : "Installed"}
+                  {!singleProduct?.installed ? "Add" : "Installed"}
                 </button>
+                <div>
+                  <small className="mt-1">Estimated USD 0 / month</small>
+                  <svg
+                    width="15"
+                    className="mx-1"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M7.67 1.99927H16.34C19.73 1.99927 22 4.37927 22 7.91927V16.0903C22 19.6203 19.73 21.9993 16.34 21.9993H7.67C4.28 21.9993 2 19.6203 2 16.0903V7.91927C2 4.37927 4.28 1.99927 7.67 1.99927ZM11.99 9.06027C11.52 9.06027 11.13 8.66927 11.13 8.19027C11.13 7.70027 11.52 7.31027 12.01 7.31027C12.49 7.31027 12.88 7.70027 12.88 8.19027C12.88 8.66927 12.49 9.06027 11.99 9.06027ZM12.87 15.7803C12.87 16.2603 12.48 16.6503 11.99 16.6503C11.51 16.6503 11.12 16.2603 11.12 15.7803V11.3603C11.12 10.8793 11.51 10.4803 11.99 10.4803C12.48 10.4803 12.87 10.8793 12.87 11.3603V15.7803Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </div>
               </div>
             </div>
             <div className="d-flex ">
               <h2 className=" my-3 w-50">
-                {
-                  products?.find((p) => p.productId === productId)
-                    ?.productDescription
-                }
+                {singleProduct?.productDescription}
               </h2>
-              
             </div>
             <div className="d-flex">
               <div>
-           <h6 className={`${navigation === "overview" && "text-primary"}`} style={{cursor:"pointer"}} onClick={()=>setNavigation("overview")}>Overview</h6>
-           <div className={`${navigation === "overview" && "px-2 border border-primary rounded"}`}></div>
-           </div>
-           <div>
-           <h6 className={`${navigation === "support" && "text-primary"} mx-2`} style={{cursor:"pointer"}}  onClick={()=>setNavigation("support")}>Support</h6>
-           <div className={`${navigation === "support" && "px-2 border border-primary rounded"}`}></div>
-           </div>
+                <h6
+                  className={`${navigation === "overview" && "text-primary"}`}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setNavigation("overview")}
+                >
+                  Overview
+                </h6>
+                <div
+                  className={`${
+                    navigation === "overview" &&
+                    "px-2 border border-primary rounded"
+                  }`}
+                ></div>
+              </div>
+              <div>
+                <h6
+                  className={`${
+                    navigation === "support" && "text-primary"
+                  } mx-2`}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setNavigation("support")}
+                >
+                  Support
+                </h6>
+                <div
+                  className={`${
+                    navigation === "support" &&
+                    "px-2 border border-primary rounded"
+                  }`}
+                ></div>
+              </div>
             </div>
-            <hr className="mt-0"/>
+            <hr className="mt-0" />
           </Card.Body>
         </Card>
       </Row>

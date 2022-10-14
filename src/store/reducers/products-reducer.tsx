@@ -25,6 +25,29 @@ export const productReducer = (state : IProductState = _state, { type, payload }
               isSuccessful: false,
             };
            
+
+            case actions.FETCH_SINGLE_PRODUCT_LOADING:
+              return {
+                ...state,
+                loading: true,
+                message: "",
+                isSuccessful: false,
+              };
+            case actions.FETCH_SINGLE_PRODUCT_SUCCESS:
+              return {
+                ...state,
+                loading: false,
+                singleProduct: payload,
+              };
+            case actions.FETCH_SINGLE_PRODUCT_FAILED:
+              return {
+                ...state,
+                loading: false,
+                message: payload,
+                isSuccessful: false,
+              };
+           
+              
             case actions.FETCH_USER_PRODUCTS_LOADING:
             return {
               ...state,
@@ -46,6 +69,28 @@ export const productReducer = (state : IProductState = _state, { type, payload }
               isSuccessful: false,
             };
           
+            case actions.FETCH_SINGLE_USER_PRODUCT_LOADING:
+              return {
+                ...state,
+                loading: true,
+                message: "",
+                isSuccessful: false,
+              };
+            case actions.FETCH_SINGLE_USER_PRODUCT_SUCCESS:
+              return {
+                ...state,
+                loading: false,
+                singleUserProduct: payload,
+              };
+            case actions.FETCH_SINGLE_USER_PRODUCT_FAILED:
+              return {
+                ...state,
+                loading: false,
+                message: payload,
+                isSuccessful: false,
+              };
+            
+
             default:
                 return state
     }}
