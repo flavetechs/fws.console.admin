@@ -113,7 +113,19 @@ const SmsDescription = () => {
                     ?.productDescription
                 }
               </h2>
+              
             </div>
+            <div className="d-flex">
+              <div>
+           <h6 className={`${navigation === "overview" && "text-primary"}`} style={{cursor:"pointer"}} onClick={()=>setNavigation("overview")}>Overview</h6>
+           <div className={`${navigation === "overview" && "px-2 border border-primary rounded"}`}></div>
+           </div>
+           <div>
+           <h6 className={`${navigation === "support" && "text-primary"} mx-2`} style={{cursor:"pointer"}}  onClick={()=>setNavigation("support")}>Support</h6>
+           <div className={`${navigation === "support" && "px-2 border border-primary rounded"}`}></div>
+           </div>
+            </div>
+            <hr className="mt-0"/>
           </Card.Body>
         </Card>
       </Row>
