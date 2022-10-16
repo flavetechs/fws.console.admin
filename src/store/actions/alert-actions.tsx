@@ -34,9 +34,9 @@ export const deleteDialogModal= (message : any) =>(dispatch: any) => {swal({
   })
   .then((willDo) => {
     if (willDo) {
-      swal(message, {
-        icon: "success",
-      });
+      // swal(message, {
+      //   icon: "success",
+      // });
       respondDialog('continue')(dispatch)
     } else {
       swal(message2);
