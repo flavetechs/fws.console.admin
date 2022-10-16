@@ -9,7 +9,7 @@ export const deleteDialogModal= (message : any) => {swal({
     title: "Are you sure delete this?",
     text: "Once deleted, you will not be able to recover this",
     icon: "warning",
-    buttons: [true],
+    buttons: ["cancel",true],
     dangerMode: true,
   })
   .then((willDelete) => {
@@ -28,7 +28,7 @@ export const deleteDialogModal= (message : any) => {swal({
     title: title,
     text: text,
     icon: "warning",
-    buttons: [true],
+    buttons: ["cancel",true],
     dangerMode: true,
   })
   .then((willDo) => {
@@ -46,6 +46,7 @@ export const deleteDialogModal= (message : any) => {swal({
   export const customisedModal= (text : any,content:any)=>(dispatch :any)=> {
     swal(text, {
       content: content,
+      buttons: ["cancel",true],
     })
     .then((value) => {
       dispatch({
