@@ -232,7 +232,7 @@ console.log("deleteDialogResponse",deleteDialogResponse);
                                                                         dispatch(
                                                                             pushId(item.countryId)
                                                                         );
-                                                                        deleteDialogModal(message)(dispatch);
+                                                                        deleteDialogModal()(dispatch);
                                                                     }}
                                                                 >
                                                                     <span className="btn-inner">
