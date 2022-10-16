@@ -6,7 +6,7 @@ import Card from "../../../Card";
 import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
 import { deleteCountryItem, getCountryLookupList, pushId, removeId } from "../../../../store/actions/location-lookup-actions";
 import { locationLocations } from "../../../../router/fws-path-locations";
-import { decisionDialogModal, deleteDialogModal, errorModal, respondToDeleteDialog } from "../../../../store/actions/alert-actions";
+import { decisionDialogModal, deleteDialogModal, respondToDeleteDialog } from "../../../../store/actions/alert-actions";
 import { IAlertState } from "../../../../store/Models/AlertState";
 
 const ListCountry = () => {
@@ -17,8 +17,8 @@ const ListCountry = () => {
 
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state: any) => state);
-    const { countryList, selectedIds }: ILocationLookupState = state.locationLookup;
-    // const { deleteDialogResponse }: IAlertState = state.alert;
+    const { countryList, selectedIds,message }: ILocationLookupState = state.locationLookup;
+    const { deleteDialogResponse }: IAlertState = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
     React.useEffect(() => {
@@ -50,13 +50,19 @@ const ListCountry = () => {
 
 
     React.useEffect(() => {
+        if (deleteDialogResponse === "continue") {
         if (selectedIds.length === 0) {
             return
         } else {
             deleteCountryItem(selectedIds)(dispatch)
         }
-    }, [selectedIds, dispatch]);
-    //DELETE HANDLER
+    }
+    return () => {
+        respondToDeleteDialog("")(dispatch);
+      };
+    }, [selectedIds, deleteDialogResponse,dispatch]);
+console.log("deleteDialogResponse",deleteDialogResponse);
+
     const filteredCountryList = countryList.filter((country) => {
         if (searchQuery === "") {
             //if query is empty
@@ -249,7 +255,7 @@ const ListCountry = () => {
                                                                         dispatch(
                                                                             pushId(item.countryId)
                                                                         );
-                                                                        deleteDialogModal('are you sure you want to delete item?');
+                                                                        deleteDialogModal()(dispatch);
                                                                     }}
                                                                 >
                                                                     <span className="btn-inner">
