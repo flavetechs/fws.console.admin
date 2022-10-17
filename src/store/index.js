@@ -9,7 +9,7 @@ export default createStore(
     combineReducers({
         mode: Mode,
         auth: authReducer,
-        alert: alertReducer,
+        alert:alertReducer,
         locationLookup: locationLookupReducer,
         product: productReducer,
         smservice: smserviceReducer,

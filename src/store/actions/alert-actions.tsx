@@ -29,7 +29,7 @@ export const deleteDialogModal= () =>(dispatch: any) => {swal({
     title: title,
     text: text,
     icon: "warning",
-    buttons: [true],
+    buttons: ["cancel",true],
     dangerMode: true,
   })
   .then((willDo) => {
@@ -43,12 +43,35 @@ export const deleteDialogModal= () =>(dispatch: any) => {swal({
       respondDialog('')(dispatch)
     }
   });} 
+
+  export const customisedModal= (text : any,content:any)=>(dispatch :any)=> {
+    swal(text, {
+      content: content,
+      buttons: ["cancel",true],
+    })
+    .then((value) => {
+      dispatch({
+        type: actions.CUSTOMISED_MODAL_RESPONSE,
+        payload: value
+    })
+    });
+  }
+
+//   export const customisedValueForModals = (value: any) =>(dispatch: any) => {
+//     dispatch({
+//         type: actions.CUSTOMISED_MODAL_RESPONSE,
+//         payload: value
+//     })
+// }
+
   export const respondToDeleteDialog = (value: any) =>(dispatch: any) => {
     dispatch({
         type: actions.DELETE_DIALOG_RESPPONSE,
         payload: value
     })
 }
+
+
 
 export const respondDialog = (value: any) => (dispatch: any)=> {
     dispatch({

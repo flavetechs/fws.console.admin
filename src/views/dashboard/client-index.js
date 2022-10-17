@@ -39,8 +39,8 @@ import {
   getSidebarTypeMode,
 } from "../../store/setting/setting";
 import { connect } from "react-redux";
-import { Card, Row } from "react-bootstrap";
-import Products from "../../components/fws-clients/fws-product-list";
+import { Card } from "react-bootstrap";
+import UserProducts from "../../components/fws-clients/fws-user-product-list";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
@@ -239,10 +239,10 @@ const ClientIndex = (props) => {
             </div>{" "}
           </div>
         </div>
-        <div className="my-3">Recommended Products</div>
+        <div className="my-3">Products Added</div>
         <Card>
           <Card.Body>
-            <Products />
+            <UserProducts />
           </Card.Body>
         </Card>
       </div>

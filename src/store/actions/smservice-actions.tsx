@@ -66,6 +66,32 @@ export const updateSms = (values: any) => (dispatch: any) => {
         });
 }
 
+export const exportPins = (numberOfPins: number) => (dispatch: any) => {
+    dispatch({
+        type: actions.EXPORT_PINS_LOADING
+    });
+ const payload={
+    numberOfPins
+ }
+ console.log("numberOfPins",numberOfPins);
+ 
+    axiosInstance.post('fws/sms/api/v1/export-pins',  payload)
+        .then((res) => {
+            dispatch({
+                type: actions.EXPORT_PINS_SUCCESS,
+                payload: res.data.message.friendlyMessage
+            });
+         
+        }).catch((err) => {
+            dispatch({
+                type: actions.EXPORT_PINS_FAILED,
+                payload: err.response.data.message.friendlyMessage
+            });
+          
+        });
+}
+
+
 export const getCountries = () => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_COUNTRY_LOADING,
