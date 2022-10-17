@@ -90,7 +90,7 @@ const EditCountry = () => {
                           </label>
                           <Field
                             type="text"
-                            className="form-control"
+                            className="form-control text-uppercase"
                             name="countryName"
                             id="countryName"
                             aria-describedby="countryName"

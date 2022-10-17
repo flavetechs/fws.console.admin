@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "../../../Card";
 import { Field, Formik } from "formik";
 import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
-import { deleteCityItem, getCityLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
+import { deleteCityItem, deleteStateItem, getCityLookupList, pushId } from "../../../../store/actions/location-lookup-actions";
 import { locationLocations } from "../../../../router/fws-path-locations";
-import { deleteDialogModal } from "../../../../store/actions/alert-actions";
+import { deleteDialogModal, respondToDeleteDialog } from "../../../../store/actions/alert-actions";
+import { IAlertState } from "../../../../store/Models/AlertState";
 
 
 const ListCity = () => {
@@ -21,6 +22,7 @@ const ListCity = () => {
     // ACCESSING STATE FROM REDUX STORE
     const state = useSelector((state: any) => state);
     const { cityList, stateList, selectedIds }: ILocationLookupState = state.locationLookup;
+    const { deleteDialogResponse }: IAlertState = state.alert;
     // ACCESSING STATE FROM REDUX STORE
 
     const queryParams = new URLSearchParams(locations.search);
@@ -36,6 +38,19 @@ const ListCity = () => {
         fetchCityLookupList();
     }, [stateIdQueryParam, dispatch]);
 
+    React.useEffect(() => {
+        if (deleteDialogResponse === "continue") {
+            if (selectedIds.length === 0) {
+                return
+            } else {
+                deleteCityItem(selectedIds, stateIdQueryParam)(dispatch)
+            }
+        }
+        return () => {
+            respondToDeleteDialog("")(dispatch);
+        };
+    }, [selectedIds, deleteDialogResponse, dispatch]);
+
     const filteredCityList = cityList.filter((city) => {
         if (searchQuery === "") {
             //if query is empty
@@ -47,15 +62,6 @@ const ListCity = () => {
             return city;
         }
     });
-
-    React.useEffect(() => {
-        if (selectedIds.length === 0) {
-            return
-        } else {
-            deleteCityItem(selectedIds, stateIdQueryParam)(dispatch);
-        }
-    }, [selectedIds, dispatch, stateIdQueryParam])
-
 
     return (
         <>
@@ -88,7 +94,7 @@ const ListCity = () => {
                                                 disabled={stateList.length === 0 ? true : false}
                                                 as="select"
                                                 name="stateId"
-                                                className="form-select"
+                                                className="form-select text-uppercase"
                                                 id="stateId"
                                                 onChange={(e: any) => {
                                                     setFieldValue("stateId", e.target.value);
@@ -278,6 +284,7 @@ const ListCity = () => {
                                                                                         pushId(item.cityId)
                                                                                     );
                                                                                     // deleteDialogModal("Successfully deleted")
+                                                                                    deleteDialogModal()(dispatch);
                                                                                 }}
                                                                             >
                                                                                 <span className="btn-inner">

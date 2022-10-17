@@ -124,7 +124,7 @@ const EditState = () => {
                           </label>
                           <Field
                             type="text"
-                            className="form-control"
+                            className="form-control text-uppercase"
                             name="stateName"
                             id="stateName"
                             aria-describedby="stateName"

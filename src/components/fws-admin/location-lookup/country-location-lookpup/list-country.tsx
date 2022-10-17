@@ -25,30 +25,6 @@ const ListCountry = () => {
         getCountryLookupList()(dispatch)
     }, [dispatch]);
 
-
-
-    //DELETE HANDLER
-    //DELETE HANDLER
-    // React.useEffect(() => {
-    //     if (deleteDialogResponse === "continue") {
-    //         if (selectedIds.length === 0) {
-    //             errorModal("No Item selected to be deleted")
-    //         } else {
-    //             deleteCountryItem(selectedIds)(dispatch);
-    //             respondToDeleteDialog("")(dispatch);
-    //         }
-    //     } else {
-    //         selectedIds.forEach((id) => {
-    //             dispatch(removeId(id));
-    //         });
-    //     }
-    //     return () => {
-    //         respondToDeleteDialog("")(dispatch);
-    //     };
-    // }, [deleteDialogResponse, dispatch]);
-    //DELETE HANDLER
-
-
     React.useEffect(() => {
         if (deleteDialogResponse === "continue") {
         if (selectedIds.length === 0) {
@@ -61,7 +37,6 @@ const ListCountry = () => {
         respondToDeleteDialog("")(dispatch);
       };
     }, [selectedIds, deleteDialogResponse,dispatch]);
-console.log("deleteDialogResponse",deleteDialogResponse);
 
     const filteredCountryList = countryList.filter((country) => {
         if (searchQuery === "") {
@@ -74,8 +49,6 @@ console.log("deleteDialogResponse",deleteDialogResponse);
             return country;
         }
     });
-
-    // console.log('deleteDialogResponse', deleteDialogResponse);
     
     return (
         <>

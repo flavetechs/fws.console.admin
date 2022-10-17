@@ -72,7 +72,7 @@ const AddState = () => {
                   }) => (
                     <Form>
                       <Col lg="12">
-                        <div className=" me-3 mx-2 mt-3 mt-lg-0 dropdown">
+                        <div className="mt-lg-0 dropdown">
                           <label htmlFor="countryId" className="form-label">
                             {" "}
                             <b>Choose Country</b>
@@ -80,7 +80,7 @@ const AddState = () => {
                           <Field
                             as="select"
                             name="countryId"
-                            className="form-select"
+                            className="form-select text-uppercase"
                             id="countryId"
                             onChange={(e: any) => {
                               setFieldValue("countryId", e.target.value);
