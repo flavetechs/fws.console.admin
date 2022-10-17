@@ -8,6 +8,7 @@ import clientIndex from '../views/dashboard/client-index';
 import SmsDescription from '../components/fws-clients/SMS/fws-sms-description';
 import Products from '../components/fws-clients/fws-product-list';
 import CreateSms from '../components/fws-clients/SMS/fws-install-sms';
+import UserProductDetails from '../components/fws-clients/SMS/fws-user-product-details';
 
 
 const ClientRouter = () => {
@@ -20,6 +21,7 @@ const ClientRouter = () => {
                         <Route path={clientDashboardLocations.dashboard} exact component={clientIndex} />
                     {/* products */}
                      <Route path={productsLocations.products} exact component={Products} /> 
+                     <Route path={productsLocations.userProductDetails} exact component={UserProductDetails} /> 
                        {/* smservice */}
                     <Route path={smsLocations.sms} exact component={SmsDescription}/>
                     <Route path={smsLocations.createSms} exact component={CreateSms}/>

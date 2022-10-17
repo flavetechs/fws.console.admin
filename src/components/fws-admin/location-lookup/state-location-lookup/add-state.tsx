@@ -5,45 +5,38 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import {  updateCountry } from "../../../store/actions/location-lookup-actions";
-import Card from "../../Card";
-import { locationLocations } from "../../../router/fws-path-locations";
+import Card from "../../../Card";
+import { ILocationLookupState } from '../../../../store/Models/LocationLookupState';
+import { createState, getCountryLookupList } from '../../../../store/actions/location-lookup-actions';
+import { locationLocations } from '../../../../router/fws-path-locations';
 
-const EditCountry = () => {
-  //VARIABLE DECLARATIONS
-  const [isChecked, setIsChecked] = useState(true);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  //VARIABLE DECLARATIONS
+const AddState = () => {
+
+  // ACCESSING STATE FROM REDUX STORE
+  const state = useSelector((state: any) => state);
+  const { countryList }: ILocationLookupState = state.locationLookup;
+  // ACCESSING STATE FROM REDUX STORE
 
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
-    countryName: Yup.string()
-      .required("Country is required"),
+    stateName: Yup.string()
+      .required("State is required"),
   });
   //VALIDATIONS SCHEMA
 
-  // ACCESSING STATE FROM REDUX STORE
+  //VARIABLE DECLARATIONS
   let locations = useLocation();
-  const state = useSelector((state) => state);
-  const { isSuccessful, countryList } = state.locationLookup;
-  // ACCESSING STATE FROM REDUX STORE
-
+  const [isChecked, setIsChecked] = useState<any>(true);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const queryParams = new URLSearchParams(locations.search);
   const countryIdQueryParam = queryParams.get("countryId") || "";
-
-  let selectedCountryValue = countryList.filter((item) => {
-    if (item.countryId == countryIdQueryParam) {
-      return item.countryName
-    }
-  })
-
+  //VARIABLE DECLARATIONS
 
   React.useEffect(() => {
-    if (!isSuccessful) {
-      history.push(locationLocations.country);
-    }
-  }, [!isSuccessful])
+    getCountryLookupList()(dispatch)
+  }, [dispatch])
+
 
   return (
     <>
@@ -53,22 +46,22 @@ const EditCountry = () => {
             <Card >
               <Card.Header>
                 <div>
-                  <h5>Edit Country</h5>
+                  <h5>Add State</h5>
                 </div>
               </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
                     countryId: countryIdQueryParam,
-                    countryName: selectedCountryValue[0]['countryName'] || [],
+                    stateName: "",
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.countryId = countryIdQueryParam;
-                    values.countryName = values.countryName.toUpperCase();
+                    values.countryId = values.countryId;
+                    values.stateName = values.stateName.toUpperCase();
                     values.isActive = isChecked;
-                    updateCountry(values)(dispatch);
+                    createState(values)(dispatch);
                   }}
                 >
                   {({
@@ -79,26 +72,56 @@ const EditCountry = () => {
                   }) => (
                     <Form>
                       <Col lg="12">
-                        <div className="form-group">
-                          {touched.countryName && errors.countryName && (
-                            <div className="text-danger">{errors.countryName}</div>
-                          )}
-                          <label htmlFor="countryName" className="form-label">
+                        <div className="mt-lg-0 dropdown">
+                          <label htmlFor="countryId" className="form-label">
                             {" "}
-                            <b>Country Name</b>
+                            <b>Choose Country</b>
+                          </label>
+                          <Field
+                            as="select"
+                            name="countryId"
+                            className="form-select text-uppercase"
+                            id="countryId"
+                            onChange={(e: any) => {
+                              setFieldValue("countryId", e.target.value);
+                              history.push(`${locationLocations.addState}?countryId=${e.target.value}`
+                              );
+                            }}
+                          >
+                            <option value="">Select Country</option>
+                            {countryList?.map((country, idx) => (
+                              <option
+                                key={idx}
+                                value={country?.countryId}
+                              >
+                                {country.countryName}
+                              </option>
+                            ))}
+                          </Field>
+                        </div>
+                      </Col>
+                      <Col lg="12">
+                        <div className="form-group">
+                          {touched.stateName && errors.stateName && (
+                            <div className="text-danger">{errors.stateName}</div>
+                          )}
+                          <label htmlFor="stateName" className="form-label">
+                            {" "}
+                            <b>State Name</b>
                           </label>
                           <Field
                             type="text"
                             className="form-control"
-                            name="countryName"
-                            id="countryName"
-                            aria-describedby="countryName"
+                            name="stateName"
+                            id="stateName"
+                            aria-describedby="stateName"
                             required
-                            placeholder="Enter Country name e.g Ghana... etc"
-                            onChange={(e) => setFieldValue("countryName", e.target.value)}
+                            placeholder="Enter State name"
+                            onChange={(e: any) => setFieldValue("stateName", e.target.value)}
                           />
                         </div>
                       </Col>
+
                       <Col lg="12" className="d-flex justify-content-between">
                         <div className="form-check mb-3 form-Check">
                           <input
@@ -128,8 +151,8 @@ const EditCountry = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>
@@ -146,4 +169,4 @@ const EditCountry = () => {
   );
 };
 
-export default EditCountry;
+export default AddState;

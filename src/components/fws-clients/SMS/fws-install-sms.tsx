@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { createSms, getCountries, getStates, validateBaseUrlSuffix } from "../../../store/actions/smservice-actions";
+import {
+  createSms,
+  getCountries,
+  getStates,
+  validateBaseUrlSuffix,
+} from "../../../store/actions/smservice-actions";
 import avatars1 from "../../../assets/images/avatars/01.png";
 import avatars2 from "../../../assets/images/avatars/avtar_2.png";
 import avatars3 from "../../../assets/images/avatars/avtar_2.png";
@@ -11,19 +16,21 @@ import avatars4 from "../../../assets/images/avatars/avtar_3.png";
 import avatars5 from "../../../assets/images/avatars/avtar_4.png";
 import avatars6 from "../../../assets/images/avatars/avtar_5.png";
 import * as Yup from "yup";
+import { ISmserviceState } from "../../../store/Models/SmserviceState";
 
 const CreateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
-  const state = useSelector((state) => state);
-  const { countries, states,baseUrlSuffixValidation,validationSuccessful } = state.smservice;
+  const state = useSelector((state : any) => state);
+  const { countries, states, baseUrlSuffixValidation, validationSuccessful } : ISmserviceState =
+    state.smservice;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
-  const [images, setImages] = useState(null);
-  const ImageDisplay = (event) => {
+  const [images, setImages] = useState();
+  const ImageDisplay = (event : any) => {
     if (event.target.files[0]) {
-      setImages(URL.createObjectURL(event.target.files[0]));
+     // setImages(URL.createObjectURL(event.target.files[0]));
     }
   };
   //VALIDATIONS SCHEMA
@@ -62,8 +69,8 @@ const CreateSms = () => {
           }}
           validationSchema={validation}
           onSubmit={(values) => {
-           createSms(values)(dispatch);
-           history.goBack();
+            createSms(values)(dispatch);
+            history.goBack();
           }}
         >
           {({
@@ -89,15 +96,19 @@ const CreateSms = () => {
                   <Card.Body>
                     <div className="new-user-info">
                       <div>
-                      <Row>
+                        <Row>
                           <div className="col-md-6">
                             {touched.schoolName && errors.schoolName && (
-                              <div className="text-danger">{errors.schoolName}</div>
+                              <div className="text-danger">
+                                {errors.schoolName}
+                              </div>
                             )}
                           </div>
                           <div className="col-md-6">
                             {touched.address && errors.address && (
-                              <div className="text-danger">{errors.address}</div>
+                              <div className="text-danger">
+                                {errors.address}
+                              </div>
                             )}
                           </div>
                         </Row>
@@ -131,15 +142,15 @@ const CreateSms = () => {
                             />
                           </Form.Group>
                           <Row>
-                          <div className="col-md-6">
-                           
-                          </div>
-                          <div className="col-md-6">
-                            {touched.country && errors.country && (
-                              <div className="text-danger">{errors.country}</div>
-                            )}
-                          </div>
-                        </Row>
+                            <div className="col-md-6"></div>
+                            <div className="col-md-6">
+                              {touched.country && errors.country && (
+                                <div className="text-danger">
+                                  {errors.country}
+                                </div>
+                              )}
+                            </div>
+                          </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="ipAddress" className="form-label">
                               <b>IP Address:</b>
@@ -158,58 +169,61 @@ const CreateSms = () => {
                               <b>Country:</b>
                             </label>
                             <Field
-                            as="select"
-                            name="country"
-                            className="form-select"
-                            id="country"
-                            onChange={(e)=>{setFieldValue("country",e.target.value); getStates(e.target.value)(dispatch);}}
-                          >
-                            <option value="Select Country">
-                              Select Country
-                            </option>
-                            {countries?.map((item, idx) => (
-                              <option
-                                key={idx}
-                                value={item.value}
-                              >
-                                {item.name}
+                              as="select"
+                              name="country"
+                              className="form-select"
+                              id="country"
+                              onChange={(e : any) => {
+                                setFieldValue("country", e.target.value);
+                                getStates(e.target.value)(dispatch);
+                              }}
+                            >
+                              <option value="Select Country">
+                                Select Country
                               </option>
-                            ))}
-                          </Field>
+                              {countries?.map((item, idx) => (
+                                <option key={idx} value={item.value}>
+                                  {item.name}
+                                </option>
+                              ))}
+                            </Field>
                           </Form.Group>
                           <Row>
-                          <div className="col-md-6">
-                            {touched.state && errors.state && (
-                              <div className="text-danger">{errors.state}</div>
-                            )}
-                          </div>
-                          <div className="col-md-6">
-                            {touched.baseUrl && errors.baseUrl && (
-                              <div className="text-danger">{errors.baseUrl}</div>
-                            )}
-                          </div>
-                        </Row>
+                            <div className="col-md-6">
+                              {touched.state && errors.state && (
+                                <div className="text-danger">
+                                  {errors.state}
+                                </div>
+                              )}
+                            </div>
+                            <div className="col-md-6">
+                              {touched.baseUrl && errors.baseUrl && (
+                                <div className="text-danger">
+                                  {errors.baseUrl}
+                                </div>
+                              )}
+                            </div>
+                          </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
                               <b>State:</b>
                             </label>
                             <Field
-                            as="select"
-                            name="state"
-                            className="form-select"
-                            id="state"
-                            onChange={(e)=>{setFieldValue("state",e.target.value);}}
-                          >
-                            <option value="Select State">Select State</option>
-                            {states?.map((item, idx) => (
-                              <option
-                                key={idx}
-                                value={item.value}
-                              >
-                                {item.name}
-                              </option>
-                            ))}
-                          </Field>
+                              as="select"
+                              name="state"
+                              className="form-select"
+                              id="state"
+                              onChange={(e : any) => {
+                                setFieldValue("state", e.target.value);
+                              }}
+                            >
+                              <option value="Select State">Select State</option>
+                              {states?.map((item, idx) => (
+                                <option key={idx} value={item.value}>
+                                  {item.name}
+                                </option>
+                              ))}
+                            </Field>
                           </Form.Group>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="baseUrl" className="form-label">
@@ -224,15 +238,17 @@ const CreateSms = () => {
                               required
                               placeholder="base URL"
                             />
-
                           </Form.Group>
                           <Row>
-                          <div className="col-md-6">
-                            {touched.baseUrlAppendix && errors.baseUrlAppendix && (
-                              <div className="text-danger">{errors.baseUrlAppendix}</div>
-                            )}
-                          </div>
-                        </Row>
+                            <div className="col-md-6">
+                              {touched.baseUrlAppendix &&
+                                errors.baseUrlAppendix && (
+                                  <div className="text-danger">
+                                    {errors.baseUrlAppendix}
+                                  </div>
+                                )}
+                            </div>
+                          </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label
                               htmlFor="baseUrlAppendix"
@@ -245,12 +261,18 @@ const CreateSms = () => {
                               className="form-control text-lowercase"
                               name="baseUrlAppendix"
                               id="baseUrlAppendix"
-                               onKeyUp={(e)=>{validateBaseUrlSuffix(e.target.value)(dispatch)}}
+                              onKeyUp={(e  : any) => {
+                                validateBaseUrlSuffix(e.target.value)(dispatch);
+                              }}
                               aria-describedby="name"
                               required
                               placeholder="base suffix"
                             />
-                            <div className="text-danger mt-2">{!baseUrlSuffixValidation && validationSuccessful ? "Base suffix already taken": ""}</div>
+                            <div className="text-danger mt-2">
+                              {!baseUrlSuffixValidation && validationSuccessful
+                                ? "Base suffix already taken"
+                                : ""}
+                            </div>
                           </Form.Group>
                           <div className="row form-group">
                             <div className="col-md-6">
@@ -315,10 +337,10 @@ const CreateSms = () => {
                                       className="file-upload form-control"
                                       data-original-title="upload photos"
                                       onChange={(event) => {
-                                        setFieldValue(
-                                          "photo",
-                                          event.currentTarget.files[0]
-                                        );
+                                        // setFieldValue(
+                                        //   "photo",
+                                        //   event.currentTarget.files[0]
+                                        // );
                                         ImageDisplay(event);
                                       }}
                                     />
@@ -360,7 +382,7 @@ const CreateSms = () => {
                           <Button
                             type="button"
                             variant="btn btn-primary"
-                            onClick={handleSubmit}
+                            onClick={()=>handleSubmit}
                           >
                             Submit
                           </Button>

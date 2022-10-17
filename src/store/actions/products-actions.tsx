@@ -20,6 +20,25 @@ export const getAllProducts = () => (dispatch: any) => {
         });
 };
 
+export const getSingleProduct = (productId:string) => (dispatch: any) => {
+    dispatch({
+        type: actions.FETCH_SINGLE_PRODUCT_LOADING,
+    });   
+    axiosInstance.get(`/fws/products/api/v1/get-single-product?productId=${productId}`)
+        .then((res) => {
+            dispatch({
+                type: actions.FETCH_SINGLE_PRODUCT_SUCCESS,
+                payload: res.data.result,
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: actions.FETCH_SINGLE_PRODUCT_FAILED,
+                payload: err.response.data.result,
+            });
+        });
+};
+
 export const getAllUserProducts = () => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_USER_PRODUCTS_LOADING,
@@ -34,6 +53,25 @@ export const getAllUserProducts = () => (dispatch: any) => {
         .catch((err) => {
             dispatch({
                 type: actions.FETCH_USER_PRODUCTS_FAILED,
+                payload: err.response.data.result,
+            });
+        });
+};
+
+export const getSingleUserProduct = (userProductId:string) => (dispatch: any) => {
+    dispatch({
+        type: actions.FETCH_SINGLE_USER_PRODUCT_LOADING,
+    });   
+    axiosInstance.get(`/fws/products/api/v1/get-single/user-product?userProductId=${userProductId}`)
+        .then((res) => {
+            dispatch({
+                type: actions.FETCH_SINGLE_USER_PRODUCT_SUCCESS,
+                payload: res.data.result,
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: actions.FETCH_SINGLE_USER_PRODUCT_FAILED,
                 payload: err.response.data.result,
             });
         });

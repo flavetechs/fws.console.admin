@@ -1,24 +1,20 @@
 import { actions } from "../action-types/location-lookup-action-types";
+import { ILocationLookupState } from "../Models/LocationLookupState";
 import { _state } from "../states/location-lookup-state";
 
-export const locationLookupReducer = (state = _state, { type, payload }) => {
+export const locationLookupReducer = (state : ILocationLookupState  = _state, { type, payload }: any) => {
   switch (type) {
-
-    case actions.GET_SINGLE_ITEM: {
-      const selectedItem = state.countryList.find(d => d.countryId === payload);
-      if (selectedItem) {
-        return {
-          ...state,
-          selectedItem
-        }
-      }
-    }
     case actions.PUSH_ITEM_ID:
       var arrayToFilter = [...state.selectedIds, payload]
       return {
         ...state,
-        selectedIds: [...new Set(arrayToFilter)],
+        selectedIds: [...arrayToFilter],
       };
+      // var arrayToFilter = [...state.selectedIds, payload]
+      // return {
+      //   ...state,
+      //   selectedIds: [...new Set(arrayToFilter)],
+      // };
     case actions.REMOVE_ITEM_ID:
       var filteredIds = filterSelectedIds(state.selectedIds, payload)
       return {
@@ -310,34 +306,14 @@ export const locationLookupReducer = (state = _state, { type, payload }) => {
         isSuccessful: false
       };
 
-    // case actions.FETCH_SINGLE_STAFF_LOADING:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
-    // case actions.FETCH_SINGLE_STAFF_SUCCESS:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     selectedItem: payload,
-    //     submitSuccessful: false,
-    //   };
-    // case actions.FETCH_SINGLE_STAFF_FAILED:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     selectedItem: null,
-    //   };
-
-
     // REDUCERS
 
     default:
       return state;
   }
 }
-function filterSelectedIds(arr, value) {
-  return arr.filter(function (ele) {
+function filterSelectedIds(arr: any, value: any) {
+  return arr.filter(function (ele: any) {
     return ele !== value;
   });
 }

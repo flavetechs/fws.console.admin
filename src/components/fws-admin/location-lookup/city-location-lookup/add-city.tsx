@@ -1,23 +1,23 @@
-import React from 'react'
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { createCity, createState, updateCity } from "../../../store/actions/location-lookup-actions";
-import Card from "../../Card";
-import { locationLocations } from "../../../router/fws-path-locations";
+import Card from "../../../Card";
+import { ILocationLookupState } from "../../../../store/Models/LocationLookupState";
+import { locationLocations } from "../../../../router/fws-path-locations";
+import { createCity } from "../../../../store/actions/location-lookup-actions";
 
-const EditCity = () => {
+const AddCity = () => {
   //VARIABLE DECLARATIONS
   const [isChecked, setIsChecked] = useState(true);
   const history = useHistory();
+  let locations = useLocation();
   const dispatch = useDispatch();
   //VARIABLE DECLARATIONS
 
   //VALIDATIONS SCHEMA
-  let locations = useLocation();
   const validation = Yup.object().shape({
     cityName: Yup.string()
       .required("City is required"),
@@ -25,24 +25,12 @@ const EditCity = () => {
   //VALIDATIONS SCHEMA
 
   // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { cityList, submittedSuccessfully } = state.locationLookup;
+  const state = useSelector((state: any) => state);
+  const { stateList }: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   const queryParams = new URLSearchParams(locations.search);
   const stateIdQueryParam = queryParams.get("stateId") || "";
-  const cityIdQueryParam = queryParams.get("cityId") || "";
-
-  let selectedCityValue = cityList?.filter((item) => {
-    if (item.cityId == cityIdQueryParam) {
-      return item.cityName
-    }
-
-  })
-
-  React.useEffect(() => {
-    submittedSuccessfully && history.push(`${locationLocations.city}?stateId=${stateIdQueryParam}`);
-  }, [submittedSuccessfully]);
 
   return (
     <>
@@ -52,24 +40,22 @@ const EditCity = () => {
             <Card >
               <Card.Header>
                 <div>
-                  <h5>Edit City</h5>
+                  <h5>Add City</h5>
                 </div>
               </Card.Header>
               <Card.Body>
                 <Formik
                   initialValues={{
                     stateId: stateIdQueryParam,
-                    cityId: cityIdQueryParam,
-                    cityName: selectedCityValue[0]['cityName'] || [],
+                    cityName: "",
                     isActive: true,
                   }}
                   validationSchema={validation}
                   onSubmit={(values) => {
-                    values.stateId = stateIdQueryParam;
-                    values.cityId = cityIdQueryParam;
-                    values.cityName = values.cityName.toUpperCase();
+                    values.stateId = values.stateId;
+                    values.cityName = values.cityName;
                     values.isActive = isChecked;
-                    updateCity(values)(dispatch);
+                    createCity(values)(dispatch);
                   }}
                 >
                   {({
@@ -79,6 +65,35 @@ const EditCity = () => {
                     errors,
                   }) => (
                     <Form>
+                      <Col lg="12">
+                        <div className="mt-lg-0 dropdown">
+                          <label htmlFor="cityName" className="form-label">
+                            {" "}
+                            <b>State Name</b>
+                          </label>
+                          <Field
+                            as="select"
+                            name="stateId"
+                            className="form-select text-uppercase"
+                            id="stateId"
+                            onChange={(e: any) => {
+                              setFieldValue("stateId", e.target.value);
+                              history.push(`${locationLocations.addCity}?stateId=${e.target.value}`
+                              );
+                            }}
+                          >
+                            <option value="">Select State</option>
+                            {stateList?.map((item, idx) => (
+                              <option
+                                key={idx}
+                                value={item?.stateId}
+                              >
+                                {item.stateName}
+                              </option>
+                            ))}
+                          </Field>
+                        </div>
+                      </Col>
                       <Col lg="12">
                         <div className="form-group">
                           {touched.cityName && errors.cityName && (
@@ -96,7 +111,7 @@ const EditCity = () => {
                             aria-describedby="cityName"
                             required
                             placeholder="Enter City name"
-                            onChange={(e) => setFieldValue("cityName", e.target.value)}
+                            onChange={(e: any) => setFieldValue("cityName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -130,8 +145,8 @@ const EditCity = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>
@@ -148,4 +163,4 @@ const EditCity = () => {
   );
 };
 
-export default EditCity;
+export default AddCity;

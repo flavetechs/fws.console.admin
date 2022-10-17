@@ -68,6 +68,28 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                       isSuccessful: false,
                     };
 
+                    case actions.EXPORT_PINS_LOADING:
+                      return {
+                        ...state,
+                        loading: true,
+                        isSuccessful: false,
+                        message: "",
+                      };
+                    case actions.EXPORT_PINS_SUCCESS:
+                      return {
+                        ...state,
+                        loading: false,
+                        message: payload,
+                        isSuccessful: true,
+                      };
+                    case actions.EXPORT_PINS_FAILED:
+                      return {
+                        ...state,
+                        loading: false,
+                        message: payload,
+                        isSuccessful: false,
+                      };
+  
 
                     case actions.VALIDATE_BASE_URL_SUFFIX_LOADING:
                       return {

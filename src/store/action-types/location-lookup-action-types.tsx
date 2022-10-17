@@ -1,5 +1,4 @@
 export const actions = {
-
     PUSH_ITEM_ID: "PUSH_ITEM_ID",
     REMOVE_ITEM_ID: "REMOVE_ITEM_ID",
     RETURN_ITEM_LIST: "RETURN_ITEM_LIST",

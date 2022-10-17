@@ -5,49 +5,73 @@ export const successModal= (message : any) => {swal("Successful",message, "succe
 
 export const errorModal= (message : any) => {swal("Error",message, "error")} 
 
-export const deleteDialogModal= (message : any) => {swal({
+export const deleteDialogModal= () =>(dispatch: any) => {swal({
     title: "Are you sure delete this?",
     text: "Once deleted, you will not be able to recover this",
     icon: "warning",
-    buttons: [true],
+    buttons: ["cancel",true],
     dangerMode: true,
   })
   .then((willDelete) => {
     if (willDelete) {
-      swal(message, {
-        icon: "success",
-      });
-      respondToDeleteDialog('continue')
+      // swal(message, {
+      //   icon: "success",
+      // });
+      respondToDeleteDialog('continue')(dispatch)
     } else {
       swal("Your item is safe!");
-      respondToDeleteDialog('')
+      respondToDeleteDialog('')(dispatch)
     }
   });} 
 
-  export const decisionDialogModal= (title : any,text : any,message : any,message2: any) => {swal({
+  export const decisionDialogModal= (title : any,text : any,message : any) =>(dispatch: any) => {
+    swal({
     title: title,
     text: text,
     icon: "warning",
-    buttons: [true],
+    buttons: ["cancel",true],
     dangerMode: true,
   })
   .then((willDo) => {
     if (willDo) {
-      swal(message, {
-        icon: "success",
-      });
-      respondDialog('continue')
+      // swal(message, {
+      //   icon: "success",
+      // });
+      respondDialog('continue')(dispatch)
     } else {
-      swal(message2);
-      respondDialog('')
+      swal(message);
+      respondDialog('')(dispatch)
     }
   });} 
+
+  export const customisedModal= (text : any,content:any)=>(dispatch :any)=> {
+    swal(text, {
+      content: content,
+      buttons: ["cancel",true],
+    })
+    .then((value) => {
+      dispatch({
+        type: actions.CUSTOMISED_MODAL_RESPONSE,
+        payload: value
+    })
+    });
+  }
+
+//   export const customisedValueForModals = (value: any) =>(dispatch: any) => {
+//     dispatch({
+//         type: actions.CUSTOMISED_MODAL_RESPONSE,
+//         payload: value
+//     })
+// }
+
   export const respondToDeleteDialog = (value: any) =>(dispatch: any) => {
     dispatch({
         type: actions.DELETE_DIALOG_RESPPONSE,
         payload: value
     })
 }
+
+
 
 export const respondDialog = (value: any) => (dispatch: any)=> {
     dispatch({
