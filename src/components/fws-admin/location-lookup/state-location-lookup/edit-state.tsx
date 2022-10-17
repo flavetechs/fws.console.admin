@@ -5,15 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field } from "formik";
 import * as Yup from "yup"
 import { useHistory, useLocation } from "react-router-dom";
-import { createState, getCountryLookupList, updateState } from "../../../store/actions/location-lookup-actions";
-import Card from "../../Card";
-import { locationLocations } from "../../../router/fws-path-locations";
+import Card from "../../../Card";
+import { ILocationLookupState } from '../../../../store/Models/LocationLookupState';
+import { getCountryLookupList, updateState } from '../../../../store/actions/location-lookup-actions';
+import { locationLocations } from '../../../../router/fws-path-locations';
+
 
 const EditState = () => {
 
   // ACCESSING STATE FROM REDUX STORE
-  const state = useSelector((state) => state);
-  const { stateList, submittedSuccessfully } = state.locationLookup;
+  const state = useSelector((state: any) => state);
+  const { stateList, submittedSuccessfully }: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   //VALIDATIONS SCHEMA
@@ -25,7 +27,7 @@ const EditState = () => {
 
   //VARIABLE DECLARATIONS
   let locations = useLocation();
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState<any>(true);
   const history = useHistory();
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(locations.search);
@@ -34,18 +36,18 @@ const EditState = () => {
   //VARIABLE DECLARATIONS
 
   let selectedStateValue = stateList?.filter((item) => {
-    if (item.stateId == stateIdQueryParam) {
+    if (item.stateId === stateIdQueryParam) {
       return item.stateName
     }
   })
 
   React.useEffect(() => {
     getCountryLookupList()(dispatch)
-  }, [])
+  }, [dispatch])
 
   React.useEffect(() => {
     submittedSuccessfully && history.push(`${locationLocations.state}?countryId=${countryIdQueryParam}`);
-  }, [submittedSuccessfully]);
+  }, [submittedSuccessfully, history, countryIdQueryParam]);
 
   return (
     <>
@@ -70,7 +72,7 @@ const EditState = () => {
                   onSubmit={(values) => {
                     values.countryId = countryIdQueryParam;
                     values.stateId = stateIdQueryParam;
-                    values.stateName = values.stateName.toUpperCase();
+                    values.stateName = values.stateName;
                     values.isActive = isChecked;
                     updateState(values)(dispatch);
                   }}
@@ -122,13 +124,13 @@ const EditState = () => {
                           </label>
                           <Field
                             type="text"
-                            className="form-control"
+                            className="form-control text-uppercase"
                             name="stateName"
                             id="stateName"
                             aria-describedby="stateName"
                             required
                             placeholder="Enter State name"
-                            onChange={(e) => setFieldValue("stateName", e.target.value)}
+                            onChange={(e: any) => setFieldValue("stateName", e.target.value)}
                           />
                         </div>
                       </Col>
@@ -162,8 +164,8 @@ const EditState = () => {
                         </Button>{" "}
                         <Button
                           type="button"
-                          variant="btn btn-primary"
-                          onClick={handleSubmit}
+                          variant="btn btn-primary mx-2"
+                          onClick={() => handleSubmit()}
                         >
                           Submit
                         </Button>

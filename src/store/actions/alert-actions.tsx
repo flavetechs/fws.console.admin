@@ -5,7 +5,7 @@ export const successModal= (message : any) => {swal("Successful",message, "succe
 
 export const errorModal= (message : any) => {swal("Error",message, "error")} 
 
-export const deleteDialogModal= (message : any) => {swal({
+export const deleteDialogModal= () =>(dispatch: any) => {swal({
     title: "Are you sure delete this?",
     text: "Once deleted, you will not be able to recover this",
     icon: "warning",
@@ -14,17 +14,18 @@ export const deleteDialogModal= (message : any) => {swal({
   })
   .then((willDelete) => {
     if (willDelete) {
-      swal(message, {
-        icon: "success",
-      });
-      respondToDeleteDialog('continue')
+      // swal(message, {
+      //   icon: "success",
+      // });
+      respondToDeleteDialog('continue')(dispatch)
     } else {
       swal("Your item is safe!");
-      respondToDeleteDialog('')
+      respondToDeleteDialog('')(dispatch)
     }
   });} 
 
-  export const decisionDialogModal= (title : any,text : any,message : any,message2: any) => {swal({
+  export const decisionDialogModal= (title : any,text : any,message : any) =>(dispatch: any) => {
+    swal({
     title: title,
     text: text,
     icon: "warning",
@@ -33,13 +34,13 @@ export const deleteDialogModal= (message : any) => {swal({
   })
   .then((willDo) => {
     if (willDo) {
-      swal(message, {
-        icon: "success",
-      });
-      respondDialog('continue')
+      // swal(message, {
+      //   icon: "success",
+      // });
+      respondDialog('continue')(dispatch)
     } else {
-      swal(message2);
-      respondDialog('')
+      swal(message);
+      respondDialog('')(dispatch)
     }
   });} 
 

@@ -5,15 +5,15 @@ import {Switch,Route} from 'react-router-dom'
 //TransitionGroup
 import {TransitionGroup,CSSTransition} from "react-transition-group";
 import { dashboardLocations, locationLocations } from './fws-path-locations';
-import ListCountry from '../components/fws-admin/location-lookup/list-country';
-import ListState from '../components/fws-admin/location-lookup/list-state';
-import ListCity from '../components/fws-admin/location-lookup/list-city';
-import AddCity from '../components/fws-admin/location-lookup/add-city';
-import EditCountry from '../components/fws-admin/location-lookup/edit-country';
-import EditState from '../components/fws-admin/location-lookup/edit-state';
-import EditCity from '../components/fws-admin/location-lookup/edit-city';
-import AddCountry from '../components/fws-admin/location-lookup/add-country'
-import AddState from '../components/fws-admin/location-lookup/add-state'
+import ListCountry from '../components/fws-admin/location-lookup/country-location-lookpup/list-country';
+import ListState from '../components/fws-admin/location-lookup/state-location-lookup/list-state';
+import ListCity from '../components/fws-admin/location-lookup/city-location-lookup/list-city';
+import AddCity from '../components/fws-admin/location-lookup/city-location-lookup/add-city';
+import EditCountry from '../components/fws-admin/location-lookup/country-location-lookpup/edit-country';
+import EditState from '../components/fws-admin/location-lookup/state-location-lookup/edit-state';
+import EditCity from '../components/fws-admin/location-lookup/city-location-lookup/edit-city';
+import AddCountry from '../components/fws-admin/location-lookup/country-location-lookpup/add-country'
+import AddState from '../components/fws-admin/location-lookup/state-location-lookup/add-state'
 
 
 const DefaultRouter = () => {

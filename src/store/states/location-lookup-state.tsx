@@ -5,10 +5,7 @@ export const _state = {
     countryList: [],
     stateList: [],
     cityList: [],
-    countrySelectedItem: {},
-    stateSelectedItem: {},
-    citySelectedItem: {},
-    selectedItem: null,
+    // selectedItem: null,
     selectedIds: [],
     submittedSuccessfully: false,
 }
