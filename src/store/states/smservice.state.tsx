@@ -7,4 +7,5 @@ export const _state = {
     states:[],
     baseUrlSuffixValidation:true,
     validationSuccessful:false,
+    exportPinsCode:"",
 }

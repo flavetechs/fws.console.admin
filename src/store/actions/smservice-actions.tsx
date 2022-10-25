@@ -66,26 +66,27 @@ export const updateSms = (values: any) => (dispatch: any) => {
         });
 }
 
-export const exportPins = (numberOfPins: number) => (dispatch: any) => {
+export const exportPins = (numberOfPins: number,clientId :string) => (dispatch: any) => {
     dispatch({
         type: actions.EXPORT_PINS_LOADING
     });
  const payload={
-    numberOfPins
+    numberOfPins,
+    clientId
  }
- console.log("numberOfPins",numberOfPins);
+
  
     axiosInstance.post('fws/sms/api/v1/export-pins',  payload)
         .then((res) => {
             dispatch({
                 type: actions.EXPORT_PINS_SUCCESS,
-                payload: res.data.message.friendlyMessage
+                payload: res.data.result
             });
          
         }).catch((err) => {
             dispatch({
                 type: actions.EXPORT_PINS_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err.response.data.result
             });
           
         });
