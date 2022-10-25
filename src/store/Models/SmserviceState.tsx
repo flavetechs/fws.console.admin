@@ -5,6 +5,7 @@ export interface ISmserviceState {
     smservice:locationDetail[],
     message: string,
     isSuccessful: boolean,
+    createSuccessful:boolean,
     countries:locationDetail[],
     states:locationDetail[],
     baseUrlSuffixValidation:boolean,
