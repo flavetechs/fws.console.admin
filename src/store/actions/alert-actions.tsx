@@ -54,7 +54,9 @@ export const deleteDialogModal= () =>(dispatch: any) => {swal({
         type: actions.CUSTOMISED_MODAL_RESPONSE,
         payload: value
     })
-    });
+
+    })
+
   }
 
 //   export const customisedValueForModals = (value: any) =>(dispatch: any) => {
