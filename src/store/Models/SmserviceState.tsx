@@ -9,4 +9,5 @@ export interface ISmserviceState {
     states:locationDetail[],
     baseUrlSuffixValidation:boolean,
     validationSuccessful:boolean,
+    exportPinsCode:string,
 }
