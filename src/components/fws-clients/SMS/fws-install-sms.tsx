@@ -23,14 +23,14 @@ const CreateSms = () => {
   const history = useHistory();
   const locations = useLocation();
   const state = useSelector((state : any) => state);
-  const { countries, states, baseUrlSuffixValidation, validationSuccessful } : ISmserviceState =
+  const { countries, states, baseUrlSuffixValidation, validationSuccessful,createSuccessful } : ISmserviceState =
     state.smservice;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
-  const [images, setImages] = useState();
+  const [images, setImages] = useState("");
   const ImageDisplay = (event : any) => {
     if (event.target.files[0]) {
-     // setImages(URL.createObjectURL(event.target.files[0]));
+      setImages(URL.createObjectURL(event.target.files[0]));
     }
   };
   //VALIDATIONS SCHEMA
@@ -51,6 +51,10 @@ const CreateSms = () => {
   useEffect(() => {
     getCountries()(dispatch);
   }, [dispatch]);
+
+  useEffect(() => {
+    createSuccessful && history.goBack();
+  }, [createSuccessful, history,dispatch]);
   return (
     <>
       <div>
@@ -70,7 +74,7 @@ const CreateSms = () => {
           validationSchema={validation}
           onSubmit={(values) => {
             createSms(values)(dispatch);
-            history.goBack();
+            //history.goBack();
           }}
         >
           {({
@@ -382,7 +386,7 @@ const CreateSms = () => {
                           <Button
                             type="button"
                             variant="btn btn-primary"
-                            onClick={()=>handleSubmit}
+                            onClick={()=>handleSubmit()}
                           >
                             Submit
                           </Button>

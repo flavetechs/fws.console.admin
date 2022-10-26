@@ -3,6 +3,7 @@ export const _state = {
     smservice:[],
     message: "",
     isSuccessful: false,
+    createSuccessful:false,
     countries:[],
     states:[],
     baseUrlSuffixValidation:true,

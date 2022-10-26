@@ -35,6 +35,7 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                     return {
                       ...state,
                       isSuccessful: true,
+                      createSuccessful:true,
                       loading: false,
                       message: payload,
                     };
