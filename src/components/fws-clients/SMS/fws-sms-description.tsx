@@ -108,13 +108,16 @@ const SmsDescription = () => {
                   className="btn btn-sm mx-2"
                   style={{ backgroundColor: "#ffc400", color: "black" }}
                   onClick={() =>
-                    !singleProduct?.installed &&
+                    !singleProduct?.installed ?
                     history.push(
                       `${smsLocations.createSms}?productId=${productId}`
+                    ) :
+                    history.push(
+                      `${smsLocations.updateSms}?productId=${productId}`
                     )
                   }
                 >
-                  {!singleProduct?.installed ? "Add" : "Installed"}
+                  {!singleProduct?.installed ? "Add" : "Update"}
                 </button>
                 <div>
                   <small className="mt-1">Estimated USD 0 / month</small>

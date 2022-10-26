@@ -17,12 +17,14 @@ import avatars5 from "../../../assets/images/avatars/avtar_4.png";
 import avatars6 from "../../../assets/images/avatars/avtar_5.png";
 import * as Yup from "yup";
 import { ISmserviceState } from "../../../store/Models/SmserviceState";
+import { IProductState } from "../../../store/Models/ProductState";
 
-const CreateSms = () => {
+const UpdateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
   const state = useSelector((state : any) => state);
+  const { singleProduct }: IProductState = state.product;
   const { countries, states, baseUrlSuffixValidation, validationSuccessful,createSuccessful } : ISmserviceState =
     state.smservice;
   const queryParams = new URLSearchParams(locations.search);
@@ -60,14 +62,14 @@ const CreateSms = () => {
       <div>
         <Formik
           initialValues={{
-            schoolName: "",
-            address: "",
-            ipAddress: "",
-            country: "",
-            state: "",
-            baseUrl: "",
-            baseUrlAppendix: "",
-            schoolLogo: "",
+            schoolName: singleProduct?.schoolName,
+            address: singleProduct?.address,
+            ipAddress: singleProduct?.ipAddress,
+            country: singleProduct?.country,
+            state: singleProduct?.state,
+            baseUrl: singleProduct?.baseUrl,
+            baseUrlAppendix: singleProduct?.baseUrlAppendix,
+            schoolLogo: singleProduct?.schoolLogo,
             file:{},
             productId: productId,
           }}
@@ -75,6 +77,8 @@ const CreateSms = () => {
           onSubmit={(values : any) => {
             const params = new FormData();
             params.append("schoolName", values.schoolName);
+            params.append("clientId", singleProduct?.clientId);
+            params.append("apiKey", singleProduct?.apiKey);
             params.append("address", values.address);
             params.append("ipAddress", values.ipAddress);
             params.append("country", values.country);
@@ -103,7 +107,7 @@ const CreateSms = () => {
                   <Card.Header className="d-flex justify-content-between">
                     <div className="header-title">
                       <h4 className="card-title">
-                        <b>Add Student Management Service</b>
+                        <b>Update Student Management Service</b>
                       </h4>
                     </div>
                   </Card.Header>
@@ -413,4 +417,4 @@ const CreateSms = () => {
     </>
   );
 };
-export default CreateSms;
+export default UpdateSms;

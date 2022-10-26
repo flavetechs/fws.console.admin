@@ -55,7 +55,7 @@ export const updateSms = (values: any) => (dispatch: any) => {
                 type: actions.UPDATE_SMS_SUCCESS,
                 payload: res.data.message.friendlyMessage
             });
-            //showSuccessToast(res.data.message.friendlyMessage)(dispatch)
+            successModal(res.data.message.friendlyMessage)
             getAllSms()(dispatch);
         }).catch((err) => {
             dispatch({
