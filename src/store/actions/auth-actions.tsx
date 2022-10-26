@@ -19,10 +19,10 @@ export const loginUser = ({ userName, password }: any) => (dispatch : any) => {
                 payload: res.data.result
             });
             
-        }).catch(err => {
+        }).catch((err : any) => {
             dispatch({
                 type: actions.LOGIN_USER_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             })
         })
 }
@@ -51,10 +51,10 @@ export const registerUser = ({  email , password  } : any) => (dispatch : any) =
                 payload: res.data.result
             });
             
-        }).catch(err => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.REGISTER_USER_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             })
         })
 }
@@ -78,10 +78,10 @@ export const generatePasswordResetLink = ({ resetOption, resetOptionValue, userT
                 type: actions.GENERATE_PASSWORD_RESET_LINK_SUCCESS,
                 payload: res.data.result
             });
-        }).catch(err => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.GENERATE_PASSWORD_RESET_LINK_FAILED,
-                payload: err.response.data.result
+                payload: err?.response.data?.result
             })
         })
 }
@@ -104,10 +104,10 @@ export const ResetPassword = ({ userId, password, resetToken } : any) => (dispat
                 type: actions.RESET_PASSWORD_LOADING,
                 payload: res.data.result
             });
-        }).catch(err => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.RESET_PASSWORD_FAILED,
-                payload: err.response.data.result
+                payload: err?.response.data?.result
             })
         })
 }
@@ -129,10 +129,10 @@ export const changeMyPassword = ({ userId, oldPassword, newPassword }: any) => (
                 type: actions.LOGIN_USER_SUCCESS,
                 payload: res.data.result
             });
-        }).catch(err => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.LOGIN_USER_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             })
         })
 }

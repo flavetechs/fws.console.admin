@@ -13,10 +13,10 @@ export const getAllSms = () => (dispatch: any) => {
                 payload: res.data.result,
             });
         })
-        .catch((err) => {
+        .catch((err :any) => {
             dispatch({
                 type: actions.FETCH_SMS_FAILED,
-                payload: err.response.data.result,
+                payload: err?.response.data.result,
             });
         });
 };
@@ -35,12 +35,12 @@ export const createSms = (values: any) => (dispatch: any) => {
             });
             successModal(res.data.message.friendlyMessage)
             getAllSms()(dispatch);
-        }).catch((err) => {
+        }).catch((err :any) => {
             dispatch({
                 type: actions.CREATE_SMS_FAILED,
                 payload: err.response.data.message.friendlyMessage
             });
-           errorModal(err.response.data.message.friendlyMessage)
+           errorModal(err?.response.data.message.friendlyMessage)
         });
 }
 
@@ -57,12 +57,12 @@ export const updateSms = (values: any) => (dispatch: any) => {
             });
             successModal(res.data.message.friendlyMessage)
             getAllSms()(dispatch);
-        }).catch((err) => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.UPDATE_SMS_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message.friendlyMessage
             });
-            //showErrorToast(err.response.data.message.friendlyMessage)(dispatch)
+            errorModal(err.response.data.message.friendlyMessage)
         });
 }
 
@@ -83,10 +83,10 @@ export const exportPins = (numberOfPins: number,clientId :string) => (dispatch: 
                 payload: res.data.result
             });
          
-        }).catch((err) => {
+        }).catch((err :any) => {
             dispatch({
                 type: actions.EXPORT_PINS_FAILED,
-                payload: err.response.data.result
+                payload: err?.response.data.result
             });
           
         });
@@ -104,10 +104,10 @@ export const getCountries = () => (dispatch: any) => {
                 type: actions.FETCH_COUNTRY_SUCCESS,
                 payload: response.data.result
             });
-        }).catch(err => {
+        }).catch((err :any) => {
             dispatch({
                 type: actions.FETCH_COUNTRY_FAILED,
-                payload: err.response.data.result
+                payload: err?.response.data.result
             });
         })
 }
@@ -124,10 +124,10 @@ export const getStates = (country: any) => (dispatch: any) => {
                 payload: response.data.result
             });
 
-        }).catch(err => {
+        }).catch((err :any) => {
             dispatch({
                 type: actions.FETCH_STATE_FAILED,
-                payload: err.response.data.result
+                payload: err?.response.data.result
             });
         })
 }
@@ -146,10 +146,10 @@ const payload={
                 payload: response.data.result
             });
 
-        }).catch(err => {
+        }).catch((err :any) => {
             dispatch({
                 type: actions.VALIDATE_BASE_URL_SUFFIX_FAILED,
-                payload: err.response.data.result
+                payload: err?.response.data.result
             });
 })
 }

@@ -31,10 +31,10 @@ export const getSingleProduct = (productId:string) => (dispatch: any) => {
                 payload: res.data.result,
             });
         })
-        .catch((err) => {
+        .catch((err : any)  => {
             dispatch({
                 type: actions.FETCH_SINGLE_PRODUCT_FAILED,
-                payload: err.response.data.result,
+                payload: err?.response.data.result,
             });
         });
 };
@@ -50,10 +50,10 @@ export const getAllUserProducts = () => (dispatch: any) => {
                 payload: res.data.result,
             });
         })
-        .catch((err) => {
+        .catch((err : any)  => {
             dispatch({
                 type: actions.FETCH_USER_PRODUCTS_FAILED,
-                payload: err.response.data.result,
+                payload: err?.response.data.result,
             });
         });
 };
@@ -69,10 +69,10 @@ export const getSingleUserProduct = (userProductId:string) => (dispatch: any) =>
                 payload: res.data.result,
             });
         })
-        .catch((err) => {
+        .catch((err : any)  => {
             dispatch({
                 type: actions.FETCH_SINGLE_USER_PRODUCT_FAILED,
-                payload: err.response.data.result,
+                payload: err?.response.data.result,
             });
         });
 };
