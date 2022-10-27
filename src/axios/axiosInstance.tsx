@@ -1,7 +1,7 @@
 import axios from 'axios';
 const axiosInstance = axios.create({
     baseURL: 'http://flavetechs.com/',
-    // swagger UI URL: 'http://flavetech-001-site6.etempurl.com/swagger/index.html',
+    // baseURL:'https://localhost:44349/',
     headers: {
         Authorization: '',
     },

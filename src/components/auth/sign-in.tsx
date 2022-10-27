@@ -23,7 +23,7 @@ const SignIn = () => {
 
     var token = sessionStorage.getItem('token');
     var user = sessionStorage.getItem('user')
-    console.log("token", token);
+    
     useEffect(() => {
         
        

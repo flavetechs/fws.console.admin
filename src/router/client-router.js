@@ -6,9 +6,9 @@ import {TransitionGroup,CSSTransition} from "react-transition-group";
 import { clientDashboardLocations, productsLocations, smsLocations } from './fws-client-path-locations';
 import clientIndex from '../views/dashboard/client-index';
 import SmsDescription from '../components/fws-clients/SMS/fws-sms-description';
+import UserProductDetails from '../components/fws-clients/SMS/fws-user-product-details';
 import Products from '../components/fws-clients/fws-product-list';
 import CreateSms from '../components/fws-clients/SMS/fws-install-sms';
-import UserProductDetails from '../components/fws-clients/SMS/fws-user-product-details';
 import UpdateSms from '../components/fws-clients/SMS/fws-update-sms';
 
 
