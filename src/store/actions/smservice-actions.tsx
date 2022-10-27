@@ -22,12 +22,12 @@ export const getAllSms = () => (dispatch: any) => {
 };
 
 
-export const createSms = (values: any) => (dispatch: any) => {
+export const createSms = (formData: any) => (dispatch: any) => {
     dispatch({
         type: actions.CREATE_SMS_LOADING
     });
                 
-    axiosInstance.post('/fws/sms/api/v1/create-sms',  values)
+    axiosInstance.post('/fws/sms/api/v1/create-sms',  formData)
         .then((res) => {
             dispatch({
                 type: actions.CREATE_SMS_SUCCESS,
@@ -44,12 +44,12 @@ export const createSms = (values: any) => (dispatch: any) => {
         });
 }
 
-export const updateSms = (values: any) => (dispatch: any) => {
+export const updateSms = (formData: any) => (dispatch: any) => {
     dispatch({
         type: actions.UPDATE_SMS_LOADING
     });
                 
-    axiosInstance.post('/fws/sms/api/v1/update-sms',  values)
+    axiosInstance.post('/fws/sms/api/v1/update-sms',  formData)
         .then((res) => {
             dispatch({
                 type: actions.UPDATE_SMS_SUCCESS,

@@ -20,7 +20,7 @@ export const getAllProducts = () => (dispatch: any) => {
         });
 };
 
-export const getSingleProduct = (productId:string) => (dispatch: any) => {
+export const getSingleProduct = (productId:any) => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_SINGLE_PRODUCT_LOADING,
     });   
@@ -58,7 +58,7 @@ export const getAllUserProducts = () => (dispatch: any) => {
         });
 };
 
-export const getSingleUserProduct = (userProductId:string) => (dispatch: any) => {
+export const getSingleUserProduct = (userProductId:any) => (dispatch: any) => {
     dispatch({
         type: actions.FETCH_SINGLE_USER_PRODUCT_LOADING,
     });   

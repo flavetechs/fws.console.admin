@@ -55,6 +55,7 @@ const CreateSms = () => {
   useEffect(() => {
     createSuccessful && history.goBack();
   }, [createSuccessful, history,dispatch]);
+ 
   return (
     <>
       <div>
@@ -68,11 +69,11 @@ const CreateSms = () => {
             baseUrl: "",
             baseUrlAppendix: "",
             schoolLogo: "",
-            file:{},
             productId: productId,
           }}
           validationSchema={validation}
           onSubmit={(values : any) => {
+            values.schoolLogo = images
             const params = new FormData();
             params.append("schoolName", values.schoolName);
             params.append("address", values.address);
@@ -81,10 +82,10 @@ const CreateSms = () => {
             params.append("state", values.state);
             params.append("baseUrl", values.baseUrl);
             params.append("baseUrlAppendix", values.baseUrlAppendix);
-            params.append("schoolLogo", values.images);
-            params.append("file", values.file);
+            params.append("schoolLogo", values.schoolLogo);
+            params.append("file", values.files);
             params.append("productId", values.productId);
-            createSms(values)(dispatch);
+            createSms(params)(dispatch);
           }}
         >
           {({
@@ -329,7 +330,7 @@ const CreateSms = () => {
                                   />{" "}
                                 </div>
                                 <div className="upload-icone bg-primary">
-                                  <label htmlFor="photo">
+                                  <label htmlFor="files">
                                     <svg
                                       className="upload-button"
                                       width="14"
@@ -344,17 +345,17 @@ const CreateSms = () => {
                                     </svg>
                                     <input
                                       type="file"
-                                      id="file"
+                                      id="files"
                                       style={{ display: "none" }}
-                                      name="file"
+                                      name="files"
                                       accept="image/jpeg,image/jpg,image/png"
                                       className="file-upload form-control"
                                       data-original-title="upload photos"
-                                      onChange={(event) => {
-                                        // setFieldValue(
-                                        //   "file",
-                                        //   event.target.files[0]
-                                        // );
+                                      onChange={(event:any) => {
+                                        setFieldValue(
+                                          "files",
+                                          event.target.files[0]
+                                        );
                                         ImageDisplay(event);
                                       }}
                                     />

@@ -1,5 +1,6 @@
 export class ProductDetail {
     productId: string = "";
+    userProductId:string = "";
     productName: string  = "";
     productDescription: string  = "";
     productType: number  = 0;
@@ -11,8 +12,8 @@ export class ProductDetail {
     country: string  = "" ;
     state: string  = "" ;
     baseUrl: string  = "" ;
-    baseUrlAppendix: string  = "" ;
-    schoolLogo: string  = "" ;
+    baseUrlSuffix: string  = "" ;
+    smsLogo: string  = "" ;
     clientId:string  = "" ;
-    apiKey:string  = "" ;
+    smsapI_KEY:string  = "" ;
 }
