@@ -4,9 +4,9 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import {
-  createSms,
   getCountries,
   getStates,
+  updateSms,
   validateBaseUrlSuffix,
 } from "../../../store/actions/smservice-actions";
 import avatars1 from "../../../assets/images/avatars/01.png";
@@ -17,16 +17,17 @@ import avatars5 from "../../../assets/images/avatars/avtar_4.png";
 import avatars6 from "../../../assets/images/avatars/avtar_5.png";
 import * as Yup from "yup";
 import { ISmserviceState } from "../../../store/Models/SmserviceState";
+import { IProductState } from "../../../store/Models/ProductState";
+import {  getSingleUserProduct } from "../../../store/actions/products-actions";
 
-const CreateSms = () => {
+const UpdateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
   const state = useSelector((state : any) => state);
+  const { singleUserProduct }: IProductState = state.product;
   const { countries, states, baseUrlSuffixValidation, validationSuccessful,createSuccessful } : ISmserviceState =
     state.smservice;
-  const queryParams = new URLSearchParams(locations.search);
-  const productId = queryParams.get("productId");
   const [images, setImages] = useState("");
   const ImageDisplay = (event : any) => {
     if (event.target.files[0]) {
@@ -49,33 +50,47 @@ const CreateSms = () => {
   });
   //VALIDATIONS SCHEMA
   useEffect(() => {
-    getCountries()(dispatch);
-  }, [dispatch]);
+    const queryParams = new URLSearchParams(locations.search);
+    const userProductId = queryParams.get("userProductId");
+    if (!userProductId) return;
+    getSingleUserProduct(userProductId)(dispatch);
+        getCountries()(dispatch);
+  }, [locations.search,dispatch]);
+  
+
+  useEffect(() => {
+    setImages(singleUserProduct?.smsLogo)
+    getStates(singleUserProduct?.country)(dispatch);
+}, [singleUserProduct,dispatch]);
 
   useEffect(() => {
     createSuccessful && history.goBack();
   }, [createSuccessful, history,dispatch]);
- 
+  
+  
   return (
     <>
       <div>
         <Formik
           initialValues={{
-            schoolName: "",
-            address: "",
-            ipAddress: "",
-            country: "",
-            state: "",
-            baseUrl: "",
-            baseUrlAppendix: "",
-            schoolLogo: "",
-            productId: productId,
+            schoolName: singleUserProduct?.schoolName|| "",
+            address: singleUserProduct?.address|| "",
+            ipAddress: singleUserProduct?.ipAddress|| "",
+            country: singleUserProduct?.country|| "",
+            state: singleUserProduct?.state|| "",
+            baseUrl: singleUserProduct?.baseUrl|| "",
+            baseUrlAppendix: singleUserProduct?.baseUrlSuffix|| "",
+            schoolLogo: singleUserProduct?.smsLogo|| "",
+            productId: singleUserProduct?.productId|| "",
           }}
+          enableReinitialize={true}
           validationSchema={validation}
           onSubmit={(values : any) => {
-            values.schoolLogo = images
+            values.schoolLogo = images;
             const params = new FormData();
             params.append("schoolName", values.schoolName);
+            params.append("clientId", singleUserProduct?.clientId);
+            params.append("apiKey", singleUserProduct?.smsapI_KEY);
             params.append("address", values.address);
             params.append("ipAddress", values.ipAddress);
             params.append("country", values.country);
@@ -83,9 +98,9 @@ const CreateSms = () => {
             params.append("baseUrl", values.baseUrl);
             params.append("baseUrlAppendix", values.baseUrlAppendix);
             params.append("schoolLogo", values.schoolLogo);
-            params.append("file", values.files);
+            params.append("file", values.file);
             params.append("productId", values.productId);
-            createSms(params)(dispatch);
+            updateSms(params)(dispatch);
           }}
         >
           {({
@@ -104,7 +119,7 @@ const CreateSms = () => {
                   <Card.Header className="d-flex justify-content-between">
                     <div className="header-title">
                       <h4 className="card-title">
-                        <b>Add Student Management Service</b>
+                        <b>Update Student Management Service</b>
                       </h4>
                     </div>
                   </Card.Header>
@@ -128,7 +143,7 @@ const CreateSms = () => {
                           </div>
                         </Row>
                         <div className="row">
-                          <Form.Group className="col-md-6 form-group">
+                          <div className="col-md-6 form-group">
                             <label htmlFor="schoolName" className="form-label">
                               <b>School Name:</b>
                             </label>
@@ -137,13 +152,12 @@ const CreateSms = () => {
                               className="form-control"
                               name="schoolName"
                               id="schoolName"
-                              aria-describedby="name"
-                              required
+                              disabled
                               placeholder="School Name"
                             />
-                          </Form.Group>
-                          <Form.Group className="col-md-6 form-group">
-                            <label htmlFor="lastName" className="form-label">
+                          </div>
+                          <div className="col-md-6 form-group">
+                            <label htmlFor="address" className="form-label">
                               <b>Address:</b>
                             </label>
                             <Field
@@ -151,11 +165,9 @@ const CreateSms = () => {
                               className="form-control"
                               name="address"
                               id="address"
-                              aria-describedby="name"
-                              required
                               placeholder="Address"
                             />
-                          </Form.Group>
+                          </div>
                           <Row>
                             <div className="col-md-6"></div>
                             <div className="col-md-6">
@@ -166,7 +178,7 @@ const CreateSms = () => {
                               )}
                             </div>
                           </Row>
-                          <Form.Group className="col-md-6 form-group">
+                          <div className="col-md-6 form-group">
                             <label htmlFor="ipAddress" className="form-label">
                               <b>IP Address:</b>
                             </label>
@@ -175,12 +187,11 @@ const CreateSms = () => {
                               className="form-control"
                               name="ipAddress"
                               id="ipAddress"
-                              aria-describedby="name"
                               placeholder="IP Address"
                             />
-                          </Form.Group>
-                          <Form.Group className="col-md-6 form-group">
-                            <label htmlFor="address" className="form-label">
+                          </div>
+                          <div className="col-md-6 form-group">
+                            <label htmlFor="country" className="form-label">
                               <b>Country:</b>
                             </label>
                             <Field
@@ -197,12 +208,12 @@ const CreateSms = () => {
                                 Select Country
                               </option>
                               {countries?.map((item, idx) => (
-                                <option key={idx} value={item.value}>
+                                <option key={idx} value={item.value} selected={item.value === singleUserProduct?.country}>
                                   {item.name}
                                 </option>
                               ))}
                             </Field>
-                          </Form.Group>
+                          </div>
                           <Row>
                             <div className="col-md-6">
                               {touched.state && errors.state && (
@@ -219,7 +230,7 @@ const CreateSms = () => {
                               )}
                             </div>
                           </Row>
-                          <Form.Group className="col-md-6 form-group">
+                          <div className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
                               <b>State:</b>
                             </label>
@@ -234,13 +245,13 @@ const CreateSms = () => {
                             >
                               <option value="Select State">Select State</option>
                               {states?.map((item, idx) => (
-                                <option key={idx} value={item.value}>
+                                <option key={idx} value={item.value} selected={item.value === singleUserProduct?.state}>
                                   {item.name}
                                 </option>
                               ))}
                             </Field>
-                          </Form.Group>
-                          <Form.Group className="col-md-6 form-group">
+                          </div>
+                          <div className="col-md-6 form-group">
                             <label htmlFor="baseUrl" className="form-label">
                               <b>Base URL:</b>
                             </label>
@@ -249,11 +260,9 @@ const CreateSms = () => {
                               className="form-control text-lowercase"
                               name="baseUrl"
                               id="baseUrl"
-                              aria-describedby="name"
-                              required
                               placeholder="base URL"
                             />
-                          </Form.Group>
+                          </div>
                           <Row>
                             <div className="col-md-6">
                               {touched.baseUrlAppendix &&
@@ -264,7 +273,7 @@ const CreateSms = () => {
                                 )}
                             </div>
                           </Row>
-                          <Form.Group className="col-md-6 form-group">
+                          <div className="col-md-6 form-group">
                             <label
                               htmlFor="baseUrlAppendix"
                               className="form-label"
@@ -279,8 +288,7 @@ const CreateSms = () => {
                               onKeyUp={(e  : any) => {
                                 validateBaseUrlSuffix(e.target.value)(dispatch);
                               }}
-                              aria-describedby="name"
-                              required
+                              disabled
                               placeholder="base suffix"
                             />
                             <div className="text-danger mt-2">
@@ -288,7 +296,7 @@ const CreateSms = () => {
                                 ? "Base suffix already taken"
                                 : ""}
                             </div>
-                          </Form.Group>
+                          </div>
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
@@ -330,7 +338,7 @@ const CreateSms = () => {
                                   />{" "}
                                 </div>
                                 <div className="upload-icone bg-primary">
-                                  <label htmlFor="files">
+                                  <label htmlFor="file">
                                     <svg
                                       className="upload-button"
                                       width="14"
@@ -345,15 +353,15 @@ const CreateSms = () => {
                                     </svg>
                                     <input
                                       type="file"
-                                      id="files"
+                                      id="file"
                                       style={{ display: "none" }}
-                                      name="files"
+                                      name="file"
                                       accept="image/jpeg,image/jpg,image/png"
                                       className="file-upload form-control"
                                       data-original-title="upload photos"
                                       onChange={(event:any) => {
                                         setFieldValue(
-                                          "files",
+                                          "file",
                                           event.target.files[0]
                                         );
                                         ImageDisplay(event);
@@ -414,4 +422,4 @@ const CreateSms = () => {
     </>
   );
 };
-export default CreateSms;
+export default UpdateSms;

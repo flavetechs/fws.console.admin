@@ -9,6 +9,7 @@ import SmsDescription from '../components/fws-clients/SMS/fws-sms-description';
 import UserProductDetails from '../components/fws-clients/SMS/fws-user-product-details';
 import Products from '../components/fws-clients/fws-product-list';
 import CreateSms from '../components/fws-clients/SMS/fws-install-sms';
+import UpdateSms from '../components/fws-clients/SMS/fws-update-sms';
 
 
 const ClientRouter = () => {
@@ -25,7 +26,7 @@ const ClientRouter = () => {
                        {/* smservice */}
                     <Route path={smsLocations.sms} exact component={SmsDescription}/>
                     <Route path={smsLocations.createSms} exact component={CreateSms}/>
-                    {/* <Route path={smsLocations.createSms}  exact component={userProfileEdit}/> */}
+                    <Route path={smsLocations.updateSms}  exact component={UpdateSms}/>
                  </Switch>
             </CSSTransition>
         </TransitionGroup>

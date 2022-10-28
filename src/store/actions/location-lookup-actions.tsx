@@ -39,10 +39,10 @@ export const getCountryLookupList = () => (dispatch: any) => {
                 type: actions.FETCH_COUNTRY_LOOKUP_SUCCESS,
                 payload: res.data.result
             });
-        }).catch((err) => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.FETCH_COUNTRY_LOOKUP_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             })
         })
 }
@@ -57,10 +57,10 @@ export const getStateLookupList = (countryId: any) => (dispatch: any) => {
                 type: actions.FETCH_STATE_LOOKUP_SUCCESS,
                 payload: res.data.result
             });
-        }).catch((err) => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.FETCH_STATE_LOOKUP_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             })
         })
 }
@@ -75,10 +75,10 @@ export const getCityLookupList = (stateId: any) => (dispatch: any) => {
                 type: actions.FETCH_CITY_LOOKUP_SUCCESS,
                 payload: res.data.result
             });
-        }).catch((err) => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.FETCH_CITY_LOOKUP_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             })
         })
 }
@@ -95,10 +95,10 @@ export const createCountry = (form: any) => (dispatch: any) => {
             });
             getCountryLookupList()(dispatch)
             successModal(res.data.message.friendlyMessage)
-        }).catch((err) => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.CREATE_COUNTRY_LOOKUP_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             });
             errorModal(err.response.data.message.friendlyMessage)
         });
@@ -116,10 +116,10 @@ export const createState = (values: any) => (dispatch: any) => {
                 payload: res.data.message.friendlyMessage
             });
             successModal(res.data.message.friendlyMessage)
-        }).catch((err) => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.CREATE_STATE_LOOKUP_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             });
             errorModal(err.response.data.message.friendlyMessage)
         });
@@ -137,10 +137,10 @@ export const createCity = (form: any) => (dispatch: any) => {
             });
             getCountryLookupList()(dispatch)
             successModal(res.data.message.friendlyMessage)
-        }).catch((err) => {
+        }).catch((err : any)  => {
             dispatch({
                 type: actions.CREATE_CITY_LOOKUP_FAILED,
-                payload: err.response.data.message.friendlyMessage
+                payload: err?.response.data.message?.friendlyMessage
             });
             errorModal(err.response.data.message.friendlyMessage)
         });

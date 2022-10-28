@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { customisedModal } from "../../../store/actions/alert-actions";
-import { getSingleProduct } from "../../../store/actions/products-actions";
+import { getSingleProduct, getSingleUserProduct } from "../../../store/actions/products-actions";
 import { exportPins } from "../../../store/actions/smservice-actions";
 import { IAlertState } from "../../../store/Models/AlertState";
 import { IProductState } from "../../../store/Models/ProductState";
@@ -14,14 +14,14 @@ const UserProductDetails = () => {
   const history = useHistory();
   const locations = useLocation();
   const state = useSelector((state: any) => state);
-  const { singleProduct }: IProductState = state.product;
+  const { singleUserProduct }: IProductState = state.product;
   const { customisedModalValue }: IAlertState = state.alert;
   const { exportPinsCode } : ISmserviceState = state.smservice;
   const queryParams = new URLSearchParams(locations.search);
   const userProductId = queryParams.get("userProductId");
 
   useEffect(() => {
-    getSingleProduct(userProductId || "")(dispatch);
+    getSingleUserProduct(userProductId || "")(dispatch);
   }, []);
 
   useEffect(() => {
@@ -53,10 +53,10 @@ const UserProductDetails = () => {
               <div className="d-flex flex-wrap align-items-center justify-content-between">
                 <div className="d-flex flex-wrap align-items-center">
                   <div className="profile-img position-relative me-3 mb-3 mb-lg-0 profile-logo profile-logo1">
-                            <img src={singleProduct?.productUrl} alt="User-Profile" className="theme-color-default-img img-fluid rounded-pill avatar-100"/>
+                            <img src={singleUserProduct?.productUrl} alt="User-Profile" className="theme-color-default-img img-fluid rounded-pill avatar-100"/>
                   </div>
                   <div className="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
-                    <h4 className="me-2 h4">{singleProduct?.productName}</h4>
+                    <h4 className="me-2 h4">{singleUserProduct?.productName}</h4>
                     <span> - Flavetech</span>
                   </div>
                 </div>
