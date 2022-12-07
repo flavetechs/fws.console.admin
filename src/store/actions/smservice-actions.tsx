@@ -16,7 +16,7 @@ export const getAllSms = () => (dispatch: any) => {
         .catch((err) => {
             dispatch({
                 type: actions.FETCH_SMS_FAILED,
-                payload: err.response.data.result,
+                payload: err?.response?.data?.result,
             });
         });
 };
