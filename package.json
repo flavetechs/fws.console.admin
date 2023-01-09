@@ -12,10 +12,11 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "aos": "^2.3.4",
+    "aos": "^3.0.0-beta.6",
     "apexcharts": "^3.27.3",
     "axios": "^1.0.0",
     "bootstrap": "^5.1.0",
+    "bootstrap-icons": "^1.10.3",
     "formik": "^2.2.9",
     "fullcalendar-interaction": "^5.3.3",
     "jquery": "^3.6.0",
@@ -71,6 +72,7 @@
     ]
   },
   "devDependencies": {
+    "@types/aos": "^3.0.4",
     "@types/react-router-dom": "^5.3.3",
     "fslightbox-react": "^1.6.2-2",
     "sortablejs": "^1.14.0",

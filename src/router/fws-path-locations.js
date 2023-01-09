@@ -2,6 +2,10 @@ export const dashboardLocations = {
     dashboard: "/dashboard",
   };
 
+ export const landingPageLocations = {
+  home: "/fws/home",
+ }
+
   export const authLocations = {
     login: "/fws/sign-in",
     register: "/fws/register",
