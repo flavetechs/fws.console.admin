@@ -1,13 +1,13 @@
 import { Row, Col, } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import Card from '../Card'
-
+import AOS from 'aos';
 
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import "../landing-page/home.css"
 
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useEffect } from 'react';
 import { authLocations, dashboardLocations } from '../../router/fws-path-locations';
 import { loginUser } from '../../store/actions/auth-actions';
@@ -26,9 +26,18 @@ const SignIn = () => {
     var token = sessionStorage.getItem('token');
     var user = sessionStorage.getItem('user')
     
+
     useEffect(() => {
-        
-       
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+   
+      }, [])
+
+    useEffect(() => { 
         if (token) {
             if (JSON.parse(user || '').userType === '0') {
                 window.location.href = '/dashboard';
@@ -51,20 +60,21 @@ const SignIn = () => {
     return (
         <>
         <HomeHeader/>
-            <section className="login-content">
+        
+            <section className="login-content" style={{background: '#fcfcfc'}} data-aos="fade-up">
                 {/* <SmpLoader /> */}
-                <Row className="m-0 align-items-center d-flex justify-content-center bg-white vh-100">
+                <Row className="m-0 align-items-center d-flex justify-content-center  vh-100">
                     <Col md="6">
                         <Row className="justify-content-center">
                             <Col md="10">
-                                <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
+                                <Card className="d-flex justify-content-center mb-0 auth-card">
                                     <Card.Body>
                                         {/* <Link to={dashboardLocations.dashboard} className="navbar-brand d-flex align-items-center mb-3">
                                             {/* <Logo color={true} /> */}
                                             {/* <h4 className="logo-title ms-3">FLAVTECH</h4> 
                                         </Link> */}
-                                        <h2 className="mb-2 text-center">Sign In</h2>
-                                        <p className="text-center">Login to stay connected.</p>
+                                        <h2 className="mb-2 text-center fw-bold title">Sign In</h2>
+                                        <p className="text-center description">Login to stay connected.</p>
 
                                         <Formik
                                             initialValues={{
@@ -143,6 +153,7 @@ const SignIn = () => {
                     </Col> */}
                 </Row>
             </section>
+          
             <HomeFooter/>
         </>
     )

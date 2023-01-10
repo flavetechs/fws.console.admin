@@ -30,8 +30,7 @@ const IndexRouters = () => {
             <Switch>
                 {
                     <>
-                        <Route exact path="/"
-                            component={userDetail?.userType == '0' ? Default : clientDefault}></Route>
+                        <Route exact path="/" component={Home}></Route>
 
                         <Route path={userDetail?.userType == '0' ? "/dashboard" : '/client-dashboard'}
                             component={userDetail?.userType == '0' ? Default : clientDefault}></Route>
