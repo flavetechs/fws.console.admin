@@ -6,7 +6,7 @@ export const successModal= (message : any) => {swal("Successful",message, "succe
 export const errorModal= (message : any) => {swal("Error",message, "error")} 
 
 export const deleteDialogModal= () =>(dispatch: any) => {swal({
-    title: "Are you sure delete this?",
+    title: "Are you sure you want to delete this?",
     text: "Once deleted, you will not be able to recover this",
     icon: "warning",
     buttons: ["cancel",true],

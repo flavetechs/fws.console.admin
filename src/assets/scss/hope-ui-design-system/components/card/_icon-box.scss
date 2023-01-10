@@ -5,14 +5,14 @@
     color: $dark;
 }
 .icon-box{
-    display: flex;
+   // display: flex;
     justify-content: center;
     align-items: center;
     border: $border-width solid $border-color;
     border-radius: $border-radius;
     cursor: pointer;
     position: relative;
-    height: 90px;
+    //height: 90px;
     .overlay{
         position: absolute;
         display: grid;
