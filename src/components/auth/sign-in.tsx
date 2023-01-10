@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import { authLocations, dashboardLocations } from '../../router/fws-path-locations';
 import { loginUser } from '../../store/actions/auth-actions';
 import { IAuthState } from '../../store/Models/AuthState';
+import HomeHeader from '../landing-page/header';
+import HomeFooter from '../landing-page/footer';
 
 
 const SignIn = () => {
@@ -48,6 +50,7 @@ const SignIn = () => {
 
     return (
         <>
+        <HomeHeader/>
             <section className="login-content">
                 {/* <SmpLoader /> */}
                 <Row className="m-0 align-items-center d-flex justify-content-center bg-white vh-100">
@@ -56,10 +59,10 @@ const SignIn = () => {
                             <Col md="10">
                                 <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                                     <Card.Body>
-                                        <Link to={dashboardLocations.dashboard} className="navbar-brand d-flex align-items-center mb-3">
+                                        {/* <Link to={dashboardLocations.dashboard} className="navbar-brand d-flex align-items-center mb-3">
                                             {/* <Logo color={true} /> */}
-                                            {/* <h4 className="logo-title ms-3">FLAVTECH</h4> */}
-                                        </Link>
+                                            {/* <h4 className="logo-title ms-3">FLAVTECH</h4> 
+                                        </Link> */}
                                         <h2 className="mb-2 text-center">Sign In</h2>
                                         <p className="text-center">Login to stay connected.</p>
 
@@ -140,6 +143,7 @@ const SignIn = () => {
                     </Col> */}
                 </Row>
             </section>
+            <HomeFooter/>
         </>
     )
 }
