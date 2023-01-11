@@ -119,14 +119,14 @@ const Header = (props) => {
                                         <p className="mb-0 caption-sub-title">{user?.userType == 0 ? "Admin" : "Client"}</p>
                                     </div>
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu  className="dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <Dropdown.Menu  className="dropdown-menu-end px-2" aria-labelledby="navbarDropdown">
                                     {/* <Dropdown.Item href="https://templates.iqonic.design/hope-ui/react/build/dashboard/app/user-profile">Profile</Dropdown.Item>
                                     <Dropdown.Item href="https://templates.iqonic.design/hope-ui/react/build/dashboard/app/user-privacy-setting">Privacy Setting</Dropdown.Item> */}
                                     {/* <Dropdown.Divider /> */}
                                     <Dropdown.Item  onClick={() => {
                                         dispatch(loginOutUser());
                                         history.push(authLocations.login)
-                                    }}>Logout</Dropdown.Item>
+                                    }}> Logout </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav>
