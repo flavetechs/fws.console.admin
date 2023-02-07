@@ -11,7 +11,7 @@ export class ProductDetail {
     ipAddress:string  = "" ;
     country: string  = "" ;
     state: string  = "" ;
-    baseUrl: string  = "" ;
+    schoolUrl: string  = "" ;
     baseUrlSuffix: string  = "" ;
     smsLogo: string  = "" ;
     clientId:string  = "" ;

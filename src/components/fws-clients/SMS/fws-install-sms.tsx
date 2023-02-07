@@ -22,13 +22,13 @@ const CreateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
-  const state = useSelector((state : any) => state);
-  const { countries, states, baseUrlSuffixValidation, validationSuccessful,createSuccessful } : ISmserviceState =
+  const state = useSelector((state: any) => state);
+  const { countries, states, baseUrlSuffixValidation, validationSuccessful, createSuccessful }: ISmserviceState =
     state.smservice;
   const queryParams = new URLSearchParams(locations.search);
   const productId = queryParams.get("productId");
   const [images, setImages] = useState("");
-  const ImageDisplay = (event : any) => {
+  const ImageDisplay = (event: any) => {
     if (event.target.files[0]) {
       setImages(URL.createObjectURL(event.target.files[0]));
     }
@@ -39,13 +39,13 @@ const CreateSms = () => {
     address: Yup.string().required("Address is required"),
     country: Yup.string().required("Country is required"),
     state: Yup.string().required("State is required"),
-    baseUrl: Yup.string()
+    schoolUrl: Yup.string()
       .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        /((https?):\/\/)[a-z0-9]+(\.flavetechs.com)$/,
         "Enter correct url!"
       )
       .required("Base Url is required"),
-    baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
+    // baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
   });
   //VALIDATIONS SCHEMA
   useEffect(() => {
@@ -54,8 +54,8 @@ const CreateSms = () => {
 
   useEffect(() => {
     createSuccessful && history.goBack();
-  }, [createSuccessful, history,dispatch]);
- 
+  }, [createSuccessful, history, dispatch]);
+
   return (
     <>
       <div>
@@ -66,13 +66,13 @@ const CreateSms = () => {
             ipAddress: "",
             country: "",
             state: "",
-            baseUrl: "",
-            baseUrlAppendix: "",
+            schoolUrl: "",
+            // baseUrlAppendix: "",
             schoolLogo: "",
             productId: productId,
           }}
           validationSchema={validation}
-          onSubmit={(values : any) => {
+          onSubmit={(values: any) => {
             values.schoolLogo = images
             const params = new FormData();
             params.append("schoolName", values.schoolName);
@@ -80,8 +80,8 @@ const CreateSms = () => {
             params.append("ipAddress", values.ipAddress);
             params.append("country", values.country);
             params.append("state", values.state);
-            params.append("baseUrl", values.baseUrl);
-            params.append("baseUrlAppendix", values.baseUrlAppendix);
+            params.append("schoolUrl", values.schoolUrl);
+            // params.append("baseUrlAppendix", values.baseUrlAppendix);
             params.append("schoolLogo", values.schoolLogo);
             params.append("file", values.files);
             params.append("productId", values.productId);
@@ -188,7 +188,7 @@ const CreateSms = () => {
                               name="country"
                               className="form-select"
                               id="country"
-                              onChange={(e : any) => {
+                              onChange={(e: any) => {
                                 setFieldValue("country", e.target.value);
                                 getStates(e.target.value)(dispatch);
                               }}
@@ -211,13 +211,7 @@ const CreateSms = () => {
                                 </div>
                               )}
                             </div>
-                            <div className="col-md-6">
-                              {touched.baseUrl && errors.baseUrl && (
-                                <div className="text-danger">
-                                  {errors.baseUrl}
-                                </div>
-                              )}
-                            </div>
+                          
                           </Row>
                           <Form.Group className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
@@ -228,7 +222,7 @@ const CreateSms = () => {
                               name="state"
                               className="form-select"
                               id="state"
-                              onChange={(e : any) => {
+                              onChange={(e: any) => {
                                 setFieldValue("state", e.target.value);
                               }}
                             >
@@ -240,22 +234,45 @@ const CreateSms = () => {
                               ))}
                             </Field>
                           </Form.Group>
-                          <Form.Group className="col-md-6 form-group">
-                            <label htmlFor="baseUrl" className="form-label">
-                              <b>Base URL:</b>
+                          <Row>
+                          <div className="col-md-6">
+                              {touched.schoolUrl && errors.schoolUrl && (
+                                <div className="text-danger">
+                                  {errors.schoolUrl}
+                                </div>
+                                )} 
+                                 <div className="text-danger">
+                                  {!baseUrlSuffixValidation && validationSuccessful
+                                ? "Base suffix already taken"
+                                : ""}
+                                </div>
+                              
+                            </div>
+                          </Row>
+                          <label className="form-label">
+                              <b>School URL:</b>
                             </label>
+                          <Form.Group className="col-md-6 input-group">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text bg-light" id="basic-addon3">https://example.flavetechs.com</span>
+                            </div>
                             <Field
                               type="text"
                               className="form-control text-lowercase"
-                              name="baseUrl"
-                              id="baseUrl"
+                              name="schoolUrl"
+                              id="schoolUrl"
                               aria-describedby="name"
                               required
-                              placeholder="base URL"
+                              onKeyUp={(e: any) => {
+                                const suffix = e.target.value.slice(8)
+                                console.log("suf",suffix);
+                                
+                                validateBaseUrlSuffix(suffix)(dispatch);
+                              }}
                             />
                           </Form.Group>
-                          <Row>
-                            <div className="col-md-6">
+                          {/*<Row>
+                             <div className="col-md-6">
                               {touched.baseUrlAppendix &&
                                 errors.baseUrlAppendix && (
                                   <div className="text-danger">
@@ -276,7 +293,7 @@ const CreateSms = () => {
                               className="form-control text-lowercase"
                               name="baseUrlAppendix"
                               id="baseUrlAppendix"
-                              onKeyUp={(e  : any) => {
+                              onKeyUp={(e: any) => {
                                 validateBaseUrlSuffix(e.target.value)(dispatch);
                               }}
                               aria-describedby="name"
@@ -288,7 +305,7 @@ const CreateSms = () => {
                                 ? "Base suffix already taken"
                                 : ""}
                             </div>
-                          </Form.Group>
+                          </Form.Group> */}
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
@@ -351,7 +368,7 @@ const CreateSms = () => {
                                       accept="image/jpeg,image/jpg,image/png"
                                       className="file-upload form-control"
                                       data-original-title="upload photos"
-                                      onChange={(event:any) => {
+                                      onChange={(event: any) => {
                                         setFieldValue(
                                           "files",
                                           event.target.files[0]
@@ -397,7 +414,7 @@ const CreateSms = () => {
                           <Button
                             type="button"
                             variant="btn btn-primary"
-                            onClick={()=>handleSubmit()}
+                            onClick={() => handleSubmit()}
                           >
                             Submit
                           </Button>

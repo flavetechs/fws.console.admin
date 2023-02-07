@@ -40,13 +40,13 @@ const UpdateSms = () => {
     address: Yup.string().required("Address is required"),
     country: Yup.string().required("Country is required"),
     state: Yup.string().required("State is required"),
-    baseUrl: Yup.string()
-      .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "Enter correct url!"
-      )
+    schoolUrl: Yup.string()
+    .matches(
+      /((https?):\/\/)[a-z0-9]+(\.flavetechs.com)$/,
+      "Enter correct url!"
+    )
       .required("Base Url is required"),
-    baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
+    // baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
   });
   //VALIDATIONS SCHEMA
   useEffect(() => {
@@ -78,8 +78,8 @@ const UpdateSms = () => {
             ipAddress: singleUserProduct?.ipAddress|| "",
             country: singleUserProduct?.country|| "",
             state: singleUserProduct?.state|| "",
-            baseUrl: singleUserProduct?.baseUrl|| "",
-            baseUrlAppendix: singleUserProduct?.baseUrlSuffix|| "",
+            schoolUrl: singleUserProduct?.schoolUrl|| "",
+            // baseUrlAppendix: singleUserProduct?.baseUrlSuffix|| "",
             schoolLogo: singleUserProduct?.smsLogo|| "",
             productId: singleUserProduct?.productId|| "",
           }}
@@ -95,8 +95,8 @@ const UpdateSms = () => {
             params.append("ipAddress", values.ipAddress);
             params.append("country", values.country);
             params.append("state", values.state);
-            params.append("baseUrl", values.baseUrl);
-            params.append("baseUrlAppendix", values.baseUrlAppendix);
+            params.append("schoolUrl", values.schoolUrl);
+            // params.append("baseUrlAppendix", values.baseUrlAppendix);
             params.append("schoolLogo", values.schoolLogo);
             params.append("file", values.file);
             params.append("productId", values.productId);
@@ -223,9 +223,9 @@ const UpdateSms = () => {
                               )}
                             </div>
                             <div className="col-md-6">
-                              {touched.baseUrl && errors.baseUrl && (
+                              {touched.schoolUrl && errors.schoolUrl && (
                                 <div className="text-danger">
-                                  {errors.baseUrl}
+                                  {errors.schoolUrl}
                                 </div>
                               )}
                             </div>
@@ -251,29 +251,44 @@ const UpdateSms = () => {
                               ))}
                             </Field>
                           </div>
-                          <div className="col-md-6 form-group">
-                            <label htmlFor="baseUrl" className="form-label">
-                              <b>Base URL:</b>
+                          <Row>
+                          <div className="col-md-6">
+                              {touched.schoolUrl && errors.schoolUrl && (
+                                <div className="text-danger">
+                                  {errors.schoolUrl}
+                                </div>
+                                )} 
+                                 <div className="text-danger">
+                                  {!baseUrlSuffixValidation && validationSuccessful
+                                ? "Base suffix already taken"
+                                : ""}
+                                </div>
+                              
+                            </div>
+                          </Row>
+                          <label className="form-label">
+                              <b>School URL:</b>
                             </label>
+                          <Form.Group className="col-md-6 input-group">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text bg-light" id="basic-addon3">https://example.flavetechs.com</span>
+                            </div>
                             <Field
                               type="text"
                               className="form-control text-lowercase"
-                              name="baseUrl"
-                              id="baseUrl"
-                              placeholder="base URL"
+                              name="schoolUrl"
+                              id="schoolUrl"
+                              aria-describedby="name"
+                              required
+                              onKeyUp={(e: any) => {
+                                const suffix = e.target.value.slice(8)
+                                console.log("suf",suffix);
+                                
+                                validateBaseUrlSuffix(suffix)(dispatch);
+                              }}
                             />
-                          </div>
-                          <Row>
-                            <div className="col-md-6">
-                              {touched.baseUrlAppendix &&
-                                errors.baseUrlAppendix && (
-                                  <div className="text-danger">
-                                    {errors.baseUrlAppendix}
-                                  </div>
-                                )}
-                            </div>
-                          </Row>
-                          <div className="col-md-6 form-group">
+                          </Form.Group>
+                          {/* <div className="col-md-6 form-group">
                             <label
                               htmlFor="baseUrlAppendix"
                               className="form-label"
@@ -296,7 +311,7 @@ const UpdateSms = () => {
                                 ? "Base suffix already taken"
                                 : ""}
                             </div>
-                          </div>
+                          </div> */}
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
