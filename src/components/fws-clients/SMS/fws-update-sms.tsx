@@ -18,18 +18,18 @@ import avatars6 from "../../../assets/images/avatars/avtar_5.png";
 import * as Yup from "yup";
 import { ISmserviceState } from "../../../store/Models/SmserviceState";
 import { IProductState } from "../../../store/Models/ProductState";
-import {  getSingleUserProduct } from "../../../store/actions/products-actions";
+import { getSingleUserProduct } from "../../../store/actions/products-actions";
 
 const UpdateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
-  const state = useSelector((state : any) => state);
+  const state = useSelector((state: any) => state);
   const { singleUserProduct }: IProductState = state.product;
-  const { countries, states, baseUrlSuffixValidation, validationSuccessful,createSuccessful } : ISmserviceState =
+  const { countries, states, baseUrlSuffixValidation, validationSuccessful, createSuccessful }: ISmserviceState =
     state.smservice;
   const [images, setImages] = useState("");
-  const ImageDisplay = (event : any) => {
+  const ImageDisplay = (event: any) => {
     if (event.target.files[0]) {
       setImages(URL.createObjectURL(event.target.files[0]));
     }
@@ -41,10 +41,10 @@ const UpdateSms = () => {
     country: Yup.string().required("Country is required"),
     state: Yup.string().required("State is required"),
     schoolUrl: Yup.string()
-    .matches(
-      /((https?):\/\/)[a-z0-9]+(\.flavetechs.com)$/,
-      "Enter correct url!"
-    )
+      .matches(
+        /((https?):\/\/)[a-z0-9]+(\.flavetechs.com)$/,
+        "Enter correct url!"
+      )
       .required("Base Url is required"),
     // baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
   });
@@ -54,38 +54,38 @@ const UpdateSms = () => {
     const userProductId = queryParams.get("userProductId");
     if (!userProductId) return;
     getSingleUserProduct(userProductId)(dispatch);
-        getCountries()(dispatch);
-  }, [locations.search,dispatch]);
-  
+    getCountries()(dispatch);
+  }, [locations.search, dispatch]);
+
 
   useEffect(() => {
     setImages(singleUserProduct?.smsLogo)
     getStates(singleUserProduct?.country)(dispatch);
-}, [singleUserProduct,dispatch]);
+  }, [singleUserProduct, dispatch]);
 
   useEffect(() => {
     createSuccessful && history.goBack();
-  }, [createSuccessful, history,dispatch]);
-  
-  
+  }, [createSuccessful, history, dispatch]);
+
+
   return (
     <>
       <div>
         <Formik
           initialValues={{
-            schoolName: singleUserProduct?.schoolName|| "",
-            address: singleUserProduct?.address|| "",
-            ipAddress: singleUserProduct?.ipAddress|| "",
-            country: singleUserProduct?.country|| "",
-            state: singleUserProduct?.state|| "",
-            schoolUrl: singleUserProduct?.schoolUrl|| "",
+            schoolName: singleUserProduct?.schoolName || "",
+            address: singleUserProduct?.address || "",
+            ipAddress: singleUserProduct?.ipAddress || "",
+            country: singleUserProduct?.country || "",
+            state: singleUserProduct?.state || "",
+            schoolUrl: singleUserProduct?.schoolUrl || "",
             // baseUrlAppendix: singleUserProduct?.baseUrlSuffix|| "",
-            schoolLogo: singleUserProduct?.smsLogo|| "",
-            productId: singleUserProduct?.productId|| "",
+            schoolLogo: singleUserProduct?.smsLogo || "",
+            productId: singleUserProduct?.productId || "",
           }}
           enableReinitialize={true}
           validationSchema={validation}
-          onSubmit={(values : any) => {
+          onSubmit={(values: any) => {
             values.schoolLogo = images;
             const params = new FormData();
             params.append("schoolName", values.schoolName);
@@ -199,7 +199,7 @@ const UpdateSms = () => {
                               name="country"
                               className="form-select"
                               id="country"
-                              onChange={(e : any) => {
+                              onChange={(e: any) => {
                                 setFieldValue("country", e.target.value);
                                 getStates(e.target.value)(dispatch);
                               }}
@@ -239,7 +239,7 @@ const UpdateSms = () => {
                               name="state"
                               className="form-select"
                               id="state"
-                              onChange={(e : any) => {
+                              onChange={(e: any) => {
                                 setFieldValue("state", e.target.value);
                               }}
                             >
@@ -252,23 +252,23 @@ const UpdateSms = () => {
                             </Field>
                           </div>
                           <Row>
-                          <div className="col-md-6">
+                            <div className="col-md-6">
                               {touched.schoolUrl && errors.schoolUrl && (
                                 <div className="text-danger">
                                   {errors.schoolUrl}
                                 </div>
-                                )} 
-                                 <div className="text-danger">
-                                  {!baseUrlSuffixValidation && validationSuccessful
-                                ? "Base suffix already taken"
-                                : ""}
-                                </div>
-                              
+                              )}
+                              <div className="text-danger">
+                                {!baseUrlSuffixValidation && validationSuccessful
+                                  ? "Base suffix already taken"
+                                  : ""}
+                              </div>
+
                             </div>
                           </Row>
                           <label className="form-label">
-                              <b>School URL:</b>
-                            </label>
+                            <b>School URL:</b>
+                          </label>
                           <Form.Group className="col-md-6 input-group">
                             <div className="input-group-prepend">
                               <span className="input-group-text bg-light" id="basic-addon3">https://example.flavetechs.com</span>
@@ -282,8 +282,8 @@ const UpdateSms = () => {
                               required
                               onKeyUp={(e: any) => {
                                 const suffix = e.target.value.slice(8)
-                                console.log("suf",suffix);
-                                
+                                console.log("suf", suffix);
+
                                 validateBaseUrlSuffix(suffix)(dispatch);
                               }}
                             />
@@ -374,7 +374,7 @@ const UpdateSms = () => {
                                       accept="image/jpeg,image/jpg,image/png"
                                       className="file-upload form-control"
                                       data-original-title="upload photos"
-                                      onChange={(event:any) => {
+                                      onChange={(event: any) => {
                                         setFieldValue(
                                           "file",
                                           event.target.files[0]
@@ -420,7 +420,7 @@ const UpdateSms = () => {
                           <Button
                             type="button"
                             variant="btn btn-primary"
-                            onClick={()=>handleSubmit()}
+                            onClick={() => handleSubmit()}
                           >
                             Submit
                           </Button>
