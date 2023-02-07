@@ -7,15 +7,15 @@ const HomeHeader = () => {
     <header id="header" className="d-flex align-items-center fixed-top">
       <div className="container d-flex align-items-center justify-content-between">
   
-        <h1 className="logo"><a href="index.html">BizLand<span>.</span></a></h1>
+        <h1 className="logo"><a href="index.html">Flaveconsole<span>..</span></a></h1>
        
   
         <nav id="navbar" className="navbar">
           <ul>
             <li><a className="nav-link scrollto active" href="/">Home</a></li>
             <li><a className="nav-link scrollto" href="#about">About</a></li>
-            <li><a className="nav-link scrollto" href="#services">Services</a></li>
-            <li><a className="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+            <li><a className="nav-link scrollto" target={'_blank'} href="http://flavetech-001-site9.etempurl.com/">CBT</a></li>
+
             {/* <li><a className="nav-link scrollto" href="#team">Team</a></li> */}
             <li><a className="nav-link scrollto" href="#contact">Contact</a></li>
             <li className="dropdown"><a href={authLocations.login}><span>Login</span> 

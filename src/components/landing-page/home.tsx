@@ -42,7 +42,7 @@ const Home = () => {
 
     <section id="hero" className="d-flex align-items-center">
       <div className="container" data-aos="zoom-out" data-aos-delay="100">
-        <h1>Welcome to <span>BizLand</span></h1>
+        <h1>Welcome to <span>FlaveConsole</span></h1>
         <h2>We are team of talented designers making websites with Bootstrap</h2>
         <div className="d-flex">
           <a href="#about" className="btn-get-started scrollto">Get Started</a>
@@ -141,65 +141,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="skills" className="skills">
-        <div className="container" data-aos="fade-up">
-  
-          <div className="row skills-content">
-  
-            <div className="col-lg-6">
-  
-              <div className="progress">
-                <span className="skill">HTML <i className="val">100%</i></span>
-                <div className="progress-bar-wrap">
-                  <div  className="progress-bar" role="progressbar" aria-valuenow={100} aria-valuemin={0} aria-valuemax={100} style={{width:"100%"}} ></div>
-                </div>
-              </div>
-  
-              <div className="progress">
-                <span className="skill">CSS <i className="val">90%</i></span>
-                <div className="progress-bar-wrap">
-                  <div className="progress-bar" role="progressbar" aria-valuenow={90} aria-valuemin={0} aria-valuemax={100} style={{width:"90%"}} ></div>
-                </div>
-              </div>
-  
-              <div className="progress">
-                <span className="skill">JavaScript <i className="val">75%</i></span>
-                <div className="progress-bar-wrap">
-                  <div className="progress-bar" role="progressbar" aria-valuenow={75} aria-valuemin={0} aria-valuemax={100} style={{width:"75%"}} ></div>
-                </div>
-              </div>
-  
-            </div>
-  
-            <div className="col-lg-6">
-  
-              <div className="progress">
-                <span className="skill">PHP <i className="val">80%</i></span>
-                <div className="progress-bar-wrap">
-                  <div className="progress-bar" role="progressbar" aria-valuenow={80} aria-valuemin={0} aria-valuemax={100} style={{width:"80%"}} ></div>
-                </div>
-              </div>
-  
-              <div className="progress">
-                <span className="skill">WordPress/CMS <i className="val">90%</i></span>
-                <div className="progress-bar-wrap">
-                  <div className="progress-bar" role="progressbar" aria-valuenow={90} aria-valuemin={0} aria-valuemax={100} style={{width:"90%"}} ></div>
-                </div>
-              </div>
-  
-              <div className="progress">
-                <span className="skill">Photoshop <i className="val">55%</i></span>
-                <div className="progress-bar-wrap">
-                  <div className="progress-bar" role="progressbar" aria-valuenow={55} aria-valuemin={0} aria-valuemax={100} style={{width:"55%"}} ></div>
-                </div>
-              </div>
-  
-            </div>
-  
-          </div>
-  
-        </div>
-      </section>
+   
 
       <section id="counts" className="counts">
         <div className="container" data-aos="fade-up">
@@ -277,68 +219,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="services" className="services">
-        <div className="container" data-aos="fade-up">
-  
-          <div className="section-title">
-            <h2>Services</h2>
-            <h3>Check our <span>Services</span></h3>
-            <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-          </div>
-  
-          <div className="row">
-            <div className="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-              <div className="icon-box">
-                <div className="icon"><i className="bx bxl-dribbble"></i></div>
-                <h4><a href="">Lorem Ipsum</a></h4>
-                <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-              <div className="icon-box">
-                <div className="icon"><i className="bx bx-file"></i></div>
-                <h4><a href="">Sed ut perspiciatis</a></h4>
-                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
-              <div className="icon-box">
-                <div className="icon"><i className="bx bx-tachometer"></i></div>
-                <h4><a href="">Magni Dolores</a></h4>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
-              <div className="icon-box">
-                <div className="icon"><i className="bx bx-world"></i></div>
-                <h4><a href="">Nemo Enim</a></h4>
-                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
-              <div className="icon-box">
-                <div className="icon"><i className="bx bx-slideshow"></i></div>
-                <h4><a href="">Dele cardo</a></h4>
-                <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
-              <div className="icon-box">
-                <div className="icon"><i className="bx bx-arch"></i></div>
-                <h4><a href="">Divera don</a></h4>
-                <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
-              </div>
-            </div>
-  
-          </div>
-  
-        </div>
-      </section>
+    
 
       <section id="testimonials" className="testimonials">
         <div className="container" data-aos="zoom-in">
@@ -413,123 +294,6 @@ const Home = () => {
   
             </div>
             <div className="swiper-pagination"></div>
-          </div>
-  
-        </div>
-      </section>
-
-      <section id="portfolio" className="portfolio">
-        <div className="container" data-aos="fade-up">
-  
-          <div className="section-title">
-            <h2>Portfolio</h2>
-            <h3>Check our <span>Portfolio</span></h3>
-            <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-          </div>
-  
-          <div className="row" data-aos="fade-up" data-aos-delay="100">
-            <div className="col-lg-12 d-flex justify-content-center">
-              <ul id="portfolio-flters">
-                <li data-filter="*" className="filter-active">All</li>
-                <li data-filter=".filter-app">App</li>
-                <li data-filter=".filter-card">Card</li>
-                <li data-filter=".filter-web">Web</li>
-              </ul>
-            </div>
-          </div>
-  
-          <div className="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-app">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-1.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>App 1</h4>
-                <p>App</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="App 1"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-web">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-2.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="Web 3"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-app">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-3.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>App 2</h4>
-                <p>App</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="App 2"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-card">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-4.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>Card 2</h4>
-                <p>Card</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="Card 2"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-web">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-5.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>Web 2</h4>
-                <p>Web</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="Web 2"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-app">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-6.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>App 3</h4>
-                <p>App</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="App 3"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-card">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-7.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>Card 1</h4>
-                <p>Card</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="Card 1"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-card">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-8.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>Card 3</h4>
-                <p>Card</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="Card 3"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
-            <div className="col-lg-4 col-md-6 portfolio-item filter-web">
-              <img src="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-9.jpg" className="img-fluid" alt=""/>
-              <div className="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <a href="https://bootstrapmade.com/demo/templates/BizLand/assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox preview-link" title="Web 3"><i className="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" className="details-link" title="More Details"><i className="bx bx-link"></i></a>
-              </div>
-            </div>
-  
           </div>
   
         </div>
