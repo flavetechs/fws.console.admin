@@ -16,6 +16,7 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                   ...state,
                   loading: false,
                   smservice: payload,
+                  isSuccessful: true,
                 };
               case actions.FETCH_SMS_FAILED:
                 return {
@@ -28,13 +29,12 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                     return {
                       ...state,
                       loading: true,
-                      isSuccessful: false,
+                      createSuccessful: false,
                       message: "",
                     };
                   case actions.CREATE_SMS_SUCCESS:
                     return {
                       ...state,
-                      isSuccessful: true,
                       createSuccessful:true,
                       loading: false,
                       message: payload,
@@ -42,7 +42,7 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                   case actions.CREATE_SMS_FAILED:
                     return {
                       ...state,
-                      isSuccessful: false,
+                      createSuccessful: false,
                       loading: false,
                       message: payload,
                     };
@@ -51,7 +51,7 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                     return {
                       ...state,
                       loading: true,
-                      isSuccessful: false,
+                      createSuccessful: false,
                       message: "",
                     };
                   case actions.UPDATE_SMS_SUCCESS:
@@ -60,14 +60,13 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                       loading: false,
                       createSuccessful:true,
                       message: payload,
-                      isSuccessful: true,
                     };
                   case actions.UPDATE_SMS_FAILED:
                     return {
                       ...state,
                       loading: false,
                       message: payload,
-                      isSuccessful: false,
+                      createSuccessful: false,
                     };
 
                     case actions.EXPORT_PINS_LOADING:
@@ -151,6 +150,12 @@ export const smserviceReducer = (state : ISmserviceState = _state, { type, paylo
                           ...state,
                           loading: false,
                           states: [],
+                          
+                        };
+                        case actions.RESET_CREATE_SUCCESSFUL:
+                        return {
+                          ...state,
+                          createSuccessful:false,
                         };
               
                 default:

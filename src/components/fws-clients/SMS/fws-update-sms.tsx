@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import {
   getCountries,
   getStates,
+  resetCreateSuccessful,
   updateSms,
   validateBaseUrlSuffix,
 } from "../../../store/actions/smservice-actions";
@@ -18,7 +19,7 @@ import avatars6 from "../../../assets/images/avatars/avtar_5.png";
 import * as Yup from "yup";
 import { ISmserviceState } from "../../../store/Models/SmserviceState";
 import { IProductState } from "../../../store/Models/ProductState";
-import { getSingleUserProduct } from "../../../store/actions/products-actions";
+import { getAllUserProducts, getSingleUserProduct } from "../../../store/actions/products-actions";
 
 const UpdateSms = () => {
   const dispatch = useDispatch();
@@ -40,13 +41,22 @@ const UpdateSms = () => {
     address: Yup.string().required("Address is required"),
     country: Yup.string().required("Country is required"),
     state: Yup.string().required("State is required"),
-    schoolUrl: Yup.string()
+    prefix: Yup.string()
+    .matches(
+      /((https?):\/\/)/,
+      "Enter correct url!"
+    ),
+    url: Yup.string()
       .matches(
-        /((https?):\/\/)[a-z0-9]+(\.flavetechs.com)$/,
+        /[a-z0-9-%]+/,
         "Enter correct url!"
       )
-      .required("Base Url is required"),
-    // baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
+      .required("School Url is required"),
+      suffix: Yup.string()
+      .matches(
+      /(\.flavetechs.com)/,
+        "Enter correct url!"
+      )
   });
   //VALIDATIONS SCHEMA
   useEffect(() => {
@@ -64,9 +74,13 @@ const UpdateSms = () => {
   }, [singleUserProduct, dispatch]);
 
   useEffect(() => {
-    createSuccessful && history.goBack();
+   if(createSuccessful){
+    resetCreateSuccessful()(dispatch);
+    history.goBack();
+   }  
   }, [createSuccessful, history, dispatch]);
 
+console.log("hols",createSuccessful);
 
   return (
     <>
@@ -79,7 +93,9 @@ const UpdateSms = () => {
             country: singleUserProduct?.country || "",
             state: singleUserProduct?.state || "",
             schoolUrl: singleUserProduct?.schoolUrl || "",
-            // baseUrlAppendix: singleUserProduct?.baseUrlSuffix|| "",
+            prefix:  singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(0,8):singleUserProduct?.schoolUrl.slice(0,7)||"",
+            url: singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(8,-15):singleUserProduct?.schoolUrl.slice(7,-15)|| "",
+            suffix: singleUserProduct?.schoolUrl.slice(-15)|| "",
             schoolLogo: singleUserProduct?.smsLogo || "",
             productId: singleUserProduct?.productId || "",
           }}
@@ -87,6 +103,7 @@ const UpdateSms = () => {
           validationSchema={validation}
           onSubmit={(values: any) => {
             values.schoolLogo = images;
+            values.schoolUrl = values.prefix + values.url + values.suffix
             const params = new FormData();
             params.append("schoolName", values.schoolName);
             params.append("clientId", singleUserProduct?.clientId);
@@ -96,7 +113,6 @@ const UpdateSms = () => {
             params.append("country", values.country);
             params.append("state", values.state);
             params.append("schoolUrl", values.schoolUrl);
-            // params.append("baseUrlAppendix", values.baseUrlAppendix);
             params.append("schoolLogo", values.schoolLogo);
             params.append("file", values.file);
             params.append("productId", values.productId);
@@ -222,13 +238,7 @@ const UpdateSms = () => {
                                 </div>
                               )}
                             </div>
-                            <div className="col-md-6">
-                              {touched.schoolUrl && errors.schoolUrl && (
-                                <div className="text-danger">
-                                  {errors.schoolUrl}
-                                </div>
-                              )}
-                            </div>
+                           
                           </Row>
                           <div className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
@@ -253,15 +263,25 @@ const UpdateSms = () => {
                           </div>
                           <Row>
                             <div className="col-md-6">
-                              {touched.schoolUrl && errors.schoolUrl && (
+                              {touched.prefix && errors.prefix && (
                                 <div className="text-danger">
-                                  {errors.schoolUrl}
+                                  {errors.prefix}
+                                </div>
+                              )}
+                                {touched.url && errors.url && (
+                                <div className="text-danger">
+                                  {errors.url}
+                                </div>
+                              )}
+                                {touched.suffix && errors.suffix && (
+                                <div className="text-danger">
+                                  {errors.suffix}
                                 </div>
                               )}
                               <div className="text-danger">
                                 {!baseUrlSuffixValidation && validationSuccessful
                                   ? "Base suffix already taken"
-                                  : ""}
+                                  : ""} 
                               </div>
 
                             </div>
@@ -270,48 +290,41 @@ const UpdateSms = () => {
                             <b>School URL:</b>
                           </label>
                           <Form.Group className="col-md-6 input-group">
-                            <div className="input-group-prepend">
-                              <span className="input-group-text bg-light" id="basic-addon3">https://example.flavetechs.com</span>
-                            </div>
-                            <Field
+            
+                              <Field
                               type="text"
                               className="form-control text-lowercase"
-                              name="schoolUrl"
-                              id="schoolUrl"
+                              name="prefix"
+                              id="prefix"
                               aria-describedby="name"
-                              required
-                              onKeyUp={(e: any) => {
-                                const suffix = e.target.value.slice(8)
-                                console.log("suf", suffix);
-
-                                validateBaseUrlSuffix(suffix)(dispatch);
-                              }}
+                              placeholder="http://|https://"
+                             
                             />
-                          </Form.Group>
-                          {/* <div className="col-md-6 form-group">
-                            <label
-                              htmlFor="baseUrlAppendix"
-                              className="form-label"
-                            >
-                              <b>Base Suffix:</b>
-                            </label>
+                           
                             <Field
                               type="text"
                               className="form-control text-lowercase"
-                              name="baseUrlAppendix"
-                              id="baseUrlAppendix"
-                              onKeyUp={(e  : any) => {
-                                validateBaseUrlSuffix(e.target.value)(dispatch);
+                              name="url"
+                              id="url"
+                              aria-describedby="name"
+                              placeholder="example"
+                              onKeyUp={(e: any) => {
+                              const suffix = e.target.value.slice(0,4)=== "www."? e.target.value.slice(4):e.target.value
+                              validateBaseUrlSuffix(suffix)(dispatch);
                               }}
-                              disabled
-                              placeholder="base suffix"
                             />
-                            <div className="text-danger mt-2">
-                              {!baseUrlSuffixValidation && validationSuccessful
-                                ? "Base suffix already taken"
-                                : ""}
-                            </div>
-                          </div> */}
+                               <Field
+                              type="text"
+                              className="form-control text-lowercase"
+                              name="suffix"
+                              id="suffix"
+                              aria-describedby="name"
+                              placeholder=".flavetechs.com"
+                              
+                            />
+                         
+                          </Form.Group>
+           
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
