@@ -80,7 +80,6 @@ const UpdateSms = () => {
    }  
   }, [createSuccessful, history, dispatch]);
 
-console.log("hols",createSuccessful);
 
   return (
     <>
