@@ -42,19 +42,19 @@ const UpdateSms = () => {
     country: Yup.string().required("Country is required"),
     state: Yup.string().required("State is required"),
     prefix: Yup.string()
-    .matches(
-      /((https?):\/\/)/,
-      "Enter correct url!"
-    ),
+      .matches(
+        /((https?):\/\/)/,
+        "Enter correct url!"
+      ),
     url: Yup.string()
       .matches(
         /[a-z0-9-%]+/,
         "Enter correct url!"
       )
       .required("School Url is required"),
-      suffix: Yup.string()
+    suffix: Yup.string()
       .matches(
-      /(\.flavetechs.com)/,
+        /(\.flavetechs.com)/,
         "Enter correct url!"
       )
   });
@@ -74,10 +74,10 @@ const UpdateSms = () => {
   }, [singleUserProduct, dispatch]);
 
   useEffect(() => {
-   if(createSuccessful){
-    resetCreateSuccessful()(dispatch);
-    history.goBack();
-   }  
+    if (createSuccessful) {
+      resetCreateSuccessful()(dispatch);
+      history.goBack();
+    }
   }, [createSuccessful, history, dispatch]);
 
 
@@ -92,9 +92,9 @@ const UpdateSms = () => {
             country: singleUserProduct?.country || "",
             state: singleUserProduct?.state || "",
             schoolUrl: singleUserProduct?.schoolUrl || "",
-            prefix:  singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(0,8):singleUserProduct?.schoolUrl.slice(0,7)||"",
-            url: singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(8,-15):singleUserProduct?.schoolUrl.slice(7,-15)|| "",
-            suffix: singleUserProduct?.schoolUrl.slice(-15)|| "",
+            prefix: singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(0, 8) : singleUserProduct?.schoolUrl.slice(0, 7) || "",
+            url: singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(8, -15) : singleUserProduct?.schoolUrl.slice(7, -15) || "",
+            suffix: singleUserProduct?.schoolUrl.slice(-15) || "",
             schoolLogo: singleUserProduct?.smsLogo || "",
             productId: singleUserProduct?.productId || "",
           }}
@@ -237,7 +237,7 @@ const UpdateSms = () => {
                                 </div>
                               )}
                             </div>
-                           
+
                           </Row>
                           <div className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
@@ -262,25 +262,25 @@ const UpdateSms = () => {
                           </div>
                           <Row>
                             <div className="col-md-6">
-                              {touched.prefix && errors.prefix && (
+                              {/* {touched.prefix && errors.prefix && (
                                 <div className="text-danger">
                                   {errors.prefix}
                                 </div>
-                              )}
-                                {touched.url && errors.url && (
+                              )} */}
+                              {touched.url && errors.url && (
                                 <div className="text-danger">
                                   {errors.url}
                                 </div>
                               )}
-                                {touched.suffix && errors.suffix && (
+                              {/* {touched.suffix && errors.suffix && (
                                 <div className="text-danger">
                                   {errors.suffix}
                                 </div>
-                              )}
+                              )} */}
                               <div className="text-danger">
                                 {!baseUrlSuffixValidation && validationSuccessful
                                   ? "Base suffix already taken"
-                                  : ""} 
+                                  : ""}
                               </div>
 
                             </div>
@@ -289,17 +289,13 @@ const UpdateSms = () => {
                             <b>School URL:</b>
                           </label>
                           <Form.Group className="col-md-6 input-group">
-            
-                              <Field
-                              type="text"
-                              className="form-control text-lowercase"
-                              name="prefix"
-                              id="prefix"
-                              aria-describedby="name"
-                              placeholder="http://|https://"
-                             
-                            />
-                           
+
+                            
+                            <div className="btn-group" data-toggle="buttons">
+                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'http://' && 'active'}`} onClick={()=>setFieldValue('prefix','http://')}> http://</label>
+                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'https://' && 'active'}`} onClick={()=>setFieldValue('prefix','https://')}>https://</label>
+                            </div>
+
                             <Field
                               type="text"
                               className="form-control text-lowercase"
@@ -308,22 +304,21 @@ const UpdateSms = () => {
                               aria-describedby="name"
                               placeholder="example"
                               onKeyUp={(e: any) => {
-                              const suffix = e.target.value.slice(0,4)=== "www."? e.target.value.slice(4):e.target.value
-                              validateBaseUrlSuffix(suffix)(dispatch);
+                                const suffix = e.target.value.slice(0, 4) === "www." ? e.target.value.slice(4) : e.target.value
+                                validateBaseUrlSuffix(suffix)(dispatch);
                               }}
                             />
-                               <Field
+                            <Field
                               type="text"
                               className="form-control text-lowercase"
                               name="suffix"
                               id="suffix"
                               aria-describedby="name"
-                              placeholder=".flavetechs.com"
-                              
+                              readOnly
                             />
-                         
+
                           </Form.Group>
-           
+
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
