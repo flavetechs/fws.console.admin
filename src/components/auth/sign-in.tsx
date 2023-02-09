@@ -14,6 +14,8 @@ import { loginUser } from '../../store/actions/auth-actions';
 import { IAuthState } from '../../store/Models/AuthState';
 import HomeHeader from '../landing-page/header';
 import HomeFooter from '../landing-page/footer';
+import Loader from '../Loader';
+import FwsLoader from '../loader/fws-loader';
 
 
 const SignIn = () => {
@@ -62,7 +64,7 @@ const SignIn = () => {
         <HomeHeader/>
         
             <section className="login-content" style={{background: '#fcfcfc'}} data-aos="fade-up">
-                {/* <SmpLoader /> */}
+                <FwsLoader />
                 <Row className="m-0 align-items-center d-flex justify-content-center  vh-100">
                     <Col md="6">
                         <Row className="justify-content-center">

@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import {
   getCountries,
   getStates,
+  resetCreateSuccessful,
   updateSms,
   validateBaseUrlSuffix,
 } from "../../../store/actions/smservice-actions";
@@ -18,18 +19,18 @@ import avatars6 from "../../../assets/images/avatars/avtar_5.png";
 import * as Yup from "yup";
 import { ISmserviceState } from "../../../store/Models/SmserviceState";
 import { IProductState } from "../../../store/Models/ProductState";
-import {  getSingleUserProduct } from "../../../store/actions/products-actions";
+import { getAllUserProducts, getSingleUserProduct } from "../../../store/actions/products-actions";
 
 const UpdateSms = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const locations = useLocation();
-  const state = useSelector((state : any) => state);
+  const state = useSelector((state: any) => state);
   const { singleUserProduct }: IProductState = state.product;
-  const { countries, states, baseUrlSuffixValidation, validationSuccessful,createSuccessful } : ISmserviceState =
+  const { countries, states, baseUrlSuffixValidation, validationSuccessful, createSuccessful }: ISmserviceState =
     state.smservice;
   const [images, setImages] = useState("");
-  const ImageDisplay = (event : any) => {
+  const ImageDisplay = (event: any) => {
     if (event.target.files[0]) {
       setImages(URL.createObjectURL(event.target.files[0]));
     }
@@ -40,13 +41,22 @@ const UpdateSms = () => {
     address: Yup.string().required("Address is required"),
     country: Yup.string().required("Country is required"),
     state: Yup.string().required("State is required"),
-    baseUrl: Yup.string()
+    prefix: Yup.string()
+    .matches(
+      /((https?):\/\/)/,
+      "Enter correct url!"
+    ),
+    url: Yup.string()
       .matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        /[a-z0-9-%]+/,
         "Enter correct url!"
       )
-      .required("Base Url is required"),
-    baseUrlAppendix: Yup.string().required("Base Url Suffix is required"),
+      .required("School Url is required"),
+      suffix: Yup.string()
+      .matches(
+      /(\.flavetechs.com)/,
+        "Enter correct url!"
+      )
   });
   //VALIDATIONS SCHEMA
   useEffect(() => {
@@ -54,39 +64,45 @@ const UpdateSms = () => {
     const userProductId = queryParams.get("userProductId");
     if (!userProductId) return;
     getSingleUserProduct(userProductId)(dispatch);
-        getCountries()(dispatch);
-  }, [locations.search,dispatch]);
-  
+    getCountries()(dispatch);
+  }, [locations.search, dispatch]);
+
 
   useEffect(() => {
     setImages(singleUserProduct?.smsLogo)
     getStates(singleUserProduct?.country)(dispatch);
-}, [singleUserProduct,dispatch]);
+  }, [singleUserProduct, dispatch]);
 
   useEffect(() => {
-    createSuccessful && history.goBack();
-  }, [createSuccessful, history,dispatch]);
-  
-  
+   if(createSuccessful){
+    resetCreateSuccessful()(dispatch);
+    history.goBack();
+   }  
+  }, [createSuccessful, history, dispatch]);
+
+
   return (
     <>
       <div>
         <Formik
           initialValues={{
-            schoolName: singleUserProduct?.schoolName|| "",
-            address: singleUserProduct?.address|| "",
-            ipAddress: singleUserProduct?.ipAddress|| "",
-            country: singleUserProduct?.country|| "",
-            state: singleUserProduct?.state|| "",
-            baseUrl: singleUserProduct?.baseUrl|| "",
-            baseUrlAppendix: singleUserProduct?.baseUrlSuffix|| "",
-            schoolLogo: singleUserProduct?.smsLogo|| "",
-            productId: singleUserProduct?.productId|| "",
+            schoolName: singleUserProduct?.schoolName || "",
+            address: singleUserProduct?.address || "",
+            ipAddress: singleUserProduct?.ipAddress || "",
+            country: singleUserProduct?.country || "",
+            state: singleUserProduct?.state || "",
+            schoolUrl: singleUserProduct?.schoolUrl || "",
+            prefix:  singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(0,8):singleUserProduct?.schoolUrl.slice(0,7)||"",
+            url: singleUserProduct?.schoolUrl.charAt(4) === "s" ? singleUserProduct?.schoolUrl.slice(8,-15):singleUserProduct?.schoolUrl.slice(7,-15)|| "",
+            suffix: singleUserProduct?.schoolUrl.slice(-15)|| "",
+            schoolLogo: singleUserProduct?.smsLogo || "",
+            productId: singleUserProduct?.productId || "",
           }}
           enableReinitialize={true}
           validationSchema={validation}
-          onSubmit={(values : any) => {
+          onSubmit={(values: any) => {
             values.schoolLogo = images;
+            values.schoolUrl = values.prefix + values.url + values.suffix
             const params = new FormData();
             params.append("schoolName", values.schoolName);
             params.append("clientId", singleUserProduct?.clientId);
@@ -95,8 +111,7 @@ const UpdateSms = () => {
             params.append("ipAddress", values.ipAddress);
             params.append("country", values.country);
             params.append("state", values.state);
-            params.append("baseUrl", values.baseUrl);
-            params.append("baseUrlAppendix", values.baseUrlAppendix);
+            params.append("schoolUrl", values.schoolUrl);
             params.append("schoolLogo", values.schoolLogo);
             params.append("file", values.file);
             params.append("productId", values.productId);
@@ -199,7 +214,7 @@ const UpdateSms = () => {
                               name="country"
                               className="form-select"
                               id="country"
-                              onChange={(e : any) => {
+                              onChange={(e: any) => {
                                 setFieldValue("country", e.target.value);
                                 getStates(e.target.value)(dispatch);
                               }}
@@ -222,13 +237,7 @@ const UpdateSms = () => {
                                 </div>
                               )}
                             </div>
-                            <div className="col-md-6">
-                              {touched.baseUrl && errors.baseUrl && (
-                                <div className="text-danger">
-                                  {errors.baseUrl}
-                                </div>
-                              )}
-                            </div>
+                           
                           </Row>
                           <div className="col-md-6 form-group">
                             <label htmlFor="state" className="form-label">
@@ -239,7 +248,7 @@ const UpdateSms = () => {
                               name="state"
                               className="form-select"
                               id="state"
-                              onChange={(e : any) => {
+                              onChange={(e: any) => {
                                 setFieldValue("state", e.target.value);
                               }}
                             >
@@ -251,52 +260,70 @@ const UpdateSms = () => {
                               ))}
                             </Field>
                           </div>
-                          <div className="col-md-6 form-group">
-                            <label htmlFor="baseUrl" className="form-label">
-                              <b>Base URL:</b>
-                            </label>
-                            <Field
-                              type="text"
-                              className="form-control text-lowercase"
-                              name="baseUrl"
-                              id="baseUrl"
-                              placeholder="base URL"
-                            />
-                          </div>
                           <Row>
                             <div className="col-md-6">
-                              {touched.baseUrlAppendix &&
-                                errors.baseUrlAppendix && (
-                                  <div className="text-danger">
-                                    {errors.baseUrlAppendix}
-                                  </div>
-                                )}
+                              {touched.prefix && errors.prefix && (
+                                <div className="text-danger">
+                                  {errors.prefix}
+                                </div>
+                              )}
+                                {touched.url && errors.url && (
+                                <div className="text-danger">
+                                  {errors.url}
+                                </div>
+                              )}
+                                {touched.suffix && errors.suffix && (
+                                <div className="text-danger">
+                                  {errors.suffix}
+                                </div>
+                              )}
+                              <div className="text-danger">
+                                {!baseUrlSuffixValidation && validationSuccessful
+                                  ? "Base suffix already taken"
+                                  : ""} 
+                              </div>
+
                             </div>
                           </Row>
-                          <div className="col-md-6 form-group">
-                            <label
-                              htmlFor="baseUrlAppendix"
-                              className="form-label"
-                            >
-                              <b>Base Suffix:</b>
-                            </label>
+                          <label className="form-label">
+                            <b>School URL:</b>
+                          </label>
+                          <Form.Group className="col-md-6 input-group">
+            
+                              <Field
+                              type="text"
+                              className="form-control text-lowercase"
+                              name="prefix"
+                              id="prefix"
+                              aria-describedby="name"
+                              placeholder="http://|https://"
+                             
+                            />
+                           
                             <Field
                               type="text"
                               className="form-control text-lowercase"
-                              name="baseUrlAppendix"
-                              id="baseUrlAppendix"
-                              onKeyUp={(e  : any) => {
-                                validateBaseUrlSuffix(e.target.value)(dispatch);
+                              name="url"
+                              id="url"
+                              aria-describedby="name"
+                              placeholder="example"
+                              onKeyUp={(e: any) => {
+                              const suffix = e.target.value.slice(0,4)=== "www."? e.target.value.slice(4):e.target.value
+                              validateBaseUrlSuffix(suffix)(dispatch);
                               }}
-                              disabled
-                              placeholder="base suffix"
                             />
-                            <div className="text-danger mt-2">
-                              {!baseUrlSuffixValidation && validationSuccessful
-                                ? "Base suffix already taken"
-                                : ""}
-                            </div>
-                          </div>
+                               <Field
+                              type="text"
+                              className="form-control text-lowercase"
+                              name="suffix"
+                              id="suffix"
+                              aria-describedby="name"
+                              placeholder=".flavetechs.com"
+                              
+                            />
+                         
+                          </Form.Group>
+           
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
@@ -359,7 +386,7 @@ const UpdateSms = () => {
                                       accept="image/jpeg,image/jpg,image/png"
                                       className="file-upload form-control"
                                       data-original-title="upload photos"
-                                      onChange={(event:any) => {
+                                      onChange={(event: any) => {
                                         setFieldValue(
                                           "file",
                                           event.target.files[0]
@@ -405,7 +432,7 @@ const UpdateSms = () => {
                           <Button
                             type="button"
                             variant="btn btn-primary"
-                            onClick={()=>handleSubmit()}
+                            onClick={() => handleSubmit()}
                           >
                             Submit
                           </Button>

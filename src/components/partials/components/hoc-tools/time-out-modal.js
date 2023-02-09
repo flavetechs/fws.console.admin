@@ -2,7 +2,7 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { respondModal, showHideTimeOutModal } from "../../../../store/actions/toaster-actions";
 
-export function SmpTimeOutModal(props) {
+export function FwsTimeOutModal(props) {
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
   const {showTimeOutModal } = state.alert;
