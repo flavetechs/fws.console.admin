@@ -1,6 +1,7 @@
 import axiosInstance from "../../axios/axiosInstance";
 import { actions } from "../action-types/smservice-action-types";
 import { errorModal, successModal } from "./alert-actions";
+import { getAllUserProducts } from "./products-actions";
 
 export const getAllSms = () => (dispatch: any) => {
     dispatch({
@@ -152,4 +153,11 @@ const payload={
                 payload: err?.response.data.result
             });
 })
+}
+
+export const resetCreateSuccessful = () => (dispatch: any) => {
+    dispatch({
+        type: actions.RESET_CREATE_SUCCESSFUL,
+    });
+
 }
