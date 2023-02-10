@@ -63,10 +63,10 @@ const CreateSms = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if(createSuccessful){
+    if (createSuccessful) {
       resetCreateSuccessful()(dispatch);
       history.goBack()
-     }  
+    }
   }, [createSuccessful, history, dispatch]);
 
   return (
@@ -250,21 +250,21 @@ const CreateSms = () => {
                           </Form.Group>
                           <Row>
                             <div className="col-md-6">
-                              {touched.prefix && errors.prefix && (
+                              {/* {touched.prefix && errors.prefix && (
                                 <div className="text-danger">
                                   {errors.prefix}
                                 </div>
-                              )}
+                              )} */}
                               {touched.url && errors.url && (
                                 <div className="text-danger">
                                   {errors.url}
                                 </div>
                               )}
-                              {touched.suffix && errors.suffix && (
+                              {/* {touched.suffix && errors.suffix && (
                                 <div className="text-danger">
                                   {errors.suffix}
                                 </div>
-                              )}
+                              )} */}
                               <div className="text-danger">
                                 {!baseUrlSuffixValidation && validationSuccessful
                                   ? "Base suffix already taken"
@@ -277,15 +277,10 @@ const CreateSms = () => {
                             <b>School URL:</b>
                           </label>
                           <Form.Group className="col-md-6 input-group">
-                            <Field
-                              type="text"
-                              className="form-control text-lowercase"
-                              name="prefix"
-                              id="prefix"
-                              aria-describedby="name"
-                              placeholder="http://|https://"
-
-                            />
+                          <div className="btn-group" data-toggle="buttons">
+                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'http://' && 'active'}`} onClick={()=>setFieldValue('prefix','http://')}> http://</label>
+                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'https://' && 'active'}`} onClick={()=>setFieldValue('prefix','https://')}>https://</label>
+                            </div>
 
                             <Field
                               type="text"
@@ -305,12 +300,13 @@ const CreateSms = () => {
                               name="suffix"
                               id="suffix"
                               aria-describedby="name"
-                              placeholder=".flavetechs.com"
+                              value=".flavetechs.com"
+                              readOnly
 
                             />
 
                           </Form.Group>
-                          
+
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
