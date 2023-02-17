@@ -44,7 +44,7 @@ const CreateSms = () => {
       .matches(
         /((https?):\/\/)/,
         "Enter correct url!"
-      ),
+      ).required("select a button"),
     url: Yup.string()
       .matches(
         /[a-z0-9-%]+/,
@@ -88,6 +88,7 @@ const CreateSms = () => {
           validationSchema={validation}
           onSubmit={(values: any) => {
             values.schoolLogo = images;
+            values.suffix = ".flavetechs.com"
             values.schoolUrl = values.prefix + values.url + values.suffix;
             const params = new FormData();
             params.append("schoolName", values.schoolName);
@@ -250,11 +251,11 @@ const CreateSms = () => {
                           </Form.Group>
                           <Row>
                             <div className="col-md-6">
-                              {/* {touched.prefix && errors.prefix && (
+                              {touched.prefix && errors.prefix && (
                                 <div className="text-danger">
                                   {errors.prefix}
                                 </div>
-                              )} */}
+                              )}
                               {touched.url && errors.url && (
                                 <div className="text-danger">
                                   {errors.url}
