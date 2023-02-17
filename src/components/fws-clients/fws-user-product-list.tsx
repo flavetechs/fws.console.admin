@@ -38,7 +38,12 @@ const UserProducts = () => {
               <div className="col-xl-3 col-lg-6 mt-2" key={idx}>
                 <div className=" card-transparent border  h-100 w-100  rounded">
                   {" "}
-                  <div
+                  <div onClick={() => {
+                    history.push(
+                      `${productsLocations.userProductDetails}?userProductId=${product.userProductId}`
+                    );
+                    setShowMenuDropdown(false);
+                  }}
                     className="card-body "
                   >
                     {" "}
@@ -51,7 +56,7 @@ const UserProducts = () => {
                             alt="product"
                           />
                         </div>
-                        <div className="dropdown show bg-light h-25">
+                        {/* <div className="dropdown show bg-light h-25">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -87,7 +92,7 @@ const UserProducts = () => {
                               </g>
                             </g>
                           </svg>
-                          {showMenuDropdown && indexRow === idx && (
+                          {/* {showMenuDropdown && indexRow === idx && (
                             <div
                               x-placement="bottom-start"
                               aria-labelledby=""
@@ -204,10 +209,10 @@ const UserProducts = () => {
                                   ></path>
                                 </svg>
                                 update
-                              </div> */}
+                              </div> 
                             </div>
-                          )}
-                        </div>
+                          )} 
+                        </div>*/}
                       </div>
                       <div>
                         <h6 className="counter fw-bold text-center my-2 mt-3">
