@@ -45,7 +45,7 @@ const UpdateSms = () => {
       .matches(
         /((https?):\/\/)/,
         "Enter correct url!"
-      ),
+      ).required("select a button"),
     url: Yup.string()
       .matches(
         /[a-z0-9-%]+/,
@@ -262,11 +262,11 @@ const UpdateSms = () => {
                           </div>
                           <Row>
                             <div className="col-md-6">
-                              {/* {touched.prefix && errors.prefix && (
+                              {touched.prefix && errors.prefix && (
                                 <div className="text-danger">
                                   {errors.prefix}
                                 </div>
-                              )} */}
+                              )}
                               {touched.url && errors.url && (
                                 <div className="text-danger">
                                   {errors.url}
