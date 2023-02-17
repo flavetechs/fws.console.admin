@@ -152,7 +152,7 @@ const UserProducts = () => {
                                 </svg>
                                 view/details
                               </div>
-                              <div
+                              {/* <div
                                 onClick={() => {
                                   history.push(
                                     `${
@@ -204,7 +204,7 @@ const UserProducts = () => {
                                   ></path>
                                 </svg>
                                 update
-                              </div>
+                              </div> */}
                             </div>
                           )}
                         </div>
