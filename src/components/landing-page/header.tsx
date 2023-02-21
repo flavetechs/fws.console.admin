@@ -19,7 +19,7 @@ const HomeHeader = () => {
             <li><a className={`nav-link scrollto ${location.hash ==''&& location.pathname == '/' && 'active'}`} href="/">Home</a></li>
             <li><a className={`nav-link scrollto ${location.hash =='#about'&& 'active'}`} href="#about">About</a></li>
             <li><a className={`nav-link scrollto ${location.hash =='#services'&& 'active'}`} href="#services">Services</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#portfolio'&& 'active'}`}  href="#portfolio">Portfolio</a></li>
+            <li><a className={`nav-link scrollto ${location.hash =='#cbt'&& 'active'}`}  href="http://cbt.flavetechs.com/" target={'_blank'}>CBT</a></li>
             {/* <li><a className="nav-link scrollto" href="#team">Team</a></li> */}
             <li><a className={`nav-link scrollto ${location.hash =='#contact'&& 'active'}`}  href="#contact">Contact</a></li>
             <li><a className={`nav-link scrollto ${location.pathname == authLocations.login && 'active'}`}  href={authLocations.login}>Login</a></li>
