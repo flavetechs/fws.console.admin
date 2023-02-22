@@ -20,13 +20,13 @@ const UserProductDetails = () => {
    const { exportPinsCode }: ISmserviceState = state.smservice;
    const queryParams = new URLSearchParams(locations.search);
    const userProductId = queryParams.get("userProductId");
-
+  
    useEffect(() => {
       getSingleUserProduct(userProductId || "")(dispatch);
    }, []);
 
    useEffect(() => {
-      customisedModalValue && exportPins(customisedModalValue, "D7F710A5-592F-4390-068C-08DA686DA23E")(dispatch)
+      customisedModalValue && exportPins(customisedModalValue, singleUserProduct?.clientId)(dispatch)
    }, [customisedModalValue]);
 
    function saveAsXlsxFile() {
@@ -682,7 +682,7 @@ const UserProductDetails = () => {
                            <div className="d-flex justify-content-between">
                               <h4 className="card-title">About</h4>
                               <a href={`${smsLocations.updateSms
-                                 }?userProductId=${singleUserProduct.userProductId}`} >Update</a>
+                                 }?userProductId=${singleUserProduct.userProductId}`} style={{cursor:"pointer"}}>Update</a>
                            </div>
                         </div>
                         <div className="card-body">

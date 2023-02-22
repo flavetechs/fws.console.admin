@@ -45,6 +45,7 @@ const UserProducts = () => {
                     setShowMenuDropdown(false);
                   }}
                     className="card-body "
+                    style={{cursor:"pointer"}}
                   >
                     {" "}
                     <div className="">

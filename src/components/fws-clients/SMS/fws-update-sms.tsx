@@ -44,18 +44,18 @@ const UpdateSms = () => {
     prefix: Yup.string()
       .matches(
         /((https?):\/\/)/,
-        "Enter correct url!"
-      ).required("select a button"),
+        "Enter correct Protocol!"
+      ).required("select a Protocol"),
     url: Yup.string()
       .matches(
-        /[a-z0-9-%]+/,
-        "Enter correct url!"
+        /[a-z0-9]+/,
+        "Enter correct Url!"
       )
       .required("School Url is required"),
     suffix: Yup.string()
       .matches(
         /(\.flavetechs.com)/,
-        "Enter correct url!"
+        "Enter correct Url!"
       )
   });
   //VALIDATIONS SCHEMA
@@ -78,8 +78,7 @@ const UpdateSms = () => {
       resetCreateSuccessful()(dispatch);
       history.goBack();
     }
-  }, [createSuccessful, history, dispatch]);
-
+  }, [createSuccessful]);
 
   return (
     <>
@@ -285,15 +284,16 @@ const UpdateSms = () => {
 
                             </div>
                           </Row>
+
                           <label className="form-label">
                             <b>School URL:</b>
                           </label>
                           <Form.Group className="col-md-6 input-group">
 
-                            
+
                             <div className="btn-group" data-toggle="buttons">
-                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'http://' && 'active'}`} onClick={()=>setFieldValue('prefix','http://')}> http://</label>
-                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'https://' && 'active'}`} onClick={()=>setFieldValue('prefix','https://')}>https://</label>
+                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'http://' && 'active'}`} onClick={() => setFieldValue('prefix', 'http://')}> http://</label>
+                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'https://' && 'active'}`} onClick={() => setFieldValue('prefix', 'https://')}>https://</label>
                             </div>
 
                             <Field
@@ -318,6 +318,8 @@ const UpdateSms = () => {
                             />
 
                           </Form.Group>
+
+                          <div className="mt-3"> <label className="fw-bold"> Preview: </label><div>{values.prefix + values.url + values.suffix}</div> </div>
 
                           <div className="row form-group">
                             <div className="col-md-6">
