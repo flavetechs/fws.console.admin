@@ -14,7 +14,7 @@ const AddState = () => {
 
   // ACCESSING STATE FROM REDUX STORE
   const state = useSelector((state: any) => state);
-  const { countryList }: ILocationLookupState = state.locationLookup;
+  const { countryList}: ILocationLookupState = state.locationLookup;
   // ACCESSING STATE FROM REDUX STORE
 
   //VALIDATIONS SCHEMA
@@ -36,7 +36,6 @@ const AddState = () => {
   React.useEffect(() => {
     getCountryLookupList()(dispatch)
   }, [dispatch])
-
 
   return (
     <>
@@ -152,7 +151,9 @@ const AddState = () => {
                         <Button
                           type="button"
                           variant="btn btn-primary mx-2"
-                          onClick={() => handleSubmit()}
+                          onClick={() => {handleSubmit();
+                            setFieldValue("stateName", "")}
+                          }
                         >
                           Submit
                         </Button>
