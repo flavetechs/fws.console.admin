@@ -12,3 +12,8 @@ export const clientDashboardLocations = {
     createSms:"/client-dashboard/create-smservices",
     updateSms:"/client-dashboard/update-smservices",
   };
+
+  export const fileManagerLocations = {
+    fileManager: "/client-dashboard/file-manager",
+    fileList:"/client-dashboard/file-list",
+  };
