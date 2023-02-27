@@ -49,4 +49,7 @@
     font-size: 30px; 
     color: var(--primary);
   }
-  
+  .dropdown-hover:hover{
+    background-color: #2e46ba !important;
+    color:white !important;
+  }
