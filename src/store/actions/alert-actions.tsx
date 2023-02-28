@@ -81,3 +81,25 @@ export const respondDialog = (value: any) => (dispatch: any)=> {
         payload: value
     })
 }
+
+export const showHideModal = (value :any) => (dispatch:any) => {
+  dispatch({
+      type: actions.SHOW_HIDE_MODAL,
+      payload: value
+  });
+}
+
+export const showHideAddFolderModal = (value:any) => (dispatch:any) => {
+  dispatch({
+      type: actions.SHOW_HIDE_ADD_FOLDER_MODAL,
+      payload: value
+  });
+}
+
+
+export const respondModal = (message:any) => (dispatch:any)=> {
+  dispatch({
+      type: actions.RESPOND_MODAL,
+      payload: message
+  })
+}

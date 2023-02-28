@@ -24,6 +24,7 @@ const FileList = () => {
                             <div className="card-body card-thumbnail">
                                 <a href="#" data-title="PDF" data-load-file="file" data-load-target="#resolte-contaniner" data-url="../file-manager/assets/images/doc-files/demo.pdf" data-bs-toggle="modal" data-bs-target="#file-documents">
                                     <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body">
+                                        
                                         <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/pdf.svg" className="img-fluid" alt="pdf.svg" loading="lazy" />
                                     </div>
                                 </a>

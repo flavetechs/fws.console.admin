@@ -10,8 +10,8 @@ import UserProductDetails from '../components/fws-clients/SMS/fws-user-product-d
 import Products from '../components/fws-clients/fws-product-list';
 import CreateSms from '../components/fws-clients/SMS/fws-install-sms';
 import UpdateSms from '../components/fws-clients/SMS/fws-update-sms';
-import FileManager from '../components/fws-clients/file-manager';
-import FileList from '../components/fws-clients/file-list';
+import FileManager from '../components/fws-clients/file-manager/file-manager-board';
+import FileList from '../components/fws-clients/file-manager/file-list';
 
 
 const ClientRouter = () => {

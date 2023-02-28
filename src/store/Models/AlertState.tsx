@@ -3,4 +3,7 @@ export interface IAlertState {
     deleteDialogResponse: string,
     dialogResponse: string,
     customisedModalValue:any,
+    showAddFolderModal:any,
+    modalResponse:any,
+    showModal:any,
 }
