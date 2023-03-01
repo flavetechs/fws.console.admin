@@ -41,6 +41,17 @@ export const fileManagerReducer = (state: IFileManagerState = _state, { type, pa
                         filterProps: payload,
                     }
 
+                    case actions.FETCH_FILE_BY_FOLDERID_SUCCESS:
+                        return {
+                            ...state,
+                            isSuccessful: false,
+                            loading: false,
+                            message: '',
+                            files:payload.data,
+                            filterProps: payload,
+                        }
+
+
                     case actions.CREATE_FOLDER_SUCCESS:
                     return {
                         ...state,
@@ -88,6 +99,14 @@ export const fileManagerReducer = (state: IFileManagerState = _state, { type, pa
                                             loading: false,
                                             message: payload
                                           };
+
+                                          case actions.DOWNLOAD_FILE_SUCCESS:
+                                            return {
+                                                ...state,
+                                                isSuccessful: true,
+                                                loading: false,
+                                                downloadedFile: payload
+                                              };
 
         default:
             return state

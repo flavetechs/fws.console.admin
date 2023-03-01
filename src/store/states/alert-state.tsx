@@ -4,6 +4,7 @@ export const _state = {
     dialogResponse: '',
     customisedModalValue:'',
     showAddFolderModal:'',
+    showAddFileModal:'',
     modalResponse:'',
     showModal:'',
 }

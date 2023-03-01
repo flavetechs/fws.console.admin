@@ -32,6 +32,12 @@ export const alertReducer = (state : IAlertState =_state, { type, payload }: any
                 ...state,
                 showAddFolderModal: payload
             }
+
+            case actions.SHOW_HIDE_ADD_FILE_MODAL:
+                return {
+                    ...state,
+                    showAddFileModal: payload
+                }
     
             case actions.RESPOND_MODAL:
             return {

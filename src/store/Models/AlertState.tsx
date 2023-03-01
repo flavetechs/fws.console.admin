@@ -4,6 +4,7 @@ export interface IAlertState {
     dialogResponse: string,
     customisedModalValue:any,
     showAddFolderModal:any,
+    showAddFileModal:any,
     modalResponse:any,
     showModal:any,
 }

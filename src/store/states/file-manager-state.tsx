@@ -5,4 +5,5 @@ export const _state = {
     files:[],
     folders:[],
     filterProps:{},
+    downloadedFile:"",
 }

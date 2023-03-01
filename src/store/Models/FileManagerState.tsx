@@ -8,4 +8,5 @@ export interface IFileManagerState {
     files:  FileManagerDetail[],
     folders: FileManagerDetail[],
     filterProps:any,
+    downloadedFile:any,
 }
