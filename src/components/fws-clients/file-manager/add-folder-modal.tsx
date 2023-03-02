@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState } from "react";
-import { createFolder, updateFolder } from "../../../store/actions/file-manager-actions";
+import { createFile, createFolder, updateFile, updateFolder } from "../../../store/actions/file-manager-actions";
 import { respondModal, showHideAddFolderModal } from "../../../store/actions/alert-actions";
 import { InputModal } from "../../partials/components/hoc-tools/input-modal";
 
@@ -17,8 +17,9 @@ export function AddFolderModal(props:any) {
 
 
   React.useEffect(() => {
-    showAddFolderModal && props.folderName &&
-   setFilename(props.folderName)
+   props.folderName ?
+    showAddFolderModal && setFilename(props.folderName)
+   :showAddFolderModal && setFilename(props.fileName)
   }, [props]);
 
   React.useEffect(() => {
@@ -50,8 +51,16 @@ export function AddFolderModal(props:any) {
               Cancel
             </Button>
             <Button variant="primary" className="" onClick={() => {
+                  const params = new FormData();
+                  const fileType:any = 5;
+                  params.append("id",props.fileId);
+                  params.append("fileType", fileType);
+                  params.append("fileName", filename);
+                  params.append("folderId", props.folderId);
                showHideAddFolderModal(false)(dispatch);
-              props.folderId ?  updateFolder({id:props.folderId,filename})(dispatch)
+               props.folderFromFile && !props.fileId ? createFile(props.folderId,params)(dispatch)
+              : props.folderFromFile && props.fileId ? updateFile(props.folderId,params)(dispatch)
+            :  props.folderId ?  updateFolder({id:props.folderId,filename})(dispatch)
               : createFolder({filename})(dispatch)
             }}>
               Send

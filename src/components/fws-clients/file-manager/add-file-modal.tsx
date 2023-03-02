@@ -37,13 +37,14 @@ export function AddFileModal(props: any) {
   if (file?.name?.split(".")[1] == "png") { fileType = 0 }
   else if (file?.name?.split(".")[1] == "jpg") { fileType = 1 }
   else if (file?.name?.split(".")[1] == "jpeg") { fileType = 1 }
+  else if (file?.name?.split(".")[1]?.includes("zip")) { fileType = 2 }
+  else if (file?.name?.split(".")[1]?.includes("rar")) { fileType = 2 }
   else if (file?.name?.split(".")[1]?.includes("doc")) { fileType = 3 }
   else if (file?.name?.split(".")[1]?.includes("xls")) { fileType = 4 }
   else if (file?.name?.split(".")[1]?.includes("txt")) { fileType = 6 }
   else { fileType = 5 }
 
-
-  console.log("file", file);
+console.log(file);
 
   return (
     <>
@@ -98,6 +99,11 @@ export function AddFileModal(props: any) {
                       <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/word.svg" className="img-fluid" alt="word.svg" loading="lazy" />
                       <h5 className="text-center">{file.name}</h5>
                       </div>
+                         : file?.name?.split(".")[1]?.includes("zip") ? 
+                         <div className="p-2 px-5 card-thumbnail bg-light" style={{width:"50%",margin:"0 25% 0 25%"}}>
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="#fece00" width="80" height="80" viewBox="0 0 24 24"><path d="M10.997 19.06c0 1.277-2.996 1.268-2.996.003 0-1.314 2.996-1.344 2.996-.003zm11.003-8.06v13h-20v-24h8.409c4.857 0 3.335 8 3.335 8 3.009-.745 8.256-.419 8.256 3zm-14-4h3v-1h-3v1zm0-2h3v-1h-3v1zm0-2h3v-1h-3v1zm0 6h3v-1h-3v1zm0 2h3v-1h-3v1zm0 2h3v-1h-3v1zm3.925 5.5l-.925-4.5h-3l-.925 4.5c-.393 1.578.801 2.5 2.425 2.5 1.626 0 2.817-.924 2.425-2.5zm3.984-12.723c2.047-.478 4.805.279 6.091 1.179-1.494-1.998-5.23-5.708-7.432-6.881 1.156 1.168 1.563 4.234 1.341 5.702z"/></svg>
+                           <h5 className="text-center">{file.name}</h5>
+                           </div>
                         // <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/ppt.svg" className="img-fluid" alt="ppt.svg" loading="lazy" />
                         : file?.name?.split(".")[1]?.includes("txt") ? 
                         <div className="p-2 px-5 card-thumbnail bg-light" style={{width:"50%",margin:"0 25% 0 25%"}}>
@@ -122,7 +128,7 @@ export function AddFileModal(props: any) {
                     id="files"
                     style={{ display: "none" }}
                     name="files"
-                    accept=".xlsx, .xls,.txt,image/jpeg,image/jpg,image/png,.doc,.docx"
+                    accept=".xlsx, .xls,.txt,image/jpeg,image/jpg,image/png,.doc,.docx,.zip,.rar,.7zip"
                     className="file-upload form-control"
                     data-original-title="upload photos"
                     onChange={(event: any) => {
@@ -160,8 +166,8 @@ export function AddFileModal(props: any) {
             params.append("fileType", fileType);
             params.append("folderId", props.folderId);
             showHideAddFileModal(false)(dispatch);
-            props.fileId ? updateFile(props.folderId,params)(dispatch)
-              : createFile(props.folderId,params)(dispatch)
+            // props.fileId ? updateFile(props.folderId,params)(dispatch): 
+              createFile(props.folderId,params)(dispatch)
           }}>
             Upload
           </Button>

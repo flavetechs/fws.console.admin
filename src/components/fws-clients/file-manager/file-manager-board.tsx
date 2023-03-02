@@ -31,7 +31,7 @@ const FileManager = () => {
     //delete dialog
     useEffect(() => {
         if (deleteDialogResponse === "continue") {
-            deleteFolder(folderProps.folderId)(dispatch);
+            deleteFolder(folderProps.folderId,"")(dispatch);
         }
         return () => {
             respondToDeleteDialog("")(dispatch);

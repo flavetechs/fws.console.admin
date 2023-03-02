@@ -104,7 +104,7 @@ export const createFolder = (filename: any) => (dispatch: any) => {
         });
 }
 
-export const deleteFolder = (fileId:any) => (dispatch: any) => {
+export const deleteFolder = (fileId:any,folderId:any) => (dispatch: any) => {
     dispatch({
         type: actions.FILE_MANAGER_LOADING
     });
@@ -116,7 +116,9 @@ export const deleteFolder = (fileId:any) => (dispatch: any) => {
                 payload: res.data.message.friendlyMessage
             });
             successModal(res.data.message.friendlyMessage)
-            getAllFolders(1,10)(dispatch);
+          folderId ?
+            getAllFiles(folderId,1,10)(dispatch)
+            : getAllFolders(1,10)(dispatch)
         }).catch((err :any) => {
             dispatch({
                 type: actions.FILE_MANAGER_FAILED,
