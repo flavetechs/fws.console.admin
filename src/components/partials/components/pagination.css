@@ -1,0 +1,8 @@
+.pagination > li > .done
+{
+    background-color: #e4e4e4;
+   
+}
+a.disabled:hover {
+    cursor:not-allowed
+ }

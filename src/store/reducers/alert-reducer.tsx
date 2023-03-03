@@ -21,6 +21,30 @@ export const alertReducer = (state : IAlertState =_state, { type, payload }: any
                 ...state,
                 dialogResponse: payload
             }
+
+            case actions.SHOW_HIDE_MODAL:
+            return {
+                ...state,
+                showModal: payload
+            }
+            case actions.SHOW_HIDE_ADD_FOLDER_MODAL:
+            return {
+                ...state,
+                showAddFolderModal: payload
+            }
+
+            case actions.SHOW_HIDE_ADD_FILE_MODAL:
+                return {
+                    ...state,
+                    showAddFileModal: payload
+                }
+    
+            case actions.RESPOND_MODAL:
+            return {
+                ...state,
+                modalResponse: payload
+            }
+            
        
         default:
             return state

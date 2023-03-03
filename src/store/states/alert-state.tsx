@@ -3,4 +3,8 @@ export const _state = {
     deleteDialogResponse: '',
     dialogResponse: '',
     customisedModalValue:'',
+    showAddFolderModal:'',
+    showAddFileModal:'',
+    modalResponse:'',
+    showModal:'',
 }
