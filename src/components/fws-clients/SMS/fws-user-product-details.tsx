@@ -9,6 +9,7 @@ import { exportPins } from "../../../store/actions/smservice-actions";
 import { IAlertState } from "../../../store/Models/AlertState";
 import { IProductState } from "../../../store/Models/ProductState";
 import { ISmserviceState } from "../../../store/Models/SmserviceState";
+import { saveAsFile } from "../../../utils/download-files";
 
 const UserProductDetails = () => {
    const dispatch = useDispatch();
@@ -29,19 +30,10 @@ const UserProductDetails = () => {
       customisedModalValue && exportPins(customisedModalValue, singleUserProduct?.clientId)(dispatch)
    }, [customisedModalValue]);
 
-   function saveAsXlsxFile() {
-      var mediaType = "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,";
-      var userInp = exportPinsCode;
-      var a = document.createElement('a');
-      a.href = mediaType + userInp;
-      a.download = 'pins.xlsx';
-      a.click();
-      a.textContent = 'Download file!';
-      document.body.appendChild(a);
-   }
+   
 
    useEffect(() => {
-      exportPinsCode && saveAsXlsxFile()
+      exportPinsCode && saveAsFile('pins.xlsx',exportPinsCode)
    }, [exportPinsCode]);
 
 

@@ -50,7 +50,7 @@ export function AddFileModal(props: any) {
     <>
       <FileModal title={props.fileId ? "Update File" : "Add File"}>
         <div>
-          <Row className="mx-5 align-items-center" style={{ margin:"25% 0 25% 0" }}>
+          <Row className="mx-5 align-items-center" style={{ margin: "25% 0 25% 0" }}>
             <div className="">
               {file &&
                 <OverlayTrigger
@@ -87,62 +87,84 @@ export function AddFileModal(props: any) {
                   alt="file"
                 />
               </div>
-              
-          :    //<img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/pdf.svg" className="img-fluid" alt="pdf.svg" loading="lazy" />
-                file?.name?.split(".")[1]?.includes("xls") ?
-                 <div className="p-2 px-5 card-thumbnail bg-light" style={{width:"50%",margin:"0 25% 0 25%"}}>
+
+              :    //<img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/pdf.svg" className="img-fluid" alt="pdf.svg" loading="lazy" />
+              file?.name?.split(".")[1]?.includes("xls") ?
+                <div className="p-2 px-5 card-thumbnail bg-light" style={{ width: "50%", margin: "0 25% 0 25%" }}>
                   <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/excel.svg" className="img-fluid " alt="excel.svg" loading="lazy" />
                   <h5 className="text-center">{file.name}</h5>
+                </div>
+                : file?.name?.split(".")[1]?.includes("doc") ?
+                  <div className="p-2 px-5 card-thumbnail bg-light" style={{ width: "50%", margin: "0 25% 0 25%" }}>
+                    <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/word.svg" className="img-fluid" alt="word.svg" loading="lazy" />
+                    <h5 className="text-center">{file.name}</h5>
                   </div>
-                    : file?.name?.split(".")[1]?.includes("doc") ? 
-                    <div className="p-2 px-5 card-thumbnail bg-light" style={{width:"50%",margin:"0 25% 0 25%"}}>
-                      <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/word.svg" className="img-fluid" alt="word.svg" loading="lazy" />
+                  : file?.name?.split(".")[1]?.includes("zip") ?
+                    <div className="p-2 px-5 card-thumbnail bg-light" style={{ width: "50%", margin: "0 25% 0 25%" }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#fece00" width="80" height="80" viewBox="0 0 24 24"><path d="M10.997 19.06c0 1.277-2.996 1.268-2.996.003 0-1.314 2.996-1.344 2.996-.003zm11.003-8.06v13h-20v-24h8.409c4.857 0 3.335 8 3.335 8 3.009-.745 8.256-.419 8.256 3zm-14-4h3v-1h-3v1zm0-2h3v-1h-3v1zm0-2h3v-1h-3v1zm0 6h3v-1h-3v1zm0 2h3v-1h-3v1zm0 2h3v-1h-3v1zm3.925 5.5l-.925-4.5h-3l-.925 4.5c-.393 1.578.801 2.5 2.425 2.5 1.626 0 2.817-.924 2.425-2.5zm3.984-12.723c2.047-.478 4.805.279 6.091 1.179-1.494-1.998-5.23-5.708-7.432-6.881 1.156 1.168 1.563 4.234 1.341 5.702z" /></svg>
                       <h5 className="text-center">{file.name}</h5>
-                      </div>
-                         : file?.name?.split(".")[1]?.includes("zip") ? 
-                         <div className="p-2 px-5 card-thumbnail bg-light" style={{width:"50%",margin:"0 25% 0 25%"}}>
-                           <svg xmlns="http://www.w3.org/2000/svg" fill="#fece00" width="80" height="80" viewBox="0 0 24 24"><path d="M10.997 19.06c0 1.277-2.996 1.268-2.996.003 0-1.314 2.996-1.344 2.996-.003zm11.003-8.06v13h-20v-24h8.409c4.857 0 3.335 8 3.335 8 3.009-.745 8.256-.419 8.256 3zm-14-4h3v-1h-3v1zm0-2h3v-1h-3v1zm0-2h3v-1h-3v1zm0 6h3v-1h-3v1zm0 2h3v-1h-3v1zm0 2h3v-1h-3v1zm3.925 5.5l-.925-4.5h-3l-.925 4.5c-.393 1.578.801 2.5 2.425 2.5 1.626 0 2.817-.924 2.425-2.5zm3.984-12.723c2.047-.478 4.805.279 6.091 1.179-1.494-1.998-5.23-5.708-7.432-6.881 1.156 1.168 1.563 4.234 1.341 5.702z"/></svg>
-                           <h5 className="text-center">{file.name}</h5>
-                           </div>
-                        // <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/ppt.svg" className="img-fluid" alt="ppt.svg" loading="lazy" />
-                        : file?.name?.split(".")[1]?.includes("txt") ? 
-                        <div className="p-2 px-5 card-thumbnail bg-light" style={{width:"50%",margin:"0 25% 0 25%"}}>
-                          <svg
-                            width="80"
-                            viewBox="0 0 113 146"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                    </div>
+                    // <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/ppt.svg" className="img-fluid" alt="ppt.svg" loading="lazy" />
+                    : file?.name?.split(".")[1]?.includes("txt") ?
+                      <div className="p-2 px-5 card-thumbnail bg-light" style={{ width: "50%", margin: "0 25% 0 25%" }}>
+                        <svg
+                          width="80"
+                          viewBox="0 0 113 146"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                            <path
-                                d="M110.667 47.9166L64.5833 1.83333C63.4124 0.660896 61.8237 0.00145877 60.1667 0H22.9167C16.8388 0 11.0098 2.41443 6.71213 6.71213C2.41443 11.0098 0 16.8388 0 22.9167V122.917C0 128.995 2.41443 134.823 6.71213 139.121C11.0098 143.419 16.8388 145.833 22.9167 145.833H89.5833C95.6612 145.833 101.49 143.419 105.788 139.121C110.086 134.823 112.5 128.995 112.5 122.917V52.0833C112.434 50.5133 111.78 49.0257 110.667 47.9166ZM66.6667 16.6822L95.8178 45.8333H66.6667V16.6822ZM89.5833 137.984H22.9167C20.154 137.984 14.0175 133.01 12.064 131.056C10.1104 129.103 7.84884 125.679 7.84884 122.917V22.9167C7.84884 20.154 10.1104 14.405 12.064 12.4515C14.0175 10.4979 20.154 7.84883 22.9167 7.84883H58.8178V47.4322C58.8394 49.083 59.7337 50.8189 60.9012 51.9863C62.0686 53.1538 63.4169 53.6606 65.0678 53.6822H104.651V122.917C104.651 125.679 102.39 131.428 100.436 133.382C98.4825 135.335 92.346 137.984 89.5833 137.984Z"
-                                fill="white"
-                            />
+                          <path
+                            d="M110.667 47.9166L64.5833 1.83333C63.4124 0.660896 61.8237 0.00145877 60.1667 0H22.9167C16.8388 0 11.0098 2.41443 6.71213 6.71213C2.41443 11.0098 0 16.8388 0 22.9167V122.917C0 128.995 2.41443 134.823 6.71213 139.121C11.0098 143.419 16.8388 145.833 22.9167 145.833H89.5833C95.6612 145.833 101.49 143.419 105.788 139.121C110.086 134.823 112.5 128.995 112.5 122.917V52.0833C112.434 50.5133 111.78 49.0257 110.667 47.9166ZM66.6667 16.6822L95.8178 45.8333H66.6667V16.6822ZM89.5833 137.984H22.9167C20.154 137.984 14.0175 133.01 12.064 131.056C10.1104 129.103 7.84884 125.679 7.84884 122.917V22.9167C7.84884 20.154 10.1104 14.405 12.064 12.4515C14.0175 10.4979 20.154 7.84883 22.9167 7.84883H58.8178V47.4322C58.8394 49.083 59.7337 50.8189 60.9012 51.9863C62.0686 53.1538 63.4169 53.6606 65.0678 53.6822H104.651V122.917C104.651 125.679 102.39 131.428 100.436 133.382C98.4825 135.335 92.346 137.984 89.5833 137.984Z"
+                            fill="white"
+                          />
                         </svg>
                         <h5 className="text-center">{file.name}</h5>
-                        </div>
-              : !file ?
-                <h4 className="uppy-Dashboard-AddFiles-title">Drop files here or
+                      </div>
+                      : !file ?
+                      <label htmlFor="files" style={{ cursor: 'pointer'}}>
+                       <div className="">
+                      <h4 className="">Drop files here or
+                     <span className="mx-1 text-primary">
+                      <input 
+                      name="files" 
+                      type="file"
+                       id="files"
+                      accept=".xlsx, .xls,.txt,image/jpeg,image/jpg,image/png,.doc,.docx,.zip,.rar,.7zip" 
+                      className="form-control-file " 
+                      //style={{display: "none"}}
+                      onChange={(event: any) => {
+                              setFile(
+                                event.target.files[0]
+                              );
+                              ImageDisplay(event);
+                            }}
+                          />
+                    {/* browse files  */}
+                    </span>
+                    
+                   </h4>
+                    </div></label>
+                        // 
+                        //   
+                        //   <label htmlFor="files" style={{ cursor: 'pointer' }}> <input
+                        //     type="file"
+                        //     
+                        //     //style={{ display: "none" }}
+                        //     
+                        //     className="file-upload form-control-file"
+                        //     data-original-title="upload photos"
+                        //     onChange={(event: any) => {
+                        //       setFile(
+                        //         event.target.files[0]
+                        //       );
+                        //       ImageDisplay(event);
+                        //     }}
+                        //   />
 
-                  <span className="mx-1 text-primary"><label htmlFor="files" style={{ cursor: 'pointer' }}> <input
-                    type="file"
-                    id="files"
-                    style={{ display: "none" }}
-                    name="files"
-                    accept=".xlsx, .xls,.txt,image/jpeg,image/jpg,image/png,.doc,.docx,.zip,.rar,.7zip"
-                    className="file-upload form-control"
-                    data-original-title="upload photos"
-                    onChange={(event: any) => {
-                      setFile(
-                        event.target.files[0]
-                      );
-                      ImageDisplay(event);
-                    }}
-                  />
+                        //     </label></span>
 
-                    browse files </label></span>
-
-                </h4>
-                : <h3 className="mx-5">{file.name}</h3>
+                        //
+                        : <h3 className="mx-5">{file.name}</h3>
             }
           </Row>
         </div>
@@ -167,7 +189,7 @@ export function AddFileModal(props: any) {
             params.append("folderId", props.folderId);
             showHideAddFileModal(false)(dispatch);
             // props.fileId ? updateFile(props.folderId,params)(dispatch): 
-              createFile(props.folderId,params)(dispatch)
+            createFile(props.folderId, params)(dispatch)
           }}>
             Upload
           </Button>
