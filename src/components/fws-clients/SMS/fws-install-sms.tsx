@@ -48,11 +48,6 @@ const CreateSms = () => {
         "Enter correct Protocol!"
       ).required("select a Protocol"),
     url: Yup.string()
-      .matches(/[a-z0-9]+/,  "Enter correct Url!")
-      .when("url", {
-        is: true,
-        then: Yup.string().required("Must enter email address")
-      })
       .required("School Url is required"),
     suffix: Yup.string()
       .matches(
