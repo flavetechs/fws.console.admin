@@ -305,14 +305,14 @@ const FileList = () => {
                                 </div>
                             </div>
                             :
-                            <div className="card card-folder col-md-4 col-lg-3 me-3 ">
+                            <div className="card card-folder col-md-4 col-lg-3 me-3 p-0">
                                 <div className="card-body card-thumbnail">
-                                    <div className='d-flex'>
+                                    <div className=''>
                                         <div className="p-4 d-flex justify-content-center align-items-center iq-document rounded bg-body">
                                             <a className=" ">
                                                 <svg style={{ cursor: 'pointer' }} onClick={() => { window.location.assign(`${fileManagerLocations.fileList}?folderId=${file.id}`) }} xmlns="http://www.w3.org/2000/svg" width="122" height="122" fill="#fece00" viewBox="0 0 24 24"><path d="M7.972 2h-6.972l.714 5h2.021l-.429-3h3.694c1.112 1.388 1.952 2 4.277 2h9.283l-.2 1h2.04l.6-3h-11.723c-1.978 0-2.041-.417-3.305-2zm16.028 7h-24l2 13h20l2-13z" /></svg>                 </a>
                                         </div>
-                                        <div className="dropdown mx-4" onClick={() => {
+                                        <div className="dropdown  d-flex justify-content-end mt-2" onClick={() => {
                                             setIndexRow(idx);
                                             setShowMenuDropdown(!showMenuDropdown)
                                             setCreateMenu(false)
