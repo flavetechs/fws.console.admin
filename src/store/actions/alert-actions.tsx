@@ -20,7 +20,7 @@ export const deleteDialogModal= () =>(dispatch: any) => {swal({
       respondToDeleteDialog('continue')(dispatch)
     } else {
       swal("Your item is safe!");
-      respondToDeleteDialog('')(dispatch)
+      respondToDeleteDialog('cancel')(dispatch)
     }
   });} 
 
@@ -40,7 +40,7 @@ export const deleteDialogModal= () =>(dispatch: any) => {swal({
       respondDialog('continue')(dispatch)
     } else {
       swal(message);
-      respondDialog('')(dispatch)
+      respondDialog('cancel')(dispatch)
     }
   });} 
 
@@ -80,4 +80,32 @@ export const respondDialog = (value: any) => (dispatch: any)=> {
         type: actions.RESPOND_DECISION_DIALOG,
         payload: value
     })
+}
+
+export const showHideModal = (value :any) => (dispatch:any) => {
+  dispatch({
+      type: actions.SHOW_HIDE_MODAL,
+      payload: value
+  });
+}
+
+export const showHideAddFolderModal = (value:any) => (dispatch:any) => {
+  dispatch({
+      type: actions.SHOW_HIDE_ADD_FOLDER_MODAL,
+      payload: value
+  });
+}
+
+export const showHideAddFileModal = (value:any) => (dispatch:any) => {
+  dispatch({
+      type: actions.SHOW_HIDE_ADD_FILE_MODAL,
+      payload: value
+  });
+}
+
+export const respondModal = (message:any) => (dispatch:any)=> {
+  dispatch({
+      type: actions.RESPOND_MODAL,
+      payload: message
+  })
 }
