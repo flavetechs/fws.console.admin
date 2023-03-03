@@ -54,12 +54,14 @@ const FileList = () => {
                 else { deleteFile(folderId, selectedIds)(dispatch) }
                 setDeleteButton(true);
                 setShowCheckBoxes(false);
+                setSelectedIds([]);
             }
             //setStateArraysAndIds(false);
             //deleteFile(folderId, { fileId: fileProps.fileId })(dispatch);
         } else if (deleteDialogResponse === "cancel") {
             setDeleteButton(true);
             setShowCheckBoxes(false);
+            setSelectedIds([]);
             //setStateArraysAndIds(false);
         }
         return () => {
@@ -67,6 +69,7 @@ const FileList = () => {
         };
     }, [fileProps, deleteDialogResponse, dispatch]);
     //delete dialog
+console.log("selectedIds",selectedIds);
 
     return (
         <div>
@@ -83,7 +86,7 @@ const FileList = () => {
                         }}
                         style={{ cursor: "pointer" }}
                         className=" text-primary mx-2"
-                        width="38"
+                        width="40"
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
