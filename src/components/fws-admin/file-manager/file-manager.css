@@ -53,11 +53,4 @@
     background-color: #2e46ba !important;
     color:white !important;
   }
-  .file-row{
-    margin-left: 10% !important;
-  }
-  @media only screen and (max-width: 600px) {
-    .file-row{
-      margin-left: 0 !important;
-    }
-  }
+  

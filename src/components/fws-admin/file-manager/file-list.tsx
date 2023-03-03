@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Card, Col, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { fileManagerLocations } from '../../../router/fws-client-path-locations';
+import { fileManagerLocations } from '../../../router/fws-path-locations';
 import { deleteDialogModal, errorModal, respondToDeleteDialog, showHideAddFileModal, showHideAddFolderModal } from '../../../store/actions/alert-actions';
 import { deleteFile, deleteFolder, downloadFile, getAllFiles } from '../../../store/actions/file-manager-actions';
 import { CheckMultiple, CheckSingleItem } from '../../../utils/tools';
@@ -72,38 +72,43 @@ const FileList = () => {
 console.log("selectedIds",selectedIds);
 
     return (
-        <div>
-            <AddFileModal folderId={folderId} />
-            <AddFolderModal folderId={folderId} folderFromFile={true} fileId={fileProps.fileId} fileName={fileProps.fileName} />
-            <div className='d-md-flex justify-content-between  m-2'>
+        <>
+         <AddFileModal folderId={folderId} />
+            <AddFolderModal folderId={folderId} folderFromFile={true} fileId={fileProps.fileId} fileName={fileProps.fileName} />    
+           <div>
+            <Row>
+            <Col sm="12">
+            <Card className="bg-transparent">
+            <Card className='m-3'>
+                <Card.Body className='d-md-flex justify-content-between p-2'>
                 <OverlayTrigger
-                    placement="top"
-                    overlay={<Tooltip id="button-tooltip-2"> back</Tooltip>}
-                >
-                    <svg
-                        onClick={() => {
-                            history.goBack()
-                        }}
-                        style={{ cursor: "pointer" }}
-                        className=" text-primary mx-2"
-                        width="40"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M13.165 11.9934L13.1634 11.6393C13.1513 10.2348 13.0666 8.98174 12.9206 8.18763C12.9206 8.17331 12.7613 7.38572 12.6599 7.12355C12.5006 6.74463 12.2126 6.42299 11.8515 6.2192C11.5624 6.0738 11.2592 6 10.9417 6C10.6922 6.01157 10.2806 6.13714 9.98692 6.24242L9.74283 6.33596C8.12612 6.97815 5.03561 9.07656 3.85199 10.3598L3.76473 10.4495L3.37527 10.8698C3.12982 11.1915 3 11.5847 3 12.0077C3 12.3866 3.11563 12.7656 3.3469 13.0718C3.41614 13.171 3.52766 13.2983 3.62693 13.4058L4.006 13.8026C5.31046 15.1243 8.13485 16.9782 9.59883 17.5924C9.59883 17.6057 10.5086 17.9857 10.9417 18H10.9995C11.6639 18 12.2846 17.6211 12.6021 17.0086C12.6888 16.8412 12.772 16.5132 12.8352 16.2252L12.949 15.6813C13.0788 14.8067 13.165 13.465 13.165 11.9934ZM19.4967 13.5183C20.3269 13.5183 21 12.8387 21 12.0004C21 11.1622 20.3269 10.4825 19.4967 10.4825L15.7975 10.8097C15.1463 10.8097 14.6183 11.3417 14.6183 12.0004C14.6183 12.6581 15.1463 13.1912 15.7975 13.1912L19.4967 13.5183Z"
-                            fill="currentColor"
-                        ></path>
-                    </svg>
-                </OverlayTrigger>
+            placement="top"
+            overlay={<Tooltip id="button-tooltip-2"> back</Tooltip>}
+          >
+            <svg
+              onClick={() => {
+                history.goBack();
+              }}
+              style={{ cursor: "pointer" }}
+              className=" text-primary m-2"
+              width="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M13.165 11.9934L13.1634 11.6393C13.1513 10.2348 13.0666 8.98174 12.9206 8.18763C12.9206 8.17331 12.7613 7.38572 12.6599 7.12355C12.5006 6.74463 12.2126 6.42299 11.8515 6.2192C11.5624 6.0738 11.2592 6 10.9417 6C10.6922 6.01157 10.2806 6.13714 9.98692 6.24242L9.74283 6.33596C8.12612 6.97815 5.03561 9.07656 3.85199 10.3598L3.76473 10.4495L3.37527 10.8698C3.12982 11.1915 3 11.5847 3 12.0077C3 12.3866 3.11563 12.7656 3.3469 13.0718C3.41614 13.171 3.52766 13.2983 3.62693 13.4058L4.006 13.8026C5.31046 15.1243 8.13485 16.9782 9.59883 17.5924C9.59883 17.6057 10.5086 17.9857 10.9417 18H10.9995C11.6639 18 12.2846 17.6211 12.6021 17.0086C12.6888 16.8412 12.772 16.5132 12.8352 16.2252L12.949 15.6813C13.0788 14.8067 13.165 13.465 13.165 11.9934ZM19.4967 13.5183C20.3269 13.5183 21 12.8387 21 12.0004C21 11.1622 20.3269 10.4825 19.4967 10.4825L15.7975 10.8097C15.1463 10.8097 14.6183 11.3417 14.6183 12.0004C14.6183 12.6581 15.1463 13.1912 15.7975 13.1912L19.4967 13.5183Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </OverlayTrigger>
                 <div>
                     {showDeleteButton ? (
                         <button
                             type="button"
-                            className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
+                            className="text-center btn-primary btn-icon mx-2  mt-2 btn btn-primary"
                             onClick={() => {
                                 setDeleteButton(!showDeleteButton);
                                 setShowCheckBoxes(!showCheckBoxes);
@@ -145,7 +150,7 @@ console.log("selectedIds",selectedIds);
                     ) : (
                         <button
                             type="button"
-                            className="text-center btn-primary btn-icon me-2 mt-lg-0 mt-md-0 mt-3 btn btn-primary"
+                            className="text-center btn-primary btn-icon mx-2 mt-2 btn btn-primary"
                             onClick={() => {
                                 deleteDialogModal()(dispatch);
                             }}
@@ -184,7 +189,7 @@ console.log("selectedIds",selectedIds);
                             <span> Delete Selected</span>
                         </button>
                     )}
-                    <button className="btn btn-sm btn-primary me-2 mt-lg-0 mt-md-0 mt-3" onClick={(e) => {
+                    <button className="btn btn-sm btn-primary me-2 mt-2" onClick={(e) => {
                         setShowMenuDropdown(!showMenuDropdown); setCreateMenu(!createMenu)
                     }}>Create File/Folder <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="18" height="24" viewBox="0 0 24 24">
                             <path d="M10.869 16.6308C10.811 16.5743 10.563 16.3609 10.359 16.1622C9.076 14.9971 6.976 11.9576 6.335 10.3668C6.232 10.1252 6.014 9.51437 6 9.18802C6 8.8753 6.072 8.5772 6.218 8.29274C6.422 7.93814 6.743 7.65368 7.122 7.49781C7.385 7.39747 8.172 7.2416 8.186 7.2416C9.047 7.08573 10.446 7 11.992 7C13.465 7 14.807 7.08573 15.681 7.21335C15.695 7.22796 16.673 7.38383 17.008 7.55431C17.62 7.86702 18 8.47784 18 9.13151V9.18802C17.985 9.61374 17.605 10.509 17.591 10.509C16.949 12.0141 14.952 14.9834 13.625 16.1768C13.625 16.1768 13.284 16.5129 13.071 16.659C12.765 16.887 12.386 17 12.007 17C11.584 17 11.19 16.8724 10.869 16.6308Z" fill="currentColor"></path>
@@ -195,24 +200,26 @@ console.log("selectedIds",selectedIds);
                         </ul>
                     </button>
                 </div>
-            </div>
-            <div className="d-flex justify-content-center">
+                </Card.Body>
+            </Card>
 
+            
                 <Row className='file-row'>
                     {files.map((file: any, idx: any) => (
                         file.fileType !== 5 ?
-                            <div className="card col-md-4 col-lg-3 me-3 iq-file-manager p-0">
-                                <div className="card-body card-thumbnail p-3">
+                            <Col md="6" lg="3" xxl="2" key={idx}>
+                                <Card className='card-thumbnail '>
+                                    <Card.Body className="px-3">
 
                                     {
                                         //<img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/pdf.svg" className="img-fluid" alt="pdf.svg" loading="lazy" />
                                         // <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/ppt.svg" className="img-fluid" alt="ppt.svg" loading="lazy" />
                                         file.fileType == 4 ?
-                                            <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body">
+                                            <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body ">
                                                 <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/excel.svg" className="img-fluid" alt="excel.svg" loading="lazy" />
                                             </div>
                                             : file.fileType == 2 ?
-                                                <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body">
+                                                <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body ">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#fece00" width="122" height="122" viewBox="0 0 24 24"><path d="M10.997 19.06c0 1.277-2.996 1.268-2.996.003 0-1.314 2.996-1.344 2.996-.003zm11.003-8.06v13h-20v-24h8.409c4.857 0 3.335 8 3.335 8 3.009-.745 8.256-.419 8.256 3zm-14-4h3v-1h-3v1zm0-2h3v-1h-3v1zm0-2h3v-1h-3v1zm0 6h3v-1h-3v1zm0 2h3v-1h-3v1zm0 2h3v-1h-3v1zm3.925 5.5l-.925-4.5h-3l-.925 4.5c-.393 1.578.801 2.5 2.425 2.5 1.626 0 2.817-.924 2.425-2.5zm3.984-12.723c2.047-.478 4.805.279 6.091 1.179-1.494-1.998-5.23-5.708-7.432-6.881 1.156 1.168 1.563 4.234 1.341 5.702z" /></svg>
                                                 </div>
                                                 : file.fileType == 3 ?
@@ -233,13 +240,16 @@ console.log("selectedIds",selectedIds);
                                                                 />
                                                             </svg>
                                                         </div>
-                                                        : <img
-                                                            className=" img-fluid rounded h-50"
+
+                                                        : 
+                                                        <div style={{height:'150px'}} className=" d-flex justify-content-center align-items-center iq-document rounded bg-body">
+                                                        <img
+                                                            className=" img-fluid w-100 rounded"
                                                             id="displayImg"
                                                             src={file.path}
                                                             alt="file"
                                                         />
-
+                                                         </div>
                                     }
 
 
@@ -305,11 +315,13 @@ console.log("selectedIds",selectedIds);
                                                 </svg>   {copiedLink.idx == idx && copiedLink.status ? 'Copied' : 'Copy'}</small>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
                             :
-                            <div className="card card-folder col-md-4 col-lg-3 me-3 p-0">
-                                <div className="card-body card-thumbnail">
+                            <Col md="6" lg="3" xxl="2"key={idx}>
+                                <Card className=" card-thumbnail">
+                                    <Card.Body className="px-3 ">
                                     <div className=''>
                                         <div className="p-4 d-flex justify-content-center align-items-center iq-document rounded bg-body">
                                             <a className=" ">
@@ -344,13 +356,14 @@ console.log("selectedIds",selectedIds);
 
 
                                     </div>
-                                </div>
-                            </div>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
 
 
                     ))}
                 </Row>
-            </div>    
+         
             
              <div className='mt-5'>
                 <PaginationFilter3
@@ -362,9 +375,11 @@ console.log("selectedIds",selectedIds);
                     param3={10}
                 />
             </div>
-
-
+            </Card>
+            </Col>
+         </Row>
         </div>
+        </>
     )
 }
 

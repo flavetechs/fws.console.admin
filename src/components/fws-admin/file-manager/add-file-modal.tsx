@@ -44,7 +44,7 @@ export function AddFileModal(props: any) {
   else if (file?.name?.split(".")[1]?.includes("txt")) { fileType = 6 }
   else { fileType = 5 }
 
-console.log(file);
+
 
   return (
     <>
