@@ -34,6 +34,8 @@ const CreateSms = () => {
       setImages(URL.createObjectURL(event.target.files[0]));
     }
   };
+
+  const [schoolURlPreview, setPreview] = useState('http://flaveconsoleflavetechs.com')
   //VALIDATIONS SCHEMA
   const validation = Yup.object().shape({
     schoolName: Yup.string().required("School Name is required"),
@@ -46,10 +48,11 @@ const CreateSms = () => {
         "Enter correct Protocol!"
       ).required("select a Protocol"),
     url: Yup.string()
-      .matches(
-        /[a-z0-9]+/,
-        "Enter correct Url!"
-      )
+      .matches(/[a-z0-9]+/,  "Enter correct Url!")
+      .when("url", {
+        is: true,
+        then: Yup.string().required("Must enter email address")
+      })
       .required("School Url is required"),
     suffix: Yup.string()
       .matches(
@@ -79,17 +82,17 @@ const CreateSms = () => {
             ipAddress: "",
             country: "",
             state: "",
-            prefix: "",
-            url: "",
-            suffix: "",
+            prefix: "http://",
+            url: "example",
+            suffix: ".flavetechs.com",
             schoolLogo: "",
             productId: productId,
           }}
           validationSchema={validation}
           onSubmit={(values: any) => {
             values.schoolLogo = images;
-            values.suffix = ".flavetechs.com"
             values.schoolUrl = values.prefix + values.url + values.suffix;
+            
             const params = new FormData();
             params.append("schoolName", values.schoolName);
             params.append("address", values.address);
@@ -277,38 +280,58 @@ const CreateSms = () => {
                           <label className="form-label">
                             <b>School URL:</b>
                           </label>
-                          <Form.Group className="col-md-6 input-group">
-                            <div className="btn-group" data-toggle="buttons">
-                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'http://' && 'active'}`} onClick={() => setFieldValue('prefix', 'http://')}> http://</label>
-                              <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'https://' && 'active'}`} onClick={() => setFieldValue('prefix', 'https://')}>https://</label>
-                            </div>
+                          <Form.Group className="col-md-12 input-group" >
+                            <Row md={8} sm={12} >
+                              <Col md={3} style={{ margin: 'auto' }}>
+                                <label>Protocol</label>
+                                <div className="btn-group" data-toggle="buttons">
+                                  <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'http://' && 'active'}`} onClick={() => {
+                                    setFieldValue('prefix', 'http://')
+                                  }
+                                  }> http://</label>
+                                  <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'https://' && 'active'}`} onClick={() => setFieldValue('prefix', 'https://')}>https://</label>
+                                </div>
 
-                            <Field
-                              type="text"
-                              className="form-control text-lowercase"
-                              name="url"
-                              id="url"
-                              aria-describedby="name"
-                              placeholder="example"
-                              onKeyUp={(e: any) => {
-                                const suffix = e.target.value.slice(0, 4) === "www." ? e.target.value.slice(4) : e.target.value
-                                validateBaseUrlSuffix(suffix)(dispatch);
-                              }}
-                            />
-                            <Field
-                              type="text"
-                              className="form-control text-lowercase"
-                              name="suffix"
-                              id="suffix"
-                              aria-describedby="name"
-                              value=".flavetechs.com"
-                              readOnly
+                              </Col>
+                              <Col md={5} sm={5}>
+                                <label>Url e.g flaveconsole</label>
+                                <Field
+                                  type="text"
+                                  className="form-control text-lowercase"
+                                  name="url"
+                                  id="url"
+                                  aria-describedby="name"
+                                  placeholder="example"
+                                  onKeyUp={(e: any) => {
+                                    const suffix = e.target.value.slice(0, 4) === "www." ? e.target.value.slice(4) : e.target.value
+                                    validateBaseUrlSuffix(suffix)(dispatch);
+                                  }}
+                                />
+                              </Col>
+                              <Col md={4} sm={4}>
+                                <label>'flavetechs.com'</label>
+                                <Field
+                                  type="text"
+                                  className="form-control text-lowercase"
+                                  name="suffix"
+                                  id="suffix"
+                                  aria-describedby="name"
+                                  value=".flavetechs.com"
+                                  readOnly
+                                />
+                              </Col>
 
-                            />
-
+                            </Row>
                           </Form.Group>
 
-                          <div className="mt-3"> <label className="fw-bold"> Preview: </label><div>{values.prefix + values.url + values.suffix}</div> </div>
+                          <Form.Group className="col-md-12 input-group" style={{ textAlign: 'center' }}>
+                            <Row md={12} sm={12} className="mt-3" style={{ marginLeft:10 }} >
+
+                              <Col className="badge bg-primary">
+                                <span className="fw-bold lead">{values.prefix + values.url + values.suffix}</span>
+                              </Col>
+                            </Row>
+                          </Form.Group>
 
 
                           <div className="row form-group">
