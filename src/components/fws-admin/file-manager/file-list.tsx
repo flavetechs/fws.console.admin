@@ -10,7 +10,7 @@ import { CheckSingleItem } from '../../../utils/tools';
 import { PaginationFilter3 } from '../../partials/components/pagination-filter';
 import { AddFileModal } from './add-file-modal';
 import { AddFolderModal } from './add-folder-modal';
-import "./file-manager.css"
+import "./file-manager.scss"
 
 const FileList = () => {
     const history = useHistory();

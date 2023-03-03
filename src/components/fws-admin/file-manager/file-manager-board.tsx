@@ -7,7 +7,7 @@ import { deleteDialogModal, respondToDeleteDialog, showHideAddFolderModal } from
 import { deleteFolder, getAllFolders } from '../../../store/actions/file-manager-actions'
 import { PaginationFilter2 } from '../../partials/components/pagination-filter'
 import { AddFolderModal } from './add-folder-modal'
-import './file-manager.css'
+import './file-manager.scss'
 
 const FileManager = () => {
     const history = useHistory();

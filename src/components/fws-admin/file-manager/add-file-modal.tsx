@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { createFile, updateFile } from "../../../store/actions/file-manager-actions";
 import { respondModal, showHideAddFileModal } from "../../../store/actions/alert-actions";
 import { FileModal } from "../../partials/components/hoc-tools/file-modal";
+import "./file-manager.scss"
 
 
 export function AddFileModal(props: any) {
@@ -143,27 +144,9 @@ export function AddFileModal(props: any) {
                     </span>
                     
                    </h4>
-                    </div></label>
-                        // 
-                        //   
-                        //   <label htmlFor="files" style={{ cursor: 'pointer' }}> <input
-                        //     type="file"
-                        //     
-                        //     //style={{ display: "none" }}
-                        //     
-                        //     className="file-upload form-control-file"
-                        //     data-original-title="upload photos"
-                        //     onChange={(event: any) => {
-                        //       setFile(
-                        //         event.target.files[0]
-                        //       );
-                        //       ImageDisplay(event);
-                        //     }}
-                        //   />
-
-                        //     </label></span>
-
-                        //
+                    </div>
+                    </label>
+                        
                         : <h3 className="mx-5">{file.name}</h3>
             }
           </Row>
