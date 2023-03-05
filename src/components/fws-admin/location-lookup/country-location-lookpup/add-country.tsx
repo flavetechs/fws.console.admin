@@ -37,7 +37,6 @@ const AddCountry = () => {
     }
   }, [isSuccessful, history]);
 
-  console.log('isSuccessful', isSuccessful);
   
 
   return (

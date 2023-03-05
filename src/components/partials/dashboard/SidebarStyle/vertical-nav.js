@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { Link, useLocation} from 'react-router-dom'
 import {Accordion, useAccordionButton, AccordionContext} from 'react-bootstrap'
-import { dashboardLocations, locationLocations } from '../../../../router/fws-path-locations';
+import { dashboardLocations, fileManagerLocations, locationLocations } from '../../../../router/fws-path-locations';
 import dashboard from '../../../../views/dashboard';
 
 
@@ -127,6 +127,15 @@ const VerticalNav = () => {
                         </ul>
                     </Accordion.Collapse>
                 </Accordion.Item>
+                
+                <li className="nav-item">  
+                    <Link className={`${location.pathname === fileManagerLocations.fileManager ? 'active' : ''} nav-link `} aria-current="page" to={fileManagerLocations.fileManager} >
+                        <i className="icon">
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd"><path fill="currentColor"  d="M0 2h8l3 3h10v4h3l-4 13h-20v-20zm22.646 8h-17.907l-3.385 11h17.907l3.385-11zm-2.646-1v-3h-9.414l-3-3h-6.586v15.75l3-9.75h16z"/></svg>
+                        </i>
+                        <span className="item-name">File  Manager</span>
+                        </Link>
+                        </li>
                 {/* <Accordion.Item as="li" eventKey="horizontal-menu" bsPrefix="nav-item" >
                     <CustomToggle eventKey="horizontal-menu" onClick={(activeKey) => setActiveMenu(activeKey)}>
                     <i className="icon">
