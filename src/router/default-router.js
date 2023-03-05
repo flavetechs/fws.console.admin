@@ -4,7 +4,7 @@ import {Switch,Route} from 'react-router-dom'
 
 //TransitionGroup
 import {TransitionGroup,CSSTransition} from "react-transition-group";
-import { dashboardLocations, locationLocations } from './fws-path-locations';
+import { dashboardLocations, fileManagerLocations, locationLocations } from './fws-path-locations';
 import ListCountry from '../components/fws-admin/location-lookup/country-location-lookpup/list-country';
 import ListState from '../components/fws-admin/location-lookup/state-location-lookup/list-state';
 import ListCity from '../components/fws-admin/location-lookup/city-location-lookup/list-city';
@@ -14,6 +14,8 @@ import EditState from '../components/fws-admin/location-lookup/state-location-lo
 import EditCity from '../components/fws-admin/location-lookup/city-location-lookup/edit-city';
 import AddCountry from '../components/fws-admin/location-lookup/country-location-lookpup/add-country'
 import AddState from '../components/fws-admin/location-lookup/state-location-lookup/add-state'
+import FileManager from '../components/fws-admin/file-manager/file-manager-board';
+import FileList from '../components/fws-admin/file-manager/file-list';
 
 
 const DefaultRouter = () => {
@@ -32,7 +34,11 @@ const DefaultRouter = () => {
                      <Route path={locationLocations.addCity} component={AddCity}></Route>
                      <Route path={locationLocations.editCountry} component={EditCountry}></Route>
                      <Route path={locationLocations.editState} component={EditState}></Route>
-                     <Route path={locationLocations.editCity} component={EditCity}></Route>
+                     <Route path={locationLocations.editCity} component={EditCity}></Route>       
+                     
+                       {/* fileManager */}
+                       <Route path={fileManagerLocations.fileManager} exact component={FileManager}/>
+                       <Route path={fileManagerLocations.fileList} exact component={FileList}/>
                   {/* location */}
                      {/* <Route path="/dashboard/app/user-profile"     exact component={UserProfile} /> */}
                     {/* <Route path="/dashboard/app/user-add"         exact component={UserAdd}/>

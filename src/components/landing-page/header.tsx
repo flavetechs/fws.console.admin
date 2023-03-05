@@ -4,7 +4,7 @@ import { authLocations } from '../../router/fws-path-locations'
 
 const HomeHeader = () => {
     const location = useLocation();
-    console.log("an",location);
+
     
   return (
     <>

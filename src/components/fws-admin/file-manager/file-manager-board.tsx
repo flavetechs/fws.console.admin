@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { fileManagerLocations } from '../../../router/fws-client-path-locations'
+import { fileManagerLocations } from '../../../router/fws-path-locations'
 import { deleteDialogModal, respondToDeleteDialog, showHideAddFolderModal } from '../../../store/actions/alert-actions'
 import { deleteFolder, getAllFolders } from '../../../store/actions/file-manager-actions'
 import { PaginationFilter2 } from '../../partials/components/pagination-filter'
 import { AddFolderModal } from './add-folder-modal'
-import './file-manager.css'
+import './file-manager.scss'
 
 const FileManager = () => {
     const history = useHistory();
@@ -84,7 +84,7 @@ const FileManager = () => {
 
 
                                 {folders.map((folder: any, idx: any) => (
-                                    <div className="card card-folder col-md-3 mx-2">
+                                    <div className="card card-folder col-md-3 mx-2"key={idx}>
                                         <div className="card-body">
                                             <div className="d-flex justify-content-between">
                                                 <a className="avatar-40 bg-soft-primary rounded-pill d-flex justify-content-center align-items-center">

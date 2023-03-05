@@ -132,7 +132,6 @@ export const createFile  = (folderId:any, fileData: any) => (dispatch: any) => {
     dispatch({
         type: actions.FILE_MANAGER_LOADING
     });
-                console.log("fileData",fileData);
                 
     axiosInstance.post('/fws/filemanager/api/v1/create/file',  fileData)
         .then((res) => {

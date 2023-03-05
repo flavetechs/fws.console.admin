@@ -23,3 +23,8 @@ export const dashboardLocations = {
     editState: "/dashboard/edit-state",
     editCity: "/dashboard/edit-city",
   };
+
+  export const fileManagerLocations = {
+    fileManager: "/dashboard/file-manager",
+    fileList:"/dashboard/file-list",
+  };

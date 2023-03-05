@@ -28,7 +28,6 @@ export function AddFolderModal(props:any) {
     }
   }, [showAddFolderModal]);
 
-
   return (
     <>
       <InputModal title={props.folderId ? "Update Folder" : "Add Folder"}>
