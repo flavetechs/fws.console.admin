@@ -87,7 +87,6 @@ const CreateSms = () => {
           onSubmit={(values: any) => {
             values.schoolLogo = images;
             values.schoolUrl = values.prefix + values.url + values.suffix;
-            
             const params = new FormData();
             params.append("schoolName", values.schoolName);
             params.append("address", values.address);
@@ -259,6 +258,7 @@ const CreateSms = () => {
                                   {errors.url}
                                 </div>
                               )}
+                              
                               {/* {touched.suffix && errors.suffix && (
                                 <div className="text-danger">
                                   {errors.suffix}
@@ -277,8 +277,8 @@ const CreateSms = () => {
                           </label>
                           <Form.Group className="col-md-12 input-group" >
                             <Row md={8} sm={12} >
-                              <Col md={3} style={{ margin: 'auto' }}>
-                                <label>Protocol</label>
+                              <Col md={3} style={{ margin: 'auto' }} className="my-2">
+                                <label  className="me-2">Protocol</label>
                                 <div className="btn-group" data-toggle="buttons">
                                   <label className={`btn btn-outline-primary btn-sm pt-2 ${values.prefix === 'http://' && 'active'}`} onClick={() => {
                                     setFieldValue('prefix', 'http://')
@@ -288,22 +288,21 @@ const CreateSms = () => {
                                 </div>
 
                               </Col>
-                              <Col md={5} sm={5}>
+                              <Col md={5} sm={5}  className="my-2">
                                 <label>Url e.g flaveconsole</label>
                                 <Field
                                   type="text"
-                                  className="form-control text-lowercase"
+                                  className="form-control text-lowercase "
                                   name="url"
                                   id="url"
                                   aria-describedby="name"
-                                  placeholder="example"
                                   onKeyUp={(e: any) => {
                                     const suffix = e.target.value.slice(0, 4) === "www." ? e.target.value.slice(4) : e.target.value
                                     validateBaseUrlSuffix(suffix)(dispatch);
                                   }}
                                 />
                               </Col>
-                              <Col md={4} sm={4}>
+                              <Col md={4} sm={4}  className="my-2">
                                 <label>'flavetechs.com'</label>
                                 <Field
                                   type="text"
@@ -319,11 +318,11 @@ const CreateSms = () => {
                             </Row>
                           </Form.Group>
 
-                          <Form.Group className="col-md-12 input-group" style={{ textAlign: 'center' }}>
-                            <Row md={12} sm={12} className="mt-3" style={{ marginLeft:10 }} >
+                          <Form.Group className="col-md-12 input-group" style={{ textAlign: 'center'}}>
+                            <Row md={12} sm={12} className="mt-3">
 
-                              <Col className="badge bg-primary">
-                                <span className="fw-bold lead">{values.prefix + values.url + values.suffix}</span>
+                              <Col className="badge bg-primary mx-3 mx-md-3">
+                                <span className="fw-bold lead text-wrap">{values.prefix + values.url + values.suffix}</span>
                               </Col>
                             </Row>
                           </Form.Group>
