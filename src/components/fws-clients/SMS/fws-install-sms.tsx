@@ -308,10 +308,10 @@ const CreateSms = () => {
 
                           </Form.Group>
 
-                          <div className="mt-3"> <label className="fw-bold"> Preview: </label><div>{values.prefix + values.url + values.suffix}</div> </div>
-
-
-                          <div className="row form-group">
+                          <div className="mt-3"> <label className="fw-bold"> Preview: </label>
+                          <div>{values.prefix + values.url + values.suffix}</div> 
+                          </div>
+                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
                                 <p className="card-title fw-bold">

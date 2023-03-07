@@ -55,7 +55,7 @@ const FileManager = () => {
                 <div className="position-relative">
                     <AddFolderModal folderId={folderProps.folderId} folderName={folderProps.folderName} />
                     <div className='d-flex justify-content-end m-3'>
-                        <button className="btn btn-sm btn-primary" onClick={(e) => { setShowMenuDropdown(false); showHideAddFolderModal(true)(dispatch) }}>
+                        <button className="btn btn-sm btn-primary" onClick={(e) => { setShowMenuDropdown(false); showHideAddFolderModal(true)(dispatch);setFolderProps({ folderId: "", folderName: "" }) }}>
                             <i className='btn-inner'>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
