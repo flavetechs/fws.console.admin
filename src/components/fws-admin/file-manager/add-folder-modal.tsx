@@ -43,8 +43,6 @@ export function AddFolderModal(props:any) {
               onClick={() => {
                 showHideAddFolderModal(false)(dispatch);
                 respondModal("cancel")(dispatch);
-                props.setTeacherClassNoteId('');
-                props.setNoteSendModal(false)
               }}
             >
               Cancel
