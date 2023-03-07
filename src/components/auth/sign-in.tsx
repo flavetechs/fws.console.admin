@@ -192,8 +192,8 @@ const SignIn = () => {
                     </Col> */}
                 </Row>
             </section>
-
-            <HomeFooter />
+          
+            {/* <HomeFooter/> */}
         </>
     )
 }

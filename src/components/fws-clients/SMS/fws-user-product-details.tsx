@@ -58,7 +58,7 @@ const UserProductDetails = () => {
                   </div>
                </div>
                <Row>
-               {/* <div className="col-lg-3">
+                  {/* <div className="col-lg-3">
              <div className="card">
                <div className="card-header">
                   <div className="header-title">
@@ -678,62 +678,62 @@ const UserProductDetails = () => {
                            </div>
                         </div>
                         <div className="card-body">
-                        
-                              <div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">Vision:</div>
-                                    <div className="mx-2 "></div>
-                                 </div>
-                                 <div className="d-flex">
-                                    <th className="mx-2">Mission:</th>
-                                    <th className="mx-2 text-capitalize ">
 
-                                    </th>
-                                 </div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">School Name:</div>
-                                    <div className="mx-2 text-capitalize ">
-                                       {singleUserProduct?.schoolName}
-                                    </div>
-                                 </div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">Address:</div>
-                                    <div className="mx-2 text-capitalize ">
-                                       {singleUserProduct?.address}
-                                    </div>
-                                 </div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">Country:</div>
-                                    <div className="mx-2 text-capitalize ">
-                                       {singleUserProduct?.country}
-                                    </div>
-                                 </div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">State:</div>
-                                    <div className="mx-2 text-capitalize ">
-                                       {singleUserProduct?.state}
-                                    </div>
-                                 </div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">IP Address:</div>
-                                    <div className="mx-2 text-capitalize ">
-                                       {singleUserProduct?.ipAddress}
-                                    </div>
-                                 </div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">Product Name:</div>
-                                    <div className="mx-2 text-capitalize ">
-                                       {singleUserProduct?.productName}
-                                    </div>
-                                 </div>
-                                 <div className="d-flex">
-                                    <div className="mx-2">Product Description:</div>
-                                    <div className="mx-2 text-capitalize ">
-                                       {singleUserProduct?.productDescription}
-                                    </div>
+                           <div>
+                              <div className="d-flex">
+                                 <div className="mx-2">Vision:</div>
+                                 <div className="mx-2 "></div>
+                              </div>
+                              <div className="d-flex">
+                                 <th className="mx-2">Mission:</th>
+                                 <th className="mx-2 text-capitalize ">
+
+                                 </th>
+                              </div>
+                              <div className="d-flex">
+                                 <div className="mx-2">School Name:</div>
+                                 <div className="mx-2 text-capitalize ">
+                                    {singleUserProduct?.schoolName}
                                  </div>
                               </div>
-                           
+                              <div className="d-flex">
+                                 <div className="mx-2">Address:</div>
+                                 <div className="mx-2 text-capitalize ">
+                                    {singleUserProduct?.address}
+                                 </div>
+                              </div>
+                              <div className="d-flex">
+                                 <div className="mx-2">Country:</div>
+                                 <div className="mx-2 text-capitalize ">
+                                    {singleUserProduct?.country}
+                                 </div>
+                              </div>
+                              <div className="d-flex">
+                                 <div className="mx-2">State:</div>
+                                 <div className="mx-2 text-capitalize ">
+                                    {singleUserProduct?.state}
+                                 </div>
+                              </div>
+                              <div className="d-flex">
+                                 <div className="mx-2">IP Address:</div>
+                                 <div className="mx-2 text-capitalize ">
+                                    {singleUserProduct?.ipAddress}
+                                 </div>
+                              </div>
+                              <div className="d-flex">
+                                 <div className="mx-2">Product Name:</div>
+                                 <div className="mx-2 text-capitalize ">
+                                    {singleUserProduct?.productName}
+                                 </div>
+                              </div>
+                              <div className="d-flex">
+                                 <div className="mx-2">Product Description:</div>
+                                 <div className="mx-2 text-capitalize ">
+                                    {singleUserProduct?.productDescription}
+                                 </div>
+                              </div>
+                           </div>
+
 
                         </div>
                      </div>

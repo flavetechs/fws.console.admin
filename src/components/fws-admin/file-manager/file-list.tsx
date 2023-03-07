@@ -64,7 +64,7 @@ const FileList = () => {
         };
     }, [fileProps, deleteDialogResponse, dispatch]);
     //delete dialog
-    console.log("selectedIds", selectedIds);
+
 
     return (
         <>

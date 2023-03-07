@@ -319,8 +319,15 @@ const UpdateSms = () => {
 
                           </Form.Group>
 
-                          <div className="mt-3"> <label className="fw-bold"> Preview: </label><div>{values.prefix + values.url + values.suffix}</div> </div>
+                          <Form.Group className="col-md-12 input-group" style={{ textAlign: 'center'}}>
+                            <Row md={12} sm={12} className="mt-3">
 
+                              <Col className="badge bg-primary mx-3 mx-md-3">
+                                <span className="fw-bold lead text-wrap">{values.prefix + values.url + values.suffix}</span>
+                              </Col>
+                            </Row>
+                          </Form.Group>
+                          
                           <div className="row form-group">
                             <div className="col-md-6">
                               <div className="header-title mt-3">
