@@ -53,7 +53,10 @@
     background-color: #2e46ba !important;
     color:white !important;
   }
- 
+   .text-mod{
+     word-break: break-all;
+     white-space: pre-wrap;
+    }
 
     .form-control-file {
       position: relative;

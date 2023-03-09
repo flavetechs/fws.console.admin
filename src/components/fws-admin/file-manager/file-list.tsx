@@ -185,7 +185,7 @@ const FileList = () => {
                                             </button>
                                         )}
                                         <button className="btn btn-sm btn-primary me-2 mt-2" onClick={(e) => {
-                                            setShowMenuDropdown(!showMenuDropdown); setCreateMenu(!createMenu); setFileProps({ fileId: "", fileType: "", fileName: "" })
+                                            setShowMenuDropdown(!showMenuDropdown); setCreateMenu(!createMenu); setFileProps({ fileId: "", fileType: "", fileName: "New Folder" })
                                         }}>Create File/Folder <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="18" height="24" viewBox="0 0 24 24">
                                                 <path d="M10.869 16.6308C10.811 16.5743 10.563 16.3609 10.359 16.1622C9.076 14.9971 6.976 11.9576 6.335 10.3668C6.232 10.1252 6.014 9.51437 6 9.18802C6 8.8753 6.072 8.5772 6.218 8.29274C6.422 7.93814 6.743 7.65368 7.122 7.49781C7.385 7.39747 8.172 7.2416 8.186 7.2416C9.047 7.08573 10.446 7 11.992 7C13.465 7 14.807 7.08573 15.681 7.21335C15.695 7.22796 16.673 7.38383 17.008 7.55431C17.62 7.86702 18 8.47784 18 9.13151V9.18802C17.985 9.61374 17.605 10.509 17.591 10.509C16.949 12.0141 14.952 14.9834 13.625 16.1768C13.625 16.1768 13.284 16.5129 13.071 16.659C12.765 16.887 12.386 17 12.007 17C11.584 17 11.19 16.8724 10.869 16.6308Z" fill="currentColor"></path>
                                             </svg>
@@ -209,27 +209,20 @@ const FileList = () => {
                                                     {
                                                         //<img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/pdf.svg" className="img-fluid" alt="pdf.svg" loading="lazy" />
                                                         // <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/ppt.svg" className="img-fluid" alt="ppt.svg" loading="lazy" />
-                                                        file.fileType == 4 ?
+                                                        file.fileType === 4 ?
                                                             <div  className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body ">
-                                                                <a target="_blank"rel="noopener noreferrer" href={file.path}>
                                                                 <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/excel.svg" className="img-fluid" alt="excel.svg" loading="lazy" />
-                                                                </a>
                                                             </div>
-                                                            : file.fileType == 2 ?
+                                                            : file.fileType === 2 ?
                                                                 <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body ">
-                                                                  <a target="_blank"rel="noopener noreferrer" href={file.path}>
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#fece00" width="122" height="122" viewBox="0 0 24 24"><path d="M10.997 19.06c0 1.277-2.996 1.268-2.996.003 0-1.314 2.996-1.344 2.996-.003zm11.003-8.06v13h-20v-24h8.409c4.857 0 3.335 8 3.335 8 3.009-.745 8.256-.419 8.256 3zm-14-4h3v-1h-3v1zm0-2h3v-1h-3v1zm0-2h3v-1h-3v1zm0 6h3v-1h-3v1zm0 2h3v-1h-3v1zm0 2h3v-1h-3v1zm3.925 5.5l-.925-4.5h-3l-.925 4.5c-.393 1.578.801 2.5 2.425 2.5 1.626 0 2.817-.924 2.425-2.5zm3.984-12.723c2.047-.478 4.805.279 6.091 1.179-1.494-1.998-5.23-5.708-7.432-6.881 1.156 1.168 1.563 4.234 1.341 5.702z" /></svg>
-                                                                </a>
                                                                 </div>
-                                                                : file.fileType == 3 ?
+                                                                : file.fileType === 3 ?
                                                                     <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body">
-                                                                      <a target="_blank"rel="noopener noreferrer" href={file.path}>
                                                                         <img src="https://templates.iqonic.design/hope-ui/pro/html/file-manager/assets/images/word.svg" className="img-fluid" alt="word.svg" loading="lazy" />
-                                                                    </a>
                                                                     </div>
-                                                                    : file.fileType == 6 ?
+                                                                    : file.fileType === 6 ?
                                                                         <div className="p-3 d-flex justify-content-center align-items-center iq-document rounded bg-body">
-                                                                          <a target="_blank"rel="noopener noreferrer" href={file.path}>
                                                                             <svg
                                                                                 width="122"
                                                                                 viewBox="0 0 113 146"
@@ -241,7 +234,6 @@ const FileList = () => {
                                                                                     fill="white"
                                                                                 />
                                                                             </svg>
-                                                                            </a>
                                                                         </div>
 
                                                                         :
@@ -269,7 +261,7 @@ const FileList = () => {
                                                                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
                                                                     <path fillRule="evenodd" clipRule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path>
                                                                 </svg>
-                                                                <p className=" mb-0 text-dark text-wrap">{file.fileName}</p>
+                                                                <p className=" mb-0 text-dark text-wrap text-mod">{file.fileName}</p>
                                                             </div>
                                                             <div>
                                                                 {showCheckBoxes ?
@@ -357,7 +349,7 @@ const FileList = () => {
                                                     </div>
 
                                                     <div className="mt-4" style={{ cursor: 'pointer' }} onClick={() => { window.location.assign(`${fileManagerLocations.fileList}?folderId=${file.id}`) }}>
-                                                        <h4>{file.fileName}</h4>
+                                                        <h4 className='text-mod'>{file.fileName}</h4>
 
 
                                                     </div>

@@ -8,21 +8,22 @@ const FwsLoader = () => {
     const { loading: loading2 } = state.auth;
     const { loading: loading3 } = state.locationLookup;
     const { loading: loading4 } = state.product;
-    const { loading: loading5 } = state.smservice;    
+    const { loading: loading5 } = state.smservice;  
+    const { loading: loading6 } = state.fileManager;  
 
     const [show, setShow] = useState(false);
 
     React.useEffect(() => {
 
         if (loading1 || loading2 || loading3 || loading4 
-            || loading5) {
+            || loading5 || loading6) {
             setShow(true);
         } else {
             setShow(false);
         }
 
     }, [loading1 || loading2 || loading3 || loading4 
-        || loading5])
+        || loading5 || loading6])
 
     return (
         <>
