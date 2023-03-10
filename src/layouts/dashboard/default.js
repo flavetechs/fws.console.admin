@@ -14,11 +14,11 @@ import Footer from '../../components/partials/dashboard/FooterStyle/footer'
 import DefaultRouter from '../../router/default-router'
 
 import SettingOffcanvas from '../../components/partials/components/settingoffcanvas'
-import Loader from '../../components/Loader'
 
 // store
 import {NavbarstyleAction, getDirMode, getcustomizerMode, getcustomizerprimaryMode, getcustomizerinfoMode,  SchemeDirAction, ColorCustomizerAction,  getNavbarStyleMode, getSidebarActiveMode, SidebarActiveStyleAction, getDarkMode, ModeAction,  SidebarColorAction, getSidebarColorMode, getSidebarTypeMode} from '../../store/setting/setting'
 import {connect} from "react-redux"
+import FwsLoader from '../../components/loader/fws-loader'
 
 const mapStateToProps = (state) => {
     return {
@@ -83,7 +83,7 @@ const Default = (props) => {
    
     return (
         <>
-            <Loader/>
+            <FwsLoader/>
             <Sidebar />
                 <main className="main-content">
                     <div className="position-relative">
