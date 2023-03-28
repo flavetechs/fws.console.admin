@@ -15,18 +15,7 @@ const HomeHeader = () => {
         <h1 className="logo"><a href="index.html">Flaveconsole<span>..</span></a></h1>
        
   
-        {/* <nav id="navbar" className="navbar">
-          <ul>
-            <li><a className={`nav-link scrollto ${location.hash ==''&& location.pathname == '/' && 'active'}`} href="/">Home</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#about'&& 'active'}`} href="#about">About</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#services'&& 'active'}`} href="#services">Services</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#cbt'&& 'active'}`}  href="http://cbt.flavetechs.com/" target={'_blank'}>CBT</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#contact'&& 'active'}`}  href="#contact">Contact</a></li>
-            <li><a className={`nav-link scrollto ${location.pathname == authLocations.login && 'active'}`}  href={authLocations.login}>Login</a></li>
-          
-          </ul>
-          <i className="bi bi-list mobile-nav-toggle navbar-mobile"></i>
-        </nav> */}
+      
        <Navbar  expand="lg">
         <Container fluid>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
