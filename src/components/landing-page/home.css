@@ -202,11 +202,11 @@ h6 {
 /**
 * Desktop Navigation 
 */
-.navbar {
+.nav-bar {
   padding: 0;
 }
 
-.navbar ul {
+.nav-bar {
   margin: 0;
   padding: 0;
   display: flex;
@@ -214,17 +214,17 @@ h6 {
   align-items: center;
 }
 
-.navbar li {
+.nav-bar  {
   position: relative;
 }
 
-.navbar>ul>li {
+.nav-bar> a {
   white-space: nowrap;
   padding: 10px 0 10px 28px;
 }
 
-.navbar a,
-.navbar a:focus {
+.nav-bar a,
+.nav-bar a:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -237,14 +237,14 @@ h6 {
   position: relative;
 }
 
-.navbar a i,
-.navbar a:focus i {
+.nav-bar a i,
+.nav-bar a:focus i {
   font-size: 12px;
   line-height: 0;
   margin-left: 5px;
 }
 
-.navbar>ul>li>a:before {
+.nav-bar>a:before {
   content: "";
   position: absolute;
   width: 100%;
@@ -257,18 +257,18 @@ h6 {
   transition: all 0.3s ease-in-out 0s;
 }
 
-.navbar a:hover:before,
-.navbar li:hover>a:before,
-.navbar .active:before {
+.nav-bar a:hover:before,
+.nav-bar a:hover>a:before,
+.nav-bar .active:before {
   visibility: visible;
-  width: 100%;
+  width: 90%;
 }
 
-.navbar a:hover,
-.navbar .active,
-.navbar .active:focus,
-.navbar li:hover>a {
-  color: #106eea;
+.nav-bar a:hover,
+.nav-bar .active,
+.nav-bar .active:focus,
+.nav-bar li:hover>a {
+  color: #106eea !important;
 }
 
 .navbar .dropdown ul {
@@ -355,9 +355,17 @@ h6 {
     display: block;
   }
 
-  .navbar ul {
-    display: none;
+  .nav-bar {
+    display: block;
+    position: absolute;
+    top: 55px;
+    transition: 0.3s;
+    padding-bottom: 50px;
   }
+  .nav-bar > a {
+    margin-bottom: 15px;
+  }
+  
 }
 
 .navbar-mobile {
@@ -574,6 +582,12 @@ h6 {
   #hero {
     height: 120vh;
   }
+}
+
+.mobile-nav ul{
+position: relative;
+top: 120px;
+display: block;
 }
 
 /*--------------------------------------------------------------
