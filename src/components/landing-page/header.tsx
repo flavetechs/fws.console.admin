@@ -1,4 +1,5 @@
 import React from 'react'
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { authLocations } from '../../router/fws-path-locations'
 
@@ -14,37 +15,22 @@ const HomeHeader = () => {
         <h1 className="logo"><a href="index.html">Flaveconsole<span>..</span></a></h1>
        
   
-        <nav id="navbar" className="navbar">
-          <ul>
-            <li><a className={`nav-link scrollto ${location.hash ==''&& location.pathname == '/' && 'active'}`} href="/">Home</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#about'&& 'active'}`} href="#about">About</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#services'&& 'active'}`} href="#services">Services</a></li>
-            <li><a className={`nav-link scrollto ${location.hash =='#cbt'&& 'active'}`}  href="http://cbt.flavetechs.com/" target={'_blank'}>CBT</a></li>
-            {/* <li><a className="nav-link scrollto" href="#team">Team</a></li> */}
-            <li><a className={`nav-link scrollto ${location.hash =='#contact'&& 'active'}`}  href="#contact">Contact</a></li>
-            <li><a className={`nav-link scrollto ${location.pathname == authLocations.login && 'active'}`}  href={authLocations.login}>Login</a></li>
-            {/* <li className="dropdown"{` ${location.pathname == authLocations.login && 'active'}`} ><a ><span>Dropdown</span> 
-            <i className="bi bi-chevron-down"></i> */}
-            {/* </a> */}
-              {/* <ul>
-                <li><a href="#">Drop Down 1</a></li>
-                <li className="dropdown"><a href="#"><span>Deep Drop Down</span> <i className="bi bi-chevron-right"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Drop Down 1</a></li>
-                    <li><a href="#">Deep Drop Down 2</a></li>
-                    <li><a href="#">Deep Drop Down 3</a></li>
-                    <li><a href="#">Deep Drop Down 4</a></li>
-                    <li><a href="#">Deep Drop Down 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Drop Down 2</a></li>
-                <li><a href="#">Drop Down 3</a></li>
-                <li><a href="#">Drop Down 4</a></li>
-              </ul> */}
-            {/* </li> */}
-          </ul>
-          <i className="bi bi-list mobile-nav-toggle"></i>
-        </nav>
+      
+       <Navbar  expand="lg">
+        <Container fluid>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav justify-content-between me-0">
+          <Nav as="ul" className="nav-bar me-auto mb-2 mb-lg-0">
+            <Nav.Link href="/"className={` scrollto ${location.hash ==''&& location.pathname == '/' && 'active'}`}>Home</Nav.Link>
+            <Nav.Link href="#about"className={`scrollto ${location.hash =='#about'&& 'active'}`}>About</Nav.Link>
+            <Nav.Link href="#services" className={` scrollto ${location.hash =='#services'&& 'active'}`} >Services</Nav.Link>
+            <Nav.Link href="http://cbt.flavetechs.com/"className={`scrollto ${location.hash =='#cbt'&& 'active'}`} target={'_blank'}>CBT</Nav.Link>
+            <Nav.Link href="#contact" className={`scrollto ${location.hash =='#contact'&& 'active'}`} >Contact</Nav.Link>
+            <Nav.Link href={authLocations.login} className={` scrollto ${location.pathname == authLocations.login && 'active'}`} >Login</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+        </Container>
+    </Navbar>
   
       </div>
     </header>
