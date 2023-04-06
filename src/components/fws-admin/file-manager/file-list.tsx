@@ -54,6 +54,7 @@ const FileList = () => {
                 setShowCheckBoxes(false);
                 setSelectedIds([]);
             }
+
         } else if (deleteDialogResponse === "cancel") {
             setDeleteButton(true);
             setShowCheckBoxes(false);
@@ -63,6 +64,7 @@ const FileList = () => {
             respondToDeleteDialog("")(dispatch);
         };
     }, [fileProps, deleteDialogResponse, dispatch]);
+    
     //delete dialog
 
 
